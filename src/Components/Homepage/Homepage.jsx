@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Homepage.css";
 import hello from "../../Assets/Hello.png";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
@@ -22,12 +22,13 @@ import Marketing from "../../Assets/Marketing.png";
 import Lifestyle from "../../Assets/Lifestyle.png";
 import Photography from "../../Assets/Photography.png";
 import Choiceyourcourse from "../../Assets/Choiceyourcourse.png";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, json, useNavigate } from "react-router-dom";
 import choiceimg from "../../Assets/choiceimg.png";
 import topbusiness from "../../Assets/TopBusiness.png";
 import topdesign from "../../Assets/TopDesign.png";
 import play from "../../Assets/play.png";
 import clock from "../../Assets/Clock.png";
+import axios from "axios";
 
 export default function Homepage() {
   const arr = [0, 1, 2, 3, 4];
@@ -45,10 +46,54 @@ export default function Homepage() {
 
   const navigate = useNavigate();
 
+  const username = JSON.parse(localStorage.getItem("name"));
+
+  const token = JSON.parse(localStorage.getItem("token"));
+  console.log("tokenfrom dash", token);
+
+  const [Banner, setBanner] = useState([]);
+  const [ongoingdata, setonGoingdata] = useState([]);
+
+  const getBanners = async () => {
+    console.log("entered");
+    axios({
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      url: "https://app-virtuallearning-221207091853.azurewebsites.net/user/view/banner",
+    }).then(function (response) {
+      console.log("recentcourses", response.data);
+      setBanner(response.data);
+    });
+  };
+
+  const getOngoing = async () => {
+    console.log("entered");
+    axios({
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      url: "https://app-virtuallearning-221207091853.azurewebsites.net/user/ongoing-courses",
+    }).then(function (response) {
+      console.log("recentcourses", response.data);
+      setonGoingdata(response.data);
+    });
+  };
+
+  useEffect(() => {
+    getBanners();
+    getOngoing();
+  }, []);
+
+  console.log("banner", Banner);
+  console.log("ongoingdata", ongoingdata);
+
   return (
     <div className="Homepagemain-div">
       <img src={hello} style={{ marginTop: "2%" }}></img>
-      <span className="UserNameText">Mahendra Singh Dhoni</span>
+      <span className="UserNameText">{username}</span>
       <div className="TopCoursesMain-div">
         <div className="TopCoursesContainer">
           <img src={topimage1} style={{ borderRadius: "6px" }}></img>
@@ -118,26 +163,88 @@ export default function Homepage() {
       </div>
       <div className="OnGoingCoursesMain-div">
         <div className="OnGoingCoursesContainer">
-          <img src={ongoingcourse} style={{ borderRadius: "6px" }}></img>
+          <img
+            src={ongoingdata[0]?.course_image}
+            style={{
+              borderRadius: "6px",
+              width: "519px",
+              height: "332px",
+              marginTop: "4%",
+            }}
+          ></img>
           <span className="OnGoingCoursesContainerText">
-            Art & Illustration
+            {ongoingdata[0]?.course_name.length > 23
+              ? ongoingdata[0]?.course_name.substr(0, 23) + "..."
+              : ongoingdata[0]?.course_name}
           </span>
-          <span className="CompletedOutOfText">15/20 chapters</span>
-          <img src={continuebutton} className="continuebutton"></img>
+          <span className="CompletedOutOfText">
+            {ongoingdata[0]?.completed_chapter_count}/
+            {ongoingdata[0]?.chapter_count}
+            chapters
+          </span>
+          <img
+            src={continuebutton}
+            className="continuebutton"
+            onClick={() => {
+              navigate("/Courseview");
+            }}
+          ></img>
         </div>
         <div className="OnGoingCoursesContainer">
-          <img src={ongoingcourse} style={{ borderRadius: "6px" }}></img>
-          <span className="OnGoingCoursesContainerText">User Interface</span>
-          <span className="CompletedOutOfText">15/20 chapters</span>
-          <img src={continuebutton} className="continuebutton"></img>
+          <img
+            src={ongoingdata[1]?.course_image}
+            style={{
+              borderRadius: "6px",
+              width: "519px",
+              height: "332px",
+              marginTop: "4%",
+            }}
+          ></img>
+          <span className="OnGoingCoursesContainerText">
+            {ongoingdata[1]?.course_name.length > 23
+              ? ongoingdata[1]?.course_name.substr(0, 23) + "..."
+              : ongoingdata[1]?.course_name}
+          </span>
+          <span className="CompletedOutOfText">
+            {ongoingdata[1]?.completed_chapter_count}/
+            {ongoingdata[1]?.chapter_count}
+            chapters
+          </span>
+          <img
+            src={continuebutton}
+            className="continuebutton"
+            onClick={() => {
+              navigate("/Courseview");
+            }}
+          ></img>
         </div>
         <div className="OnGoingCoursesContainer">
-          <img src={ongoingcourse} style={{ borderRadius: "6px" }}></img>
+          <img
+            src={ongoingdata[2]?.course_image}
+            style={{
+              borderRadius: "6px",
+              width: "519px",
+              height: "332px",
+              marginTop: "4%",
+            }}
+          ></img>
           <span className="OnGoingCoursesContainerText">
-            Learn Figma - UI/UX...
+            {ongoingdata[2]?.course_name.length > 23
+              ? ongoingdata[2]?.course_name.substr(0, 23) + "..."
+              : ongoingdata[2]?.course_name}
           </span>
-          <span className="CompletedOutOfText">15/20 chapters</span>
-          <img src={continuebutton} className="continuebutton"></img>
+          <span className="CompletedOutOfText">
+            {ongoingdata[2]?.completed_chapter_count}/
+            {ongoingdata[2]?.chapter_count}
+            chapters
+          </span>
+          <img
+            src={continuebutton}
+            className="continuebutton"
+            onClick={() => {
+              navigate("/Courseview");
+            }}
+          ></img>
         </div>
       </div>
       <div className="CategoriesMain-div">
@@ -314,7 +421,6 @@ export default function Homepage() {
                   alignItems: "center",
                   width: "89.09px",
                   height: "26px",
-                  backgroundColor: "lightblue",
                 }}
               >
                 <img src={clock}></img>
@@ -359,7 +465,6 @@ export default function Homepage() {
                   alignItems: "center",
                   width: "89.09px",
                   height: "26px",
-                  backgroundColor: "lightblue",
                 }}
               >
                 <img src={clock}></img>
@@ -407,7 +512,6 @@ export default function Homepage() {
                   alignItems: "center",
                   width: "89.09px",
                   height: "26px",
-                  backgroundColor: "lightblue",
                 }}
               >
                 <img src={clock}></img>
@@ -463,7 +567,6 @@ export default function Homepage() {
                   alignItems: "center",
                   width: "89.09px",
                   height: "26px",
-                  backgroundColor: "lightblue",
                 }}
               >
                 <img src={clock}></img>
@@ -510,7 +613,6 @@ export default function Homepage() {
                   alignItems: "center",
                   width: "89.09px",
                   height: "26px",
-                  backgroundColor: "lightblue",
                 }}
               >
                 <img src={clock}></img>
@@ -555,7 +657,6 @@ export default function Homepage() {
                   alignItems: "center",
                   width: "89.09px",
                   height: "26px",
-                  backgroundColor: "lightblue",
                 }}
               >
                 <img src={clock}></img>
@@ -603,7 +704,6 @@ export default function Homepage() {
                   alignItems: "center",
                   width: "89.09px",
                   height: "26px",
-                  backgroundColor: "lightblue",
                 }}
               >
                 <img src={clock}></img>

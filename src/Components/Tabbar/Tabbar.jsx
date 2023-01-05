@@ -7,6 +7,9 @@ import gear from "../../Assets/Gear@2x.png";
 import profile from "../../Assets/Mask.png";
 
 export default function Tabbar() {
+  const userimg = JSON.parse(localStorage.getItem("profileUrl"));
+  console.log(userimg);
+
   return (
     <div className="Tabbarmain-div">
       <div className="Tabbarinside-div">
@@ -23,7 +26,10 @@ export default function Tabbar() {
           <img src={bell}></img>
           <img src={gear}></img>
           <div className="TabProfile">
-            <img src={profile}></img>
+            <img
+              src={userimg}
+              style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+            ></img>
           </div>
         </div>
       </div>

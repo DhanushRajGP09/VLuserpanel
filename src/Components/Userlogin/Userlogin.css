@@ -1,0 +1,71 @@
+.login-container {
+  display: flex;
+  background-color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 7rem;
+  flex-direction: column;
+  border-radius: 4px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+}
+
+.logo-img {
+  display: flex;
+  padding: 0 2.5rem 1rem 2.5rem;
+}
+
+.form-log {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0 2rem 0;
+
+  /* padding-top: 2rem; */
+}
+
+.form-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.fogrot-password {
+  padding-top: 0.8rem;
+  position: relative;
+  left: 4.2rem;
+  color: #ee5c4d;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 500;
+  padding-bottom: 4rem;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+.login-btn {
+  background-color: #ee5c4d;
+  border: none;
+  outline: none;
+  padding: 0.3rem;
+  border-radius: 6px;
+}
+
+.login-text {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 35px;
+  font-style: bold;
+}

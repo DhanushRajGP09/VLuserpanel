@@ -6,12 +6,14 @@ import Tabbar from "../../Components/Tabbar/Tabbar";
 import Ongoing from "../../Components/Ongoing/Ongoing";
 import Mycourse from "../../Components/Mycourse/Mycourse";
 import Courseview from "../../Components/Courseview/Courseview";
+import Login from "../Login/Login";
 
 export default function Home() {
   return (
     <div className="Home">
       <Tabbar />
       <Routes>
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/" element={<Homepage />}></Route>
         <Route path="/Mycourse/*" element={<Mycourse />}></Route>
         <Route path="/Courseview/*" element={<Courseview />}></Route>

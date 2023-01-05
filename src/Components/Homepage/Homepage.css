@@ -10,15 +10,17 @@
 .UserNameText {
   width: 263px;
   height: 50px;
-
   font-family: "Biko";
   font-style: normal;
   font-weight: 700;
   font-size: 26px;
   line-height: 50px;
   /* identical to box height, or 192% */
-
   color: #092963;
+  margin-right: 5%;
+
+  display: flex;
+  align-items: flex-start;
 }
 .TopCoursesMain-div {
   height: auto;
@@ -30,6 +32,7 @@
   justify-content: space-between;
 }
 .OnGoingCoursesMain-div {
+  margin-top: 2%;
   height: auto;
   width: 100%;
   display: flex;
