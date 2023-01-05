@@ -1,0 +1,123 @@
+.MyCourseMain-div {
+  width: 80%;
+
+  height: 150vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.Mycourse-text {
+  margin-left: 3%;
+  width: auto;
+  height: 30px;
+  margin-top: 2%;
+  font-family: "Biko", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+  /* identical to box height, or 188% */
+
+  color: #2bb5f4;
+}
+.Mycoursetab-div {
+  margin-left: 3%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 243px;
+  margin-top: 3%;
+  height: 50px;
+  left: 240px;
+  top: 170px;
+}
+.Ongoing-button {
+  width: 114px;
+  height: 36px;
+  background: #042c5c;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 50px;
+
+  text-align: center;
+  cursor: pointer;
+
+  color: #ffffff;
+}
+.completed-button {
+  width: 114px;
+  height: 36px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Proxima Nova Soft";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 50px;
+  /* identical to box height, or 250% */
+
+  color: #7a7a7a;
+}
+.OngoingCoursemain-div {
+  height: auto;
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-left: 3%;
+}
+.OngoingCourseContainer {
+  margin-top: 1%;
+  width: 464px;
+  height: 262px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background: linear-gradient(
+    360deg,
+    rgba(0, 0, 0, 0.6) 5.69%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border-radius: 6px;
+}
+
+.OngoingCoursecontainer {
+  margin-top: 2%;
+  width: 464px;
+  height: 262px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.OngoingCourseinsidetext {
+  position: absolute;
+  width: auto;
+  height: 30px;
+  left: 20px;
+  top: 22px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  /* identical to box height, or 150% */
+
+  color: #ffffff;
+}

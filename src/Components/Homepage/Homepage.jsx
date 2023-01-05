@@ -22,7 +22,7 @@ import Marketing from "../../Assets/Marketing.png";
 import Lifestyle from "../../Assets/Lifestyle.png";
 import Photography from "../../Assets/Photography.png";
 import Choiceyourcourse from "../../Assets/Choiceyourcourse.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import choiceimg from "../../Assets/choiceimg.png";
 import topbusiness from "../../Assets/TopBusiness.png";
 import topdesign from "../../Assets/TopDesign.png";
@@ -42,6 +42,8 @@ export default function Homepage() {
       }
     }
   };
+
+  const navigate = useNavigate();
 
   return (
     <div className="Homepagemain-div">
@@ -109,6 +111,9 @@ export default function Homepage() {
         <img
           src={seeall}
           style={{ cursor: "pointer", marginRight: "2%" }}
+          onClick={() => {
+            navigate("/Mycourse/Ongoing");
+          }}
         ></img>
       </div>
       <div className="OnGoingCoursesMain-div">

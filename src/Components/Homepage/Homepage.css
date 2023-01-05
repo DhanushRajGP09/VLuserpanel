@@ -1,6 +1,6 @@
 .Homepagemain-div {
   width: 75%;
-  background-color: aliceblue;
+
   height: 150vh;
   display: flex;
   flex-direction: column;
@@ -75,12 +75,40 @@
   line-height: 50px;
   color: #ffffff;
 }
+.OnGoingCourseContainerText {
+  position: absolute;
+  width: auto;
+  left: 20.9px;
+  top: 122px;
+  height: 50px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 50px;
+  color: #ffffff;
+}
 .CompletedOutOfText {
   position: absolute;
   width: auto;
   height: 50px;
   left: 20.09px;
   top: 192px;
+  font-family: "Proxima Nova Soft";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 50px;
+  /* identical to box height, or 278% */
+
+  color: #ffffff;
+}
+.CompletedOngoing {
+  position: absolute;
+  width: auto;
+  height: 50px;
+  left: 20.09px;
+  top: 152px;
   font-family: "Proxima Nova Soft";
   font-style: normal;
   font-weight: 500;
@@ -151,6 +179,14 @@
   height: 50px;
   left: 324.4px;
   top: 179px;
+  cursor: pointer;
+}
+.Ongoingcontinuebutton {
+  position: absolute;
+  width: 119.52px;
+  height: 50px;
+  left: 20.9px;
+  top: 199px;
   cursor: pointer;
 }
 .CategoriesMain-div {
