@@ -1,0 +1,320 @@
+.Homepagemain-div {
+  width: 75%;
+  background-color: aliceblue;
+  height: 150vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.UserNameText {
+  width: 263px;
+  height: 50px;
+
+  font-family: "Biko";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 50px;
+  /* identical to box height, or 192% */
+
+  color: #092963;
+}
+.TopCoursesMain-div {
+  height: auto;
+  width: 100%;
+  margin-top: 2%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.OnGoingCoursesMain-div {
+  height: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.TopCoursesContainer {
+  height: 261px;
+  width: 464px;
+  margin-top: 0.5%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+.OnGoingCoursesContainer {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5%;
+  width: 464px;
+  height: 262px;
+  background: linear-gradient(
+    360deg,
+    rgba(0, 0, 0, 0.39) 39.69%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  border-radius: 6px;
+}
+.OnGoingCoursesContainerText {
+  position: absolute;
+  width: auto;
+  left: 20.9px;
+  top: 166px;
+  height: 50px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 50px;
+  color: #ffffff;
+}
+.CompletedOutOfText {
+  position: absolute;
+  width: auto;
+  height: 50px;
+  left: 20.09px;
+  top: 192px;
+  font-family: "Proxima Nova Soft";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 50px;
+  /* identical to box height, or 278% */
+
+  color: #ffffff;
+}
+.TopCoursesContainerText {
+  position: absolute;
+  width: 325px;
+  height: 50px;
+  left: 30px;
+  top: 201px;
+
+  font-family: "Biko";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 50px;
+  /* identical to box height, or 208% */
+
+  color: #ffffff;
+}
+.SliderContainer-div {
+  height: auto;
+  width: 100%;
+  margin-top: 1%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.SliderPagination {
+  height: 10px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0px;
+}
+.OngoingCoursesHeader {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 3%;
+}
+.gradient {
+  position: absolute;
+  width: 464px;
+  height: 206px;
+  top: 55px;
+  background: linear-gradient(
+    180deg,
+    rgba(196, 196, 196, 0) 2%,
+    #000000 221.3%
+  );
+  mix-blend-mode: multiply;
+  border-radius: 0px 0px 6px 6px;
+}
+.continuebutton {
+  position: absolute;
+  width: 119.52px;
+  height: 50px;
+  left: 324.4px;
+  top: 179px;
+  cursor: pointer;
+}
+.CategoriesMain-div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-top: 2%;
+}
+.CategoriesOptions-div {
+  display: flex;
+  width: 92%;
+  height: auto;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.CategoriesCoursesHeader {
+  display: flex;
+  width: 100%;
+  height: 50px;
+
+  align-items: center;
+  justify-content: space-between;
+}
+.ChoiceTabBar-div {
+  width: 259px;
+  height: 50px;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+.Tabdiv {
+  width: 63px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ChoiceTab {
+  width: 63px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: none;
+  border-radius: 6px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 50px;
+  /* identical to box height, or 250% */
+  text-decoration: none;
+  color: #7a7a7a;
+}
+.ChoiceTab:active {
+  background: #dfe7f4;
+  color: #092963;
+}
+.ChoiceTab:hover {
+  background: #dfe7f4;
+  color: #092963;
+}
+.ChoiceDisplayMain-div {
+  height: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.ChoiceContainer {
+  width: 342px;
+  height: 302px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+.ChoiceContainerImg {
+  width: 342px;
+  height: 193px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background: #c4c4c4;
+  border-radius: 6px 6px 0px 0px;
+}
+.ChoiceContainerText-div {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  height: auto;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+
+  color: #111111;
+}
+.ChoiceContainerText {
+  width: auto;
+  height: auto;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  /* or 144% */
+  display: flex;
+  align-items: flex-start;
+  color: #111111;
+  margin-left: 19px;
+  margin-right: 15px;
+}
+.ChoiceChapter {
+  width: 167px;
+  height: 26px;
+
+  display: flex;
+  align-items: flex-start;
+  margin-left: 19px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  /* identical to box height, or 162% */
+
+  color: #7a7a7a;
+}
+.ChoiceCategory {
+  position: absolute;
+  width: 91px;
+  height: 34px;
+  margin-left: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 130px;
+  background: #fcbe4b;
+  mix-blend-mode: normal;
+  border-radius: 6px;
+  font-family: "Proxima Nova Soft";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 0px;
+
+  color: #000000;
+}
+.Play {
+  position: absolute;
+  width: 47px;
+  height: 47px;
+}
