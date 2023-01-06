@@ -120,6 +120,13 @@
 
   color: #111111;
 }
+
+.video-div {
+  height: 531px;
+  width: 100%;
+  position: relative;
+}
+
 .VideoDescription-lessons {
   width: auto;
   height: 24px;

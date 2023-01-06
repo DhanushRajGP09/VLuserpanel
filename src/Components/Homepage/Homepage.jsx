@@ -29,6 +29,8 @@ import topdesign from "../../Assets/TopDesign.png";
 import play from "../../Assets/play.png";
 import clock from "../../Assets/Clock.png";
 import axios from "axios";
+import { addcourseId, addcourseName } from "../../features/Courseslice";
+import { useDispatch } from "react-redux/es";
 
 export default function Homepage() {
   const arr = [0, 1, 2, 3, 4];
@@ -80,6 +82,13 @@ export default function Homepage() {
       console.log("recentcourses", response.data);
       setonGoingdata(response.data);
     });
+  };
+
+  const dispatch = useDispatch();
+  const handleContinue = (id, name) => {
+    dispatch(addcourseId(id));
+    dispatch(addcourseName(name));
+    navigate("/Courseview");
   };
 
   useEffect(() => {

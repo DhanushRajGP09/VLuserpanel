@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from "react";
 import "./Courseview.css";
 import right from "../../Assets/chevron_right_black_24dp (1) 1.png";
-import plus from "../../Assets/Arrow@2x.png";
-import minus from "../../Assets/minus.png";
 
-import redplay from "../../Assets/Red Play.png";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux/es";
-import { useNavigate } from "react-router";
+import { Route, Routes, useNavigate } from "react-router";
 import { getCourseId, getOngoingCourseName } from "../../features/Courseslice";
+import ReactPlayer from "react-player";
+import Chapters from "../Chapters/Chapters";
+import Overview from "../Overview/Overview";
+import Chapterdummy from "../Chapterdummy/Chapterdummy";
 export default function Courseview() {
   const [overview, setOverview] = useState(false);
-  const [chapters, setChapters] = useState(true);
+  const [chapters, setChapters] = useState(false);
 
+  const navigate = useNavigate();
   const handleOverview = () => {
     setOverview(!overview);
     setChapters(false);
+    navigate("/Courseview");
   };
   const handleChapters = () => {
     setOverview(false);
     setChapters(!chapters);
+    navigate("/Courseview/Chapters");
   };
 
   useEffect(() => {
     if (window.location.pathname === "/Courseview") {
+      setOverview(true);
+    } else if (window.location.pathname === "/Courseview/Chapters") {
       setChapters(true);
     }
   }, []);
@@ -31,7 +37,6 @@ export default function Courseview() {
   console.log("tokenfrom dash", token);
 
   const [coursedata, setCoursedata] = useState([]);
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -43,6 +48,8 @@ export default function Courseview() {
 
   const [id, setid] = useState(getcourseid);
   const [name, setName] = useState(getcoursename);
+  const [video, setvideo] = useState(false);
+  const [videourl, setVideoUrl] = useState("");
 
   const getCourse = async () => {
     console.log("entered");
@@ -63,6 +70,11 @@ export default function Courseview() {
     getCourse();
   }, []);
 
+  const Totalvideo =
+    coursedata?.courseContentResponse?.totalVideoLength / 3600 + " ";
+
+  const videolength = Totalvideo.substr(0, 4);
+
   return (
     <>
       {coursedata && coursedata?.lessonResponseList?.length > 0 ? (
@@ -76,14 +88,19 @@ export default function Courseview() {
           </div>
           <div className="CourseViewInner-div">
             <div className="VideoDisplay-div">
-              <iframe
-                className="VideoDisplay"
-                src={
-                  coursedata?.lessonResponseList[0]?.lessonList[0]?.videoLink
-                }
-              >
-                <div className="VideoDisplay-gradient"></div>
-              </iframe>
+              <div className="video-div">
+                <ReactPlayer
+                  controls
+                  url={
+                    video
+                      ? videourl
+                      : coursedata?.lessonResponseList[0]?.lessonList[0]
+                          ?.videoLink
+                  }
+                  width="100%"
+                  height="531px"
+                />
+              </div>
               <div className="VideoDescription-div">
                 <div className="VideoDescriptionInner-div">
                   <span className="VideoDescription-Title">{name}</span>
@@ -124,104 +141,19 @@ export default function Courseview() {
                   Chapters
                 </span>
               </div>
-              <div className="CourseSidebar-header">
-                <span className="CourseContentText">Course Content</span>
-                <span className="CourseContentDetails">
-                  7 Chapter | 46 lessons | 6 Assignment Test | 3.5h total length
-                </span>
-              </div>
-              <div className="ChapterContainer-div" id="ChapterContainer-div">
-                <div
-                  style={{
-                    display: "flex",
-                    width: "100%",
-
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <span className="ChapterName">
-                    Chapter 1 - Introduction to the course
-                  </span>
-                  <img
-                    id="img"
-                    src={plus}
-                    style={{ marginRight: "2%", cursor: "pointer" }}
-                    onClick={() => {
-                      if (
-                        document.getElementById("ChaptersContainer").style
-                          .display === "flex"
-                      ) {
-                        document.getElementById(
-                          "ChaptersContainer"
-                        ).style.display = "none";
-                        document.getElementById("img").src = plus;
-                        document.getElementById(
-                          "ChapterContainer-div"
-                        ).style.height = "30px";
-                      } else {
-                        document.getElementById(
-                          "ChaptersContainer"
-                        ).style.display = "flex";
-                        document.getElementById(
-                          "ChapterContainer-div"
-                        ).style.height = "auto";
-                        document.getElementById("img").src = minus;
-                      }
-                    }}
-                  ></img>
-                </div>
-                <div className="ChaptersContainer" id="ChaptersContainer">
-                  <div className="lessons-div">
-                    <div className="ChaptersContainerMain-div">
-                      <div className="ProgressContainer-div"></div>
-                      <div className="lessonContainer">
-                        <span className="lessonNum">20</span>
-                        <div className="lessonDetails">
-                          <span className="lessonName">
-                            Creating a New Project and File
-                          </span>
-                          <span className="lessonDuration">01.38 mins</span>
-                        </div>
-                        <img
-                          src={redplay}
-                          style={{ marginRight: "2%", cursor: "pointer" }}
-                        ></img>
-                      </div>
-                    </div>
-                    <div className="ChaptersContainerMain-div">
-                      <div className="ProgressContainer-div"></div>
-                      <div className="lessonContainer">
-                        <span className="lessonNum">20</span>
-                        <div className="lessonDetails">
-                          <span className="lessonName">
-                            Creating a New Project and File
-                          </span>
-                          <span className="lessonDuration">01.38 mins</span>
-                        </div>
-                        <img
-                          src={redplay}
-                          style={{ marginRight: "2%", cursor: "pointer" }}
-                        ></img>
-                      </div>
-                    </div>
-                    <div className="ChaptersContainerMain-div">
-                      <div className="ProgressContainer-div"></div>
-                      <div className="lessonContainer">
-                        <span className="lessonNum">20</span>
-                        <div className="lessonDetails">
-                          <span className="lessonName">Creating a New </span>
-                          <span className="lessonDuration">01.38 mins</span>
-                        </div>
-                        <img
-                          src={redplay}
-                          style={{ marginRight: "2%", cursor: "pointer" }}
-                        ></img>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Routes>
+                <Route path="/" element={<Overview />}></Route>
+                <Route
+                  path="/Chapters"
+                  element={
+                    <Chapters
+                      coursedata={coursedata}
+                      setVideoUrl={setVideoUrl}
+                      setvideo={setvideo}
+                    />
+                  }
+                ></Route>
+              </Routes>
             </div>
           </div>
         </div>
@@ -232,21 +164,17 @@ export default function Courseview() {
             <img src={right}></img>
             <span className="MyCourse-text">Ongoing</span>
             <img src={right}></img>
-            <span className="currentpageCourse-text">Course title</span>
+            <span className="currentpageCourse-text">Loading.....</span>
           </div>
           <div className="CourseViewInner-div">
             <div className="VideoDisplay-div">
-              <iframe className="VideoDisplay">
-                <div className="VideoDisplay-gradient"></div>
-              </iframe>
+              <div className="VideoDisplay">
+                <div className="VideoDisplay-gradient">Loading..</div>
+              </div>
               <div className="VideoDescription-div">
                 <div className="VideoDescriptionInner-div">
-                  <span className="VideoDescription-Title">
-                    Learn Figma - UI/UX Design Essential Training
-                  </span>
-                  <span className="VideoDescription-lessons">
-                    7 Chapter | 46 lessons
-                  </span>
+                  <span className="VideoDescription-Title">Loading...</span>
+                  <span className="VideoDescription-lessons">Loading...</span>
                 </div>
                 <div className="VideoDescription-category">Design</div>
               </div>
@@ -280,104 +208,10 @@ export default function Courseview() {
                   Chapters
                 </span>
               </div>
-              <div className="CourseSidebar-header">
-                <span className="CourseContentText">Course Content</span>
-                <span className="CourseContentDetails">
-                  7 Chapter | 46 lessons | 6 Assignment Test | 3.5h total length
-                </span>
-              </div>
-              <div className="ChapterContainer-div" id="ChapterContainer-div">
-                <div
-                  style={{
-                    display: "flex",
-                    width: "100%",
-
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <span className="ChapterName">
-                    Chapter 1 - Introduction to the course
-                  </span>
-                  <img
-                    id="img"
-                    src={plus}
-                    style={{ marginRight: "2%", cursor: "pointer" }}
-                    onClick={() => {
-                      if (
-                        document.getElementById("ChaptersContainer").style
-                          .display === "flex"
-                      ) {
-                        document.getElementById(
-                          "ChaptersContainer"
-                        ).style.display = "none";
-                        document.getElementById("img").src = plus;
-                        document.getElementById(
-                          "ChapterContainer-div"
-                        ).style.height = "30px";
-                      } else {
-                        document.getElementById(
-                          "ChaptersContainer"
-                        ).style.display = "flex";
-                        document.getElementById(
-                          "ChapterContainer-div"
-                        ).style.height = "auto";
-                        document.getElementById("img").src = minus;
-                      }
-                    }}
-                  ></img>
-                </div>
-                <div className="ChaptersContainer" id="ChaptersContainer">
-                  <div className="lessons-div">
-                    <div className="ChaptersContainerMain-div">
-                      <div className="ProgressContainer-div"></div>
-                      <div className="lessonContainer">
-                        <span className="lessonNum">20</span>
-                        <div className="lessonDetails">
-                          <span className="lessonName">
-                            Creating a New Project and File
-                          </span>
-                          <span className="lessonDuration">01.38 mins</span>
-                        </div>
-                        <img
-                          src={redplay}
-                          style={{ marginRight: "2%", cursor: "pointer" }}
-                        ></img>
-                      </div>
-                    </div>
-                    <div className="ChaptersContainerMain-div">
-                      <div className="ProgressContainer-div"></div>
-                      <div className="lessonContainer">
-                        <span className="lessonNum">20</span>
-                        <div className="lessonDetails">
-                          <span className="lessonName">
-                            Creating a New Project and File
-                          </span>
-                          <span className="lessonDuration">01.38 mins</span>
-                        </div>
-                        <img
-                          src={redplay}
-                          style={{ marginRight: "2%", cursor: "pointer" }}
-                        ></img>
-                      </div>
-                    </div>
-                    <div className="ChaptersContainerMain-div">
-                      <div className="ProgressContainer-div"></div>
-                      <div className="lessonContainer">
-                        <span className="lessonNum">20</span>
-                        <div className="lessonDetails">
-                          <span className="lessonName">Creating a New </span>
-                          <span className="lessonDuration">01.38 mins</span>
-                        </div>
-                        <img
-                          src={redplay}
-                          style={{ marginRight: "2%", cursor: "pointer" }}
-                        ></img>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Routes>
+                <Route path="/" element={<Overview />}></Route>
+                <Route path="/Chapters" element={<Chapterdummy />}></Route>
+              </Routes>
             </div>
           </div>
         </div>

@@ -33,6 +33,12 @@ export default function Ongoing() {
     getOngoing();
   }, []);
 
+  const handleContinue = (id, name) => {
+    dispatch(addcourseId(id));
+    dispatch(addcourseName(name));
+    navigate("/Courseview");
+  };
+
   return (
     <>
       {ongoingdata.length > 0 ? (
@@ -57,9 +63,7 @@ export default function Ongoing() {
                   src={continuebutton}
                   className="Ongoingcontinuebutton"
                   onClick={() => {
-                    dispatch(addcourseId(data?.course_id));
-                    dispatch(addcourseName(data?.course_name));
-                    navigate("/Courseview");
+                    handleContinue(data?.course_id, data?.course_name);
                   }}
                 ></img>
               </div>
