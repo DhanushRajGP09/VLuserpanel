@@ -29,10 +29,21 @@ import topdesign from "../../Assets/TopDesign.png";
 import play from "../../Assets/play.png";
 import clock from "../../Assets/Clock.png";
 import axios from "axios";
-import { addcourseId, addcourseName } from "../../features/Courseslice";
-import { useDispatch } from "react-redux/es";
+import {
+  addChoiceCourse,
+  addTopbusiness,
+  addcourseId,
+  addcourseName,
+  getChoiceCourse,
+  getTopBusiness,
+} from "../../features/Courseslice";
+import { useDispatch, useSelector } from "react-redux/es";
 
 export default function Homepage() {
+  const [activeall, setactiveall] = useState(true);
+  const [activepopular, setactivepopular] = useState(false);
+  const [activenewest, setactivenewest] = useState(false);
+
   const arr = [0, 1, 2, 3, 4];
 
   const handleChange = (num) => {
@@ -63,7 +74,7 @@ export default function Homepage() {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      url: "https://app-virtuallearning-221207091853.azurewebsites.net/user/view/banner",
+      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/banner",
     }).then(function (response) {
       console.log("recentcourses", response.data);
       setBanner(response.data);
@@ -77,12 +88,70 @@ export default function Homepage() {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      url: "https://app-virtuallearning-221207091853.azurewebsites.net/user/ongoing-courses",
+      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/ongoing-courses",
     }).then(function (response) {
       console.log("recentcourses", response.data);
       setonGoingdata(response.data);
     });
   };
+  const getAll = async () => {
+    console.log("entered");
+    axios({
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/courses?limit=100&page=1",
+    }).then(function (response) {
+      console.log("recentcourses", response.data);
+      dispatch(addChoiceCourse(response.data));
+    });
+  };
+  const getPopular = async () => {
+    console.log("entered");
+    axios({
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/popularCourse?limit=100&page=1",
+    }).then(function (response) {
+      console.log("recentcourses", response.data);
+      dispatch(addChoiceCourse(response.data));
+    });
+  };
+  const getnewest = async () => {
+    console.log("entered");
+    axios({
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/newestCourse?limit=100&page=1",
+    }).then(function (response) {
+      console.log("recentcourses", response.data);
+      dispatch(addChoiceCourse(response.data));
+    });
+  };
+
+  const getchoice = useSelector(getChoiceCourse);
+  console.log("choic", getchoice);
+
+  const gettopbusiness = async () => {
+    console.log("entered");
+    axios({
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/course/category1?limit=5&page=1",
+    }).then(function (response) {
+      console.log("recentcourses", response.data);
+      dispatch(addTopbusiness(response.data));
+    });
+  };
+  const getbusiness = useSelector(getTopBusiness);
+  console.log("getbusi", getbusiness);
 
   const dispatch = useDispatch();
   const handleContinue = (id, name) => {
@@ -94,36 +163,78 @@ export default function Homepage() {
   useEffect(() => {
     getBanners();
     getOngoing();
+    getAll();
+    gettopbusiness();
   }, []);
 
   console.log("banner", Banner);
   console.log("ongoingdata", ongoingdata);
 
+  function handleAll() {
+    setactiveall(true);
+    setactivenewest(false);
+    setactivepopular(false);
+    getAll();
+  }
+  function handlePopular() {
+    setactiveall(false);
+    setactivenewest(false);
+    setactivepopular(true);
+    getPopular();
+  }
+  function handleNewest() {
+    setactiveall(false);
+    setactivenewest(true);
+    setactivepopular(false);
+    getnewest();
+  }
+
   return (
     <div className="Homepagemain-div">
       <img src={hello} style={{ marginTop: "2%" }}></img>
       <span className="UserNameText">{username}</span>
-      <div className="TopCoursesMain-div">
-        <div className="TopCoursesContainer">
-          <img src={topimage1} style={{ borderRadius: "6px" }}></img>
-          <div className="gradient"></div>
-          <span className="TopCoursesContainerText">
-            Product UX Design Course Sale
-          </span>
+      {Banner.length > 0 ? (
+        <div className="TopCoursesMain-div">
+          <div className="TopCoursesContainer">
+            <img
+              src={Banner[0].imageLink}
+              style={{
+                borderRadius: "6px",
+                width: "540px",
+                height: "332px",
+                marginTop: "4%",
+              }}
+            ></img>
+            <div className="gradient"></div>
+          </div>
+          <div className="TopCoursesContainer">
+            <img
+              src={Banner[1].imageLink}
+              style={{
+                borderRadius: "6px",
+                width: "540px",
+                height: "332px",
+                marginTop: "4%",
+              }}
+            ></img>
+            <div className="gradient"></div>
+          </div>
+          {Banner?.length > 2 ? (
+            <div className="TopCoursesContainer">
+              <img src={topimage1} style={{ borderRadius: "6px" }}></img>
+              <div className="gradient"></div>
+              <span className="TopCoursesContainerText">
+                Digital Marketing Strategies
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
-        <div className="TopCoursesContainer">
-          <img src={topimage1} style={{ borderRadius: "6px" }}></img>
-          <div className="gradient"></div>
-          <span className="TopCoursesContainerText">Marketing Courses</span>
-        </div>
-        <div className="TopCoursesContainer">
-          <img src={topimage1} style={{ borderRadius: "6px" }}></img>
-          <div className="gradient"></div>
-          <span className="TopCoursesContainerText">
-            Digital Marketing Strategies
-          </span>
-        </div>
-      </div>
+      ) : (
+        ""
+      )}
+
       <div className="SliderContainer-div">
         <div className="SliderPagination">
           <img
@@ -134,30 +245,42 @@ export default function Homepage() {
               handleChange(1);
             }}
           ></img>
-          <img
-            id="page2"
-            src={notactive}
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              handleChange(2);
-            }}
-          ></img>
-          <img
-            id="page3"
-            src={notactive}
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              handleChange(3);
-            }}
-          ></img>
-          <img
-            id="page4"
-            src={notactive}
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              handleChange(4);
-            }}
-          ></img>
+          {Banner?.length > 3 ? (
+            <img
+              id="page2"
+              src={notactive}
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                handleChange(2);
+              }}
+            ></img>
+          ) : (
+            ""
+          )}
+          {Banner?.length > 6 ? (
+            <img
+              id="page3"
+              src={notactive}
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                handleChange(3);
+              }}
+            ></img>
+          ) : (
+            ""
+          )}
+          {Banner?.length > 9 ? (
+            <img
+              id="page4"
+              src={notactive}
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                handleChange(4);
+              }}
+            ></img>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="OngoingCoursesHeader">
@@ -170,92 +293,98 @@ export default function Homepage() {
           }}
         ></img>
       </div>
-      <div className="OnGoingCoursesMain-div">
-        <div className="OnGoingCoursesContainer">
-          <img
-            src={ongoingdata[0]?.course_image}
-            style={{
-              borderRadius: "6px",
-              width: "519px",
-              height: "332px",
-              marginTop: "4%",
-            }}
-          ></img>
-          <span className="OnGoingCoursesContainerText">
-            {ongoingdata[0]?.course_name.length > 23
-              ? ongoingdata[0]?.course_name.substr(0, 23) + "..."
-              : ongoingdata[0]?.course_name}
-          </span>
-          <span className="CompletedOutOfText">
-            {ongoingdata[0]?.completed_chapter_count}/
-            {ongoingdata[0]?.chapter_count}
-            chapters
-          </span>
-          <img
-            src={continuebutton}
-            className="continuebutton"
-            onClick={() => {
-              navigate("/Courseview");
-            }}
-          ></img>
+
+      {ongoingdata?.length > 0 ? (
+        <div className="OnGoingCoursesMain-div">
+          <div className="OnGoingCoursesContainer">
+            <img
+              src={ongoingdata[0]?.course_image}
+              style={{
+                borderRadius: "6px",
+                width: "519px",
+                height: "332px",
+                marginTop: "4%",
+              }}
+            ></img>
+            <span className="OnGoingCoursesContainerText">
+              {ongoingdata[0]?.course_name.length > 23
+                ? ongoingdata[0]?.course_name.substr(0, 23) + "..."
+                : ongoingdata[0]?.course_name}
+            </span>
+            <span className="CompletedOutOfText">
+              {ongoingdata[0]?.completed_chapter_count}/
+              {ongoingdata[0]?.chapter_count}
+              chapters
+            </span>
+            <img
+              src={continuebutton}
+              className="continuebutton"
+              onClick={() => {
+                navigate("/Courseview");
+              }}
+            ></img>
+          </div>
+          <div className="OnGoingCoursesContainer">
+            <img
+              src={ongoingdata[1]?.course_image}
+              style={{
+                borderRadius: "6px",
+                width: "519px",
+                height: "332px",
+                marginTop: "4%",
+              }}
+            ></img>
+            <span className="OnGoingCoursesContainerText">
+              {ongoingdata[1]?.course_name.length > 23
+                ? ongoingdata[1]?.course_name.substr(0, 23) + "..."
+                : ongoingdata[1]?.course_name}
+            </span>
+            <span className="CompletedOutOfText">
+              {ongoingdata[1]?.completed_chapter_count}/
+              {ongoingdata[1]?.chapter_count}
+              chapters
+            </span>
+            <img
+              src={continuebutton}
+              className="continuebutton"
+              onClick={() => {
+                navigate("/Courseview");
+              }}
+            ></img>
+          </div>
+          <div className="OnGoingCoursesContainer">
+            <img
+              src={ongoingdata[2]?.course_image}
+              style={{
+                borderRadius: "6px",
+                width: "519px",
+                height: "332px",
+                marginTop: "4%",
+              }}
+            ></img>
+            <span className="OnGoingCoursesContainerText">
+              {ongoingdata[2]?.course_name.length > 23
+                ? ongoingdata[2]?.course_name.substr(0, 23) + "..."
+                : ongoingdata[2]?.course_name}
+            </span>
+            <span className="CompletedOutOfText">
+              {ongoingdata[2]?.completed_chapter_count}/
+              {ongoingdata[2]?.chapter_count}
+              chapters
+            </span>
+            <img
+              src={continuebutton}
+              className="continuebutton"
+              onClick={() => {
+                navigate("/Courseview");
+              }}
+            ></img>
+          </div>
         </div>
-        <div className="OnGoingCoursesContainer">
-          <img
-            src={ongoingdata[1]?.course_image}
-            style={{
-              borderRadius: "6px",
-              width: "519px",
-              height: "332px",
-              marginTop: "4%",
-            }}
-          ></img>
-          <span className="OnGoingCoursesContainerText">
-            {ongoingdata[1]?.course_name.length > 23
-              ? ongoingdata[1]?.course_name.substr(0, 23) + "..."
-              : ongoingdata[1]?.course_name}
-          </span>
-          <span className="CompletedOutOfText">
-            {ongoingdata[1]?.completed_chapter_count}/
-            {ongoingdata[1]?.chapter_count}
-            chapters
-          </span>
-          <img
-            src={continuebutton}
-            className="continuebutton"
-            onClick={() => {
-              navigate("/Courseview");
-            }}
-          ></img>
-        </div>
-        <div className="OnGoingCoursesContainer">
-          <img
-            src={ongoingdata[2]?.course_image}
-            style={{
-              borderRadius: "6px",
-              width: "519px",
-              height: "332px",
-              marginTop: "4%",
-            }}
-          ></img>
-          <span className="OnGoingCoursesContainerText">
-            {ongoingdata[2]?.course_name.length > 23
-              ? ongoingdata[2]?.course_name.substr(0, 23) + "..."
-              : ongoingdata[2]?.course_name}
-          </span>
-          <span className="CompletedOutOfText">
-            {ongoingdata[2]?.completed_chapter_count}/
-            {ongoingdata[2]?.chapter_count}
-            chapters
-          </span>
-          <img
-            src={continuebutton}
-            className="continuebutton"
-            onClick={() => {
-              navigate("/Courseview");
-            }}
-          ></img>
-        </div>
-      </div>
+      ) : (
+        ""
+      )}
+
       <div className="CategoriesMain-div">
         <div className="CategoriesCoursesHeader">
           <img src={categories}></img>
@@ -292,449 +421,146 @@ export default function Homepage() {
       </div>
       <div className="ChoiceTabBar-div">
         <div className="Tabdiv">
-          <Link className="ChoiceTab" to="/">
+          <span
+            className="ChoiceTab"
+            style={{
+              backgroundColor: activeall ? "#dfe7f4" : "white",
+              color: activeall ? "#092963" : "#7a7a7a",
+            }}
+            onClick={() => {
+              handleAll();
+            }}
+          >
             All
-          </Link>
+          </span>
         </div>
         <div className="Tabdiv">
-          <Link className="ChoiceTab" to="/popular">
+          <span
+            className="ChoiceTab"
+            style={{
+              backgroundColor: activepopular ? "#dfe7f4" : "white",
+              color: activepopular ? "#092963" : "#7a7a7a",
+            }}
+            onClick={() => {
+              handlePopular();
+            }}
+          >
             Popular
-          </Link>
+          </span>
         </div>
         <div className="Tabdiv">
-          <Link className="ChoiceTab">Newest</Link>
+          <span
+            className="ChoiceTab"
+            style={{
+              backgroundColor: activenewest ? "#dfe7f4" : "white",
+              color: activenewest ? "#092963" : "#7a7a7a",
+            }}
+            onClick={() => {
+              handleNewest();
+            }}
+          >
+            Newest
+          </span>
         </div>
       </div>
-      <div className="ChoiceDisplayMain-div">
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <div className="ChoiceCategory">Design</div>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">
-              Learn Figma - UI/UX Design Essential Training
-            </span>
-            <span className="ChoiceChapter">7 Chapters</span>
-          </div>
-        </div>
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <div className="ChoiceCategory">Marketing</div>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">
-              Digital Marketing for 2021 Masterclass
-            </span>
-            <span className="ChoiceChapter">7 Chapters</span>
-          </div>
-        </div>
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <div className="ChoiceCategory">Business</div>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">Smart Tips: Leadership</span>
-            <span className="ChoiceChapter">7 Chapters</span>
-          </div>
-        </div>
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <div className="ChoiceCategory">Music</div>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">What makes epic musics?</span>
-            <span className="ChoiceChapter">7 Chapters</span>
-          </div>
-        </div>
-      </div>
-      <div className="OngoingCoursesHeader">
-        <img src={topbusiness}></img>
-        <img
-          src={seeall}
-          style={{ cursor: "pointer", marginRight: "2%" }}
-        ></img>
-      </div>
-      <div className="ChoiceDisplayMain-div">
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <img src={play} className="Play"></img>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">
-              Learn Figma - UI/UX Design Essential Training
-            </span>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "60%",
-              }}
-            >
-              <span className="ChoiceChapter">7 Chapters</span>
-              <div
+      {getchoice?.length > 0 ? (
+        <div className="ChoiceDisplayMain-div">
+          <div className="ChoiceContainer">
+            <div className="ChoiceContainerImg">
+              <img
+                src={getchoice[0]?.course_image}
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "89.09px",
-                  height: "26px",
+                  borderRadius: "6px",
+                  width: "342px",
+                  height: "193px",
                 }}
-              >
-                <img src={clock}></img>
-                <span
-                  style={{
-                    width: "69px",
-                    height: "26px",
-                    fontFamily: "Proxima Nova Soft",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#7A7A7A",
-                  }}
-                >
-                  1:30:20
-                </span>
+              ></img>
+              <div className="ChoiceCategory">
+                {getchoice[0]?.category_name}
               </div>
+            </div>
+            <div className="ChoiceContainerText-div">
+              <span className="ChoiceContainerText">
+                {getchoice[0]?.course_name}
+              </span>
+              <span className="ChoiceChapter">
+                {getchoice[0]?.chapter_count} Chapters
+              </span>
+            </div>
+          </div>
+          <div className="ChoiceContainer">
+            <div className="ChoiceContainerImg">
+              <img
+                src={getchoice[1]?.course_image}
+                style={{
+                  borderRadius: "6px",
+                  width: "342px",
+                  height: "193px",
+                }}
+              ></img>
+              <div className="ChoiceCategory">
+                {getchoice[1]?.category_name}
+              </div>
+            </div>
+            <div className="ChoiceContainerText-div">
+              <span className="ChoiceContainerText">
+                {getchoice[1]?.course_name}
+              </span>
+              <span className="ChoiceChapter">
+                {getchoice[1]?.chapter_count} Chapters
+              </span>
+            </div>
+          </div>
+          <div className="ChoiceContainer">
+            <div className="ChoiceContainerImg">
+              <img
+                src={getchoice[2]?.course_image}
+                style={{
+                  borderRadius: "6px",
+                  width: "342px",
+                  height: "193px",
+                }}
+              ></img>
+              <div className="ChoiceCategory">
+                {getchoice[2]?.category_name}
+              </div>
+            </div>
+            <div className="ChoiceContainerText-div">
+              <span className="ChoiceContainerText">
+                {getchoice[2]?.course_name}
+              </span>
+              <span className="ChoiceChapter">
+                {getchoice[2]?.chapter_count} Chapters
+              </span>
+            </div>
+          </div>
+          <div className="ChoiceContainer">
+            <div className="ChoiceContainerImg">
+              <img
+                src={getchoice[3]?.course_image}
+                style={{
+                  borderRadius: "6px",
+                  width: "342px",
+                  height: "193px",
+                }}
+              ></img>
+              <div className="ChoiceCategory">
+                {getchoice[3]?.category_name}
+              </div>
+            </div>
+            <div className="ChoiceContainerText-div">
+              <span className="ChoiceContainerText">
+                {getchoice[3]?.course_name}
+              </span>
+              <span className="ChoiceChapter">
+                {getchoice[3]?.chapter_count} Chapters
+              </span>
             </div>
           </div>
         </div>
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <img src={play} className="Play"></img>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">
-              Digital Marketing for 2021 Masterclass
-            </span>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "60%",
-              }}
-            >
-              <span className="ChoiceChapter">7 Chapters</span>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "89.09px",
-                  height: "26px",
-                }}
-              >
-                <img src={clock}></img>
-                <span
-                  style={{
-                    width: "69px",
-                    height: "26px",
-                    fontFamily: "Proxima Nova Soft",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#7A7A7A",
-                  }}
-                >
-                  1:30:20
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <img src={play} className="Play"></img>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">Smart Tips: Leadership</span>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "60%",
-              }}
-            >
-              <span className="ChoiceChapter">7 Chapters</span>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "89.09px",
-                  height: "26px",
-                }}
-              >
-                <img src={clock}></img>
-                <span
-                  style={{
-                    width: "69px",
-                    height: "26px",
-                    fontFamily: "Proxima Nova Soft",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#7A7A7A",
-                  }}
-                >
-                  1:30:20
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <img src={play} className="Play"></img>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">
-              New Graphic Design Tutorials & Tips | Tutorials | Graphic Design
-              Junction
-            </span>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "60%",
-              }}
-            >
-              <span className="ChoiceChapter">7 Chapters</span>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "89.09px",
-                  height: "26px",
-                }}
-              >
-                <img src={clock}></img>
-                <span
-                  style={{
-                    width: "69px",
-                    height: "26px",
-                    fontFamily: "Proxima Nova Soft",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#7A7A7A",
-                  }}
-                >
-                  1:30:20
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="OngoingCoursesHeader">
-        <img src={topdesign}></img>
-        <img
-          src={seeall}
-          style={{ cursor: "pointer", marginRight: "2%" }}
-        ></img>
-      </div>
-      <div className="ChoiceDisplayMain-div">
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <img src={play} className="Play"></img>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">
-              Learn Figma - UI/UX Design Essential Training
-            </span>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "60%",
-              }}
-            >
-              <span className="ChoiceChapter">7 Chapters</span>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "89.09px",
-                  height: "26px",
-                }}
-              >
-                <img src={clock}></img>
-                <span
-                  style={{
-                    width: "69px",
-                    height: "26px",
-                    fontFamily: "Proxima Nova Soft",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#7A7A7A",
-                  }}
-                >
-                  1:30:20
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <img src={play} className="Play"></img>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">
-              Digital Marketing for 2021 Masterclass
-            </span>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "60%",
-              }}
-            >
-              <span className="ChoiceChapter">7 Chapters</span>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "89.09px",
-                  height: "26px",
-                }}
-              >
-                <img src={clock}></img>
-                <span
-                  style={{
-                    width: "69px",
-                    height: "26px",
-                    fontFamily: "Proxima Nova Soft",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#7A7A7A",
-                  }}
-                >
-                  1:30:20
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <img src={play} className="Play"></img>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">Smart Tips: Leadership</span>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "60%",
-              }}
-            >
-              <span className="ChoiceChapter">7 Chapters</span>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "89.09px",
-                  height: "26px",
-                }}
-              >
-                <img src={clock}></img>
-                <span
-                  style={{
-                    width: "69px",
-                    height: "26px",
-                    fontFamily: "Proxima Nova Soft",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#7A7A7A",
-                  }}
-                >
-                  1:30:20
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="ChoiceContainer">
-          <div className="ChoiceContainerImg">
-            <img src={choiceimg}></img>
-            <img src={play} className="Play"></img>
-          </div>
-          <div className="ChoiceContainerText-div">
-            <span className="ChoiceContainerText">
-              New Graphic Design Tutorials & Tips | Tutorials | Graphic Design
-              Junction
-            </span>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "60%",
-              }}
-            >
-              <span className="ChoiceChapter">7 Chapters</span>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "89.09px",
-                  height: "26px",
-                }}
-              >
-                <img src={clock}></img>
-                <span
-                  style={{
-                    width: "69px",
-                    height: "26px",
-                    fontFamily: "Proxima Nova Soft",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    lineHeight: "26px",
-                    color: "#7A7A7A",
-                  }}
-                >
-                  1:30:20
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

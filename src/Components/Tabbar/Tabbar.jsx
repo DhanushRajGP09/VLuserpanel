@@ -5,15 +5,23 @@ import searchicon from "../../Assets/MagnifyingGlass.png";
 import bell from "../../Assets/Bell@2x.png";
 import gear from "../../Assets/Gear@2x.png";
 import profile from "../../Assets/Mask.png";
+import { useNavigate } from "react-router";
 
 export default function Tabbar() {
   const userimg = JSON.parse(localStorage.getItem("profileUrl"));
   console.log(userimg);
+  const navigate = useNavigate();
 
   return (
     <div className="Tabbarmain-div">
       <div className="Tabbarinside-div">
-        <img src={tablogo}></img>
+        <img
+          src={tablogo}
+          onClick={() => {
+            navigate("/");
+          }}
+          style={{ cursor: "pointer" }}
+        ></img>
         <div className="Tabsearchmain-div">
           <img src={searchicon} style={{ marginLeft: "2%" }}></img>
           <input

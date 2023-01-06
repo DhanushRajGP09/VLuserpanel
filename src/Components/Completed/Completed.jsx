@@ -1,36 +1,36 @@
 import React, { useEffect, useState } from "react";
-import "./Ongoing.css";
-import continuebutton from "../../Assets/continuebutton.png";
-import ongoing from "../../Assets/ongoingcontainer.png";
-import { useNavigate } from "react-router";
-import axios from "axios";
 import { useDispatch } from "react-redux/es";
+import { useNavigate } from "react-router";
 import { addcourseId, addcourseName } from "../../features/Courseslice";
+import axios from "axios";
+import viewcertificate from "../../Assets/ViewCertificate (2).png";
 
-export default function Ongoing() {
+import "./Completed.css";
+
+export default function Completed() {
   const token = JSON.parse(localStorage.getItem("token"));
   console.log("tokenfrom dash", token);
 
-  const [ongoingdata, setonGoingdata] = useState([]);
+  const [completedData, setCompleteddata] = useState([]);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const getOngoing = async () => {
+  const getCompleted = async () => {
     console.log("entered");
     axios({
       method: "get",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/ongoing-courses",
+      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/completed-courses",
     }).then(function (response) {
       console.log("recentcourses", response.data);
-      setonGoingdata(response.data);
+      setCompleteddata(response.data);
     });
   };
   useEffect(() => {
-    getOngoing();
+    getCompleted();
   }, []);
 
   const handleContinue = (id, name) => {
@@ -38,12 +38,11 @@ export default function Ongoing() {
     dispatch(addcourseName(name));
     navigate("/Courseview");
   };
-
   return (
     <>
-      {ongoingdata.length > 0 ? (
+      {completedData.length > 0 ? (
         <div className="OngoingCoursemain-div">
-          {ongoingdata.map((data, index) => {
+          {completedData.map((data, index) => {
             return (
               <div className="OngoingCoursecontainer">
                 <img
@@ -51,7 +50,7 @@ export default function Ongoing() {
                   style={{ width: "464px", height: " 262px" }}
                 ></img>
                 <div className="OngoingCourseContainer"></div>
-                <span className="OngoingCourseinsidetext">Ongoing</span>
+                <span className="OngoingCourseinsidetext">Completed</span>
                 <span className="OnGoingCourseContainerText">
                   {data?.course_name}
                 </span>
@@ -60,8 +59,8 @@ export default function Ongoing() {
                   chapters
                 </span>
                 <img
-                  src={continuebutton}
-                  className="Ongoingcontinuebutton"
+                  src={viewcertificate}
+                  className="Certificatebutton"
                   onClick={() => {
                     handleContinue(data?.course_id, data?.course_name);
                   }}

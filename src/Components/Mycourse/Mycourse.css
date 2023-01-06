@@ -11,7 +11,7 @@
   margin-left: 3%;
   width: auto;
   height: 30px;
-  margin-top: 2%;
+  margin-top: 3%;
   font-family: "Biko", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -62,7 +62,7 @@
   align-items: center;
   justify-content: center;
 
-  font-family: "Proxima Nova Soft";
+  font-family: "Proxima Nova Soft", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;

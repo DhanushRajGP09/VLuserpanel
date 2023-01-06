@@ -30,7 +30,7 @@ export default function Chapters(props) {
             >
               <span className="ChapterName">{data?.chapterName}</span>
               <img
-                id="img"
+                id={`img${index}`}
                 src={plus}
                 style={{ marginRight: "2%", cursor: "pointer" }}
                 onClick={() => {
@@ -41,7 +41,7 @@ export default function Chapters(props) {
                     document.getElementById(
                       `ChaptersContainer${index}`
                     ).style.display = "none";
-                    document.getElementById("img").src = plus;
+                    document.getElementById(`img${index}`).src = plus;
                     document.getElementById(
                       "ChapterContainer-div"
                     ).style.height = "30px";
@@ -52,65 +52,65 @@ export default function Chapters(props) {
                     document.getElementById(
                       "ChapterContainer-div"
                     ).style.height = "auto";
-                    document.getElementById("img").src = minus;
+                    document.getElementById(`img${index}`).src = minus;
                   }
                 }}
               ></img>
             </div>
             <div className="ChaptersContainer" id={`ChaptersContainer${index}`}>
               <div className="lessons-div">
-                {props.coursedata?.lessonResponseList[
-                  props.index
-                ]?.lessonList?.map((data, index2) => {
-                  return (
-                    <div className="ChaptersContainerMain-div">
-                      <div className="ProgressContainer-div"></div>
-                      <div className="lessonContainer">
-                        <span className="lessonNum">
-                          {
-                            props.coursedata?.lessonResponseList[index]
-                              ?.lessonList[index2]?.lessonNumber
-                          }
-                        </span>
-                        <div className="lessonDetails">
-                          <span className="lessonName">
+                {props.coursedata?.lessonResponseList[index]?.lessonList?.map(
+                  (data, index2) => {
+                    return (
+                      <div className="ChaptersContainerMain-div">
+                        <div className="ProgressContainer-div"></div>
+                        <div className="lessonContainer">
+                          <span className="lessonNum">
                             {
                               props.coursedata?.lessonResponseList[index]
-                                ?.lessonList[index2]?.lessonName
+                                ?.lessonList[index2]?.lessonNumber
                             }
                           </span>
-                          <span className="lessonDuration">
-                            {(
-                              props.coursedata?.lessonResponseList[index]
-                                ?.lessonList[index2]?.duration /
-                                60 +
-                              " "
-                            ).substr(0, 4)}
-                            mins
-                          </span>
+                          <div className="lessonDetails">
+                            <span className="lessonName">
+                              {
+                                props.coursedata?.lessonResponseList[index]
+                                  ?.lessonList[index2]?.lessonName
+                              }
+                            </span>
+                            <span className="lessonDuration">
+                              {(
+                                props.coursedata?.lessonResponseList[index]
+                                  ?.lessonList[index2]?.duration /
+                                  60 +
+                                " "
+                              ).substr(0, 4)}
+                              mins
+                            </span>
+                          </div>
+                          <img
+                            src={redplay}
+                            style={{
+                              marginRight: "2%",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              props.setvideo(true);
+                              props.setVideoUrl(
+                                props.coursedata?.lessonResponseList[index]
+                                  ?.lessonList[index2]?.videoLink
+                              );
+                              console.log(
+                                props.coursedata?.lessonResponseList[index]
+                                  ?.lessonList[index2]?.videoLink
+                              );
+                            }}
+                          ></img>
                         </div>
-                        <img
-                          src={redplay}
-                          style={{
-                            marginRight: "2%",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            props.setvideo(true);
-                            props.setVideoUrl(
-                              props.coursedata?.lessonResponseList[index]
-                                ?.lessonList[index2]?.videoLink
-                            );
-                            console.log(
-                              props.coursedata?.lessonResponseList[index]
-                                ?.lessonList[index2]?.videoLink
-                            );
-                          }}
-                        ></img>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  }
+                )}
               </div>
             </div>
           </div>

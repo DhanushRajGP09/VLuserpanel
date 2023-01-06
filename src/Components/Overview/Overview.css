@@ -117,7 +117,7 @@
   background-color: #fcbe4b;
 }
 .couses-Include {
-  font-family: "Proxima Nova Soft";
+  font-family: "Proxima Nova Soft", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
@@ -132,18 +132,18 @@
 }
 .img-name {
   display: flex;
-  margin-left: 30px;
+  align-items: center;
+  margin-left: 10%;
   margin-top: 16px;
-  /* justify-content: space-between; */
 }
 .font-courses {
-  font-family: "Proxima Nova Soft";
+  font-family: "Proxima Nova Soft", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
   /* identical to box height, or 133% */
-
+  width: auto;
   color: #7a7a7a;
 }
 .join-btn {
@@ -158,4 +158,53 @@
   text-align: center;
   font-size: 25px;
   color: #ffffff;
+}
+.CoursesInclude-div {
+  margin-top: 3%;
+  width: 319px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.Whatyoulearn-div {
+  margin-top: 3%;
+  width: 385px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 10%;
+}
+.Requirements-div {
+  width: 421px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 10%;
+}
+.InstructorDetails-div {
+  margin-top: 5%;
+  height: 90px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.showmore {
+  color: #ec5d52;
+  border: none;
+  text-decoration: none;
+  background-color: white;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  cursor: pointer;
 }

@@ -235,8 +235,9 @@
   justify-content: center;
 }
 .ChoiceTab {
-  width: 63px;
+  width: 70px;
   height: 36px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -281,7 +282,7 @@
   width: 342px;
   height: 193px;
   display: flex;
-  position: relative;
+
   align-items: center;
   justify-content: center;
   background: #c4c4c4;
@@ -334,9 +335,9 @@
 }
 .ChoiceCategory {
   position: absolute;
-  width: 91px;
+  width: 150px;
   height: 34px;
-  margin-left: 230px;
+  margin-left: 170px;
   display: flex;
   align-items: center;
   justify-content: center;

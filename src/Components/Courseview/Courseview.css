@@ -27,7 +27,7 @@
   font-size: 16px;
   line-height: 30px;
   /* identical to box height, or 188% */
-
+  cursor: pointer;
   color: #2bb5f4;
 }
 
@@ -61,7 +61,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  height: 615px;
+  height: auto;
 }
 .VideoDisplay {
   width: 100%;
@@ -94,6 +94,7 @@
   border: 1px solid #f0f0f0;
 }
 .VideoDescription-div {
+  margin-top: 2%;
   width: 100%;
   height: 54px;
   display: flex;
@@ -107,6 +108,223 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+}
+.CourseResultMain-div {
+  margin-left: 3%;
+  width: 140px;
+  height: 117px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.ApprovalText {
+  width: 120px;
+  height: 30px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 30px;
+
+  color: #ffffff;
+}
+.joinComplete-div {
+  width: 397px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+}
+.joinCompleteInner-div {
+  width: 363.37px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.joinDatediv {
+  margin-left: 1%;
+  width: 126.08px;
+
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.joinDateText {
+  width: 46.86px;
+  height: 20px;
+  font-family: "Proxima Nova", sans-serif;
+  font-style: normal;
+  margin-right: 15%;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #111111;
+}
+.FinalCertificateMain {
+  margin-top: 3%;
+  margin-bottom: 2%;
+  width: 295px;
+  background: #ffffff;
+  margin-right: 3%;
+  height: 152px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  box-sizing: border-box;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.ResultPercent {
+  width: 118px;
+  height: 57px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 110px;
+  /* or 183% */
+
+  display: flex;
+  align-items: center;
+
+  color: #1eab0d;
+}
+.CourseResultText {
+  width: auto;
+  height: 30px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  /* identical to box height, or 150% */
+
+  color: #ffffff;
+}
+.joinDate {
+  width: 109.35px;
+  height: 30px;
+  font-family: "Proxima Nova", sans-serif;
+  text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #2bb5f4;
+}
+
+.CompletedCourseMain-div {
+  margin-top: 5%;
+  width: 100%;
+  height: auto;
+  left: 240px;
+  top: 825px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: #042c5c;
+  border-radius: 2px;
+}
+.certificateFooter {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  top: 122px;
+  background: #042c5c;
+  border-radius: 0px 0px 6px 6px;
+}
+.certificatecomplete {
+  width: 111px;
+  height: 20px;
+  left: 891px;
+  top: 894px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 20px;
+
+  color: #7a7a7a;
+}
+
+.certificateName {
+  width: 177px;
+  height: 20px;
+  left: 891px;
+  top: 919px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  color: #ec5d52;
+}
+.certificateTitle {
+  width: auto;
+  height: 20px;
+  left: 891px;
+  top: 938px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  /* identical to box height, or 167% */
+
+  color: #373737;
+}
+.certificatedescdetails {
+  width: 185px;
+  height: 28px;
+  left: 891px;
+  top: 967px;
+  font-family: "Proxima Nova Soft";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 8px;
+  line-height: 14px;
+  color: #7a7a7a;
+}
+
+.FinalCertificateInnerdetails {
+  height: 102px;
+  margin-left: 5%;
+  width: 185px;
+  margin-top: 5%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.cup {
+  width: 82px;
+  height: 90px;
+  margin-bottom: 20px;
+
+  margin-left: 205px;
+  z-index: 2;
 }
 .VideoDescription-Title {
   width: auto;
