@@ -11,7 +11,7 @@ import seeall from "../../Assets/SeeAll.png";
 import continuebutton from "../../Assets/continuebutton.png";
 import ongoingcourse from "../../Assets/ongoingcourse.png";
 import categories from "../../Assets/Categories.png";
-import design from "../../Assets/Design.png";
+// import design from "../../Assets/Design.png";
 import development from "../../Assets/Development.png";
 import business from "../../Assets/Business.png";
 import Music from "../../Assets/Music.png";
@@ -28,7 +28,7 @@ import topbusiness from "../../Assets/TopBusiness.png";
 import topdesign from "../../Assets/TopDesign.png";
 import play from "../../Assets/play.png";
 import clock from "../../Assets/Clock.png";
-
+ 
 export default function Homepage() {
   const arr = [0, 1, 2, 3, 4];
 
@@ -144,7 +144,7 @@ export default function Homepage() {
           ></img>
         </div>
         <div className="CategoriesOptions-div">
-          <img src={design} style={{ cursor: "pointer" }}></img>
+          {/* <img src={design} style={{ cursor: "pointer" }}></img> */}
           <img src={development} style={{ cursor: "pointer" }}></img>
           <img src={business} style={{ cursor: "pointer" }}></img>
           <img src={Music} style={{ cursor: "pointer" }}></img>
