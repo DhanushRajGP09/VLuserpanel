@@ -103,6 +103,92 @@
 
   margin-bottom: 5%;
 }
+.Searchresults {
+  height: 552px;
+  width: 708px;
+  display: none;
+
+  margin-top: 0%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2%;
+  margin-left: 2%;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.ResultContainer-div {
+  height: 138px;
+  margin-top: 1%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  border-bottom: 1px solid #1e4284;
+}
+.ResultContainer {
+  width: 100%;
+  height: 98px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2%;
+}
+
+.Resultimg {
+  width: 98px;
+  height: 98px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ResultDetails-div {
+  height: 98px;
+  width: 82%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.ResultChapters {
+  width: 89px;
+  height: 26px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  /* identical to box height, or 144% */
+
+  color: #ffffff;
+
+  opacity: 0.3;
+}
+.ResultCategory {
+  width: auto;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  mix-blend-mode: normal;
+  border-radius: 6px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  /* identical to box height, or 162% */
+
+  color: #373737;
+}
+
+.SearchImage {
+  width: 98px;
+  height: 98px;
+}
 
 .TopSearchText {
   width: auto;

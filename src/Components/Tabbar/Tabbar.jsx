@@ -17,13 +17,51 @@ import Marketing from "../../Assets/Marketing.png";
 import Lifestyle from "../../Assets/Lifestyle.png";
 import Photography from "../../Assets/Photography.png";
 import close from "../../Assets/X.png";
+import searchimage from "../../Assets/illustration-in-UI.png";
 
 export default function Tabbar() {
   const [search, setSearch] = useState(false);
+  const [searchinput, setSearchinput] = useState("");
+  console.log("search", searchinput);
 
   const userimg = JSON.parse(localStorage.getItem("profileUrl"));
   console.log(userimg);
   const navigate = useNavigate();
+
+  const handleSearch = async () => {
+    let result = await fetch(
+      "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/search",
+      {
+        method: "post",
+        body: JSON.stringify({
+          searchOption: "desig",
+
+          categories: ["design"],
+
+          durationRequestList: [
+            {
+              startDuration: 3,
+
+              endDuration: 10,
+            },
+
+            {
+              startDuration: 3,
+
+              endDuration: 20,
+            },
+          ],
+        }),
+      }
+    );
+    result = await result.json();
+    console.warn(result);
+    if (result) {
+      console.log("res", result);
+    } else {
+      alert("result not found");
+    }
+  };
 
   return (
     <div className="Tabbarmain-div" id="tabbarmain">
@@ -46,6 +84,15 @@ export default function Tabbar() {
               placeholder="search"
               style={{ marginLeft: "2%" }}
               className="Tabsearchinputactive"
+              value={searchinput}
+              onChange={(e) => {
+                setSearchinput(e.target.value);
+                document.getElementById("TopSearch").style.display = "none";
+                document.getElementById("categorySearch").style.display =
+                  "none";
+                document.getElementById("Searchresults").style.display = "flex";
+                handleSearch();
+              }}
             ></input>
             <div className="activesearchCover">
               <img src={searchicon} style={{ marginLeft: "2%" }}></img>
@@ -93,7 +140,11 @@ export default function Tabbar() {
         )}
       </div>
       {search ? (
-        <div className="TopSearch">
+        <div
+          className="TopSearch"
+          id="TopSearch"
+          style={{ display: searchinput === "" ? "flex" : "none" }}
+        >
           <span className="TopSearchText">Top Search</span>
           <div className="TopSearchIcons-div">
             <button className="TopSearchButton">
@@ -123,7 +174,11 @@ export default function Tabbar() {
         ""
       )}
       {search ? (
-        <div className="categorySearch">
+        <div
+          className="categorySearch"
+          id="categorySearch"
+          style={{ display: searchinput === "" ? "flex" : "none" }}
+        >
           <span className="TopSearchText">Search from Categories</span>
           <div className="categorySearchIconDiv">
             <img
@@ -219,6 +274,112 @@ export default function Tabbar() {
                 mixBlendMode: "normal",
               }}
             ></img>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {search ? (
+        <div
+          className="Searchresults"
+          id="Searchresults"
+          style={{ display: searchinput === "" ? "none" : "flex" }}
+        >
+          <div className="ResultContainer-div">
+            <div className="ResultContainer">
+              <div className="Resultimg">
+                <img className="SearchImage" src={searchimage}></img>
+              </div>
+              <div className="ResultDetails-div">
+                <span className="TopSearchText">
+                  Digital Marketing for 2021 Masterclass
+                </span>
+                <span className="ResultChapters">sddasd</span>
+                <div className="ResultCategory">
+                  designdddsssssssssssssssdddddd
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="ResultContainer-div">
+            <div className="ResultContainer">
+              <div className="Resultimg">
+                <img className="SearchImage" src={searchimage}></img>
+              </div>
+              <div className="ResultDetails-div">
+                <span className="TopSearchText">
+                  Digital Marketing for 2021 Masterclass
+                </span>
+                <span className="ResultChapters">sddasd</span>
+                <div className="ResultCategory">
+                  designdddsssssssssssssssdddddd
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="ResultContainer-div">
+            <div className="ResultContainer">
+              <div className="Resultimg">
+                <img className="SearchImage" src={searchimage}></img>
+              </div>
+              <div className="ResultDetails-div">
+                <span className="TopSearchText">
+                  Digital Marketing for 2021 Masterclass
+                </span>
+                <span className="ResultChapters">sddasd</span>
+                <div className="ResultCategory">
+                  designdddsssssssssssssssdddddd
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="ResultContainer-div">
+            <div className="ResultContainer">
+              <div className="Resultimg">
+                <img className="SearchImage" src={searchimage}></img>
+              </div>
+              <div className="ResultDetails-div">
+                <span className="TopSearchText">
+                  Digital Marketing for 2021 Masterclass
+                </span>
+                <span className="ResultChapters">sddasd</span>
+                <div className="ResultCategory">
+                  designdddsssssssssssssssdddddd
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="ResultContainer-div">
+            <div className="ResultContainer">
+              <div className="Resultimg">
+                <img className="SearchImage" src={searchimage}></img>
+              </div>
+              <div className="ResultDetails-div">
+                <span className="TopSearchText">
+                  Digital Marketing for 2021 Masterclass
+                </span>
+                <span className="ResultChapters">sddasd</span>
+                <div className="ResultCategory">
+                  designdddsssssssssssssssdddddd
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="ResultContainer-div">
+            <div className="ResultContainer">
+              <div className="Resultimg">
+                <img className="SearchImage" src={searchimage}></img>
+              </div>
+              <div className="ResultDetails-div">
+                <span className="TopSearchText">
+                  Digital Marketing for 2021 Masterclass
+                </span>
+                <span className="ResultChapters">sddasd</span>
+                <div className="ResultCategory">
+                  designdddsssssssssssssssdddddd
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
