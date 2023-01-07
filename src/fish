@@ -1,0 +1,30 @@
+1.A fishbone diagram is a visualization tool for categorizing the potential causes of a problem.
+2.why fishbone is used?
+=This tool is used in order to identify a problem’s root causes.
+3.typically used for?
+=root cause analysis.
+4.it should be efficient as a test case technique to determine cause and effect.
+
+fishbone diagram is useful in?
+1.product development:
+developing a new product
+2.troubleshooting processes:
+Troubleshooting is a systematic process used to locate the cause of a fault in a computer system and correct the relevant hardware and software issues.
+
+typically used to focus a conversation around a problem.
+After the group has brainstormed all the possible causes for a problem,
+the facilitator helps the group to rate the potential causes according to their level of importance
+and diagram a hierarchy. The name comes from the diagram's design, which looks much like a skeleton of a fish.
+
+Fishbone diagrams are typically worked right to left, with each large "bone" of the fish branching out to include smaller bones,
+each containing more detail.
+
+How to create a fishbone diagram
+
+1.The head of the fish is created by listing the problem in a statement format and drawing a box around it. A horizontal arrow is then drawn across the page with an arrow pointing to the head.
+This acts as the backbone of the fish.
+2.Then at least four overarching "causes" are identified that might contribute to the problem. Some generic categories to start with may include methods, skills, equipment, people, materials, environment or measurements.
+These causes are then drawn to branch off from the spine with arrows, making the first bones of the fish.
+3.For each overarching cause, team members should brainstorm any supporting information that may contribute to it. This typically involves some sort of questioning methods, such as the 5 Why's or the 4P's (Policies, Procedures, People and Plant) to keep the conversation focused.
+These contributing factors are written down to branch off their corresponding cause.
+4.This process of breaking down each cause is continued until the root causes of the problem have been identified.

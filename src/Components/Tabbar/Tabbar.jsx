@@ -91,11 +91,16 @@ export default function Tabbar() {
                 document.getElementById("categorySearch").style.display =
                   "none";
                 document.getElementById("Searchresults").style.display = "flex";
-                handleSearch();
               }}
             ></input>
             <div className="activesearchCover">
-              <img src={searchicon} style={{ marginLeft: "2%" }}></img>
+              <img
+                src={searchicon}
+                style={{ marginLeft: "2%" }}
+                onClick={() => {
+                  handleSearch();
+                }}
+              ></img>
             </div>
           </div>
         ) : (
