@@ -264,6 +264,7 @@
   height: auto;
   width: 100%;
   display: flex;
+  margin-top: 2%;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -357,4 +358,18 @@
   position: absolute;
   width: 47px;
   height: 47px;
+  cursor: pointer;
+}
+.Topcategory2text {
+  width: auto;
+  height: 50px;
+
+  font-family: "Biko", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 50px;
+  /* identical to box height, or 208% */
+
+  color: #000000;
 }

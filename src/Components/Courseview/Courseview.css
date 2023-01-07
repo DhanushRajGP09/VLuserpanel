@@ -361,7 +361,7 @@
   color: #111111;
 }
 .VideoDescription-category {
-  width: 91px;
+  width: 150px;
   height: 34px;
   background: #fcbe4b;
   mix-blend-mode: normal;
@@ -478,7 +478,7 @@
 }
 .ProgressContainer-div {
   width: 24px;
-  background-color: #2bb5f4;
+
   height: 24px;
 }
 

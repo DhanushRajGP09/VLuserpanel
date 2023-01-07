@@ -36,6 +36,8 @@ export default function Ongoing() {
   const handleContinue = (id, name) => {
     dispatch(addcourseId(id));
     dispatch(addcourseName(name));
+    localStorage.setItem("courseid", JSON.stringify(id));
+    localStorage.setItem("coursename", JSON.stringify(name));
     navigate("/Courseview");
   };
 

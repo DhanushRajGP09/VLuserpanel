@@ -9,6 +9,7 @@ import footerlogo from "../../Assets/certificatefooterlogo.png";
 
 import cup from "../../Assets/cup.png";
 import {
+  addCourseData,
   addcourseOverview,
   getCourseId,
   getCourseOverview,
@@ -49,6 +50,9 @@ export default function Courseview() {
   const token = JSON.parse(localStorage.getItem("token"));
   console.log("tokenfrom dash", token);
 
+  const localid = JSON.parse(localStorage.getItem("courseid"));
+  const localname = JSON.parse(localStorage.getItem("coursename"));
+
   const [coursedata, setCoursedata] = useState([]);
   const [courseoverview, setCourseOverview] = useState([]);
 
@@ -59,7 +63,7 @@ export default function Courseview() {
   console.log("courseid", getcourseid);
 
   const getcoursename = useSelector(getOngoingCourseName);
-  console.log("coursenam", getcoursename);
+  console.log("coursename", getcoursename);
 
   const [id, setid] = useState(getcourseid);
   const [name, setName] = useState(getcoursename);
@@ -70,13 +74,17 @@ export default function Courseview() {
     console.log("entered");
     axios({
       method: "get",
+      params: {
+        courseId: localid,
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      url: `https://app-virtuallearning-230106135903.azurewebsites.net/user/view/chapter?courseId=${id}`,
+      url: `https://app-virtuallearning-230106135903.azurewebsites.net/user/view/chapter`,
     }).then(function (response) {
       console.log("recentcourss", response.data);
       setCoursedata(response.data);
+      dispatch(addCourseData(response.data));
     });
   };
 
@@ -87,7 +95,7 @@ export default function Courseview() {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      url: `https://app-virtuallearning-230106135903.azurewebsites.net/user/view/courseOverview?courseId=${id}`,
+      url: `https://app-virtuallearning-230106135903.azurewebsites.net/user/view/courseOverview?courseId=${localid}`,
     }).then(function (response) {
       console.log("recentcourss", response.data);
       setCourseOverview(response.data);
@@ -96,10 +104,11 @@ export default function Courseview() {
   };
   const OverView = useSelector(getCourseOverview);
 
-  console.log("coursedata", coursedata);
+  console.log("coursedat", coursedata);
   useEffect(() => {
     getOverview();
     getCourse();
+    setid(getcourseid);
   }, []);
 
   const Totalvideo =
@@ -139,7 +148,7 @@ export default function Courseview() {
               className="currentpageCourse-text"
               style={{ display: onGoingpage ? "block" : "none" }}
             >
-              {name}
+              {localname}
             </span>
           </div>
           <div className="CourseViewInner-div">
@@ -154,7 +163,7 @@ export default function Courseview() {
               </div>
               <div className="VideoDescription-div">
                 <div className="VideoDescriptionInner-div">
-                  <span className="VideoDescription-Title">{name}</span>
+                  <span className="VideoDescription-Title">{localname}</span>
                   <span className="VideoDescription-lessons">
                     {coursedata?.courseContentResponse?.chapterCount} Chapter |{" "}
                     {coursedata?.courseContentResponse?.lessonCount} lessons

@@ -3,6 +3,10 @@ import React from "react";
 import plus from "../../Assets/Arrow@2x.png";
 import minus from "../../Assets/minus.png";
 import redplay from "../../Assets/Red Play.png";
+import greentick from "../../Assets/Green Tick@2x.png";
+import greyplay from "../../Assets/grey play@2x.png";
+import greendot from "../../Assets/Group Dot@2x.png";
+import greydot from "../../Assets/Grey Dot@2x.png";
 
 export default function Chapters(props) {
   return (
@@ -28,7 +32,14 @@ export default function Chapters(props) {
                 justifyContent: "space-between",
               }}
             >
-              <span className="ChapterName">{data?.chapterName}</span>
+              <span
+                className="ChapterName"
+                style={{
+                  color: data?.chapterCompleted ? "#1eab0d" : "#042C5C",
+                }}
+              >
+                {data?.chapterName}
+              </span>
               <img
                 id={`img${index}`}
                 src={plus}
@@ -63,7 +74,23 @@ export default function Chapters(props) {
                   (data, index2) => {
                     return (
                       <div className="ChaptersContainerMain-div">
-                        <div className="ProgressContainer-div"></div>
+                        <div className="ProgressContainer-div">
+                          <img
+                            src={
+                              props.coursedata?.lessonResponseList[index]
+                                ?.lessonList[index2]?.lessonCompleted
+                                ? greentick
+                                : props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList[index2]?.durationCompleted > 0
+                                ? greendot
+                                : greydot
+                            }
+                            style={{
+                              width: "24px",
+                              height: "24px",
+                            }}
+                          ></img>
+                        </div>
                         <div className="lessonContainer">
                           <span className="lessonNum">
                             {
@@ -72,7 +99,16 @@ export default function Chapters(props) {
                             }
                           </span>
                           <div className="lessonDetails">
-                            <span className="lessonName">
+                            <span
+                              className="lessonName"
+                              style={{
+                                color: props.coursedata?.lessonResponseList[
+                                  index
+                                ]?.lessonList[index2]?.lessonCompleted
+                                  ? "#042C5C"
+                                  : "#373737",
+                              }}
+                            >
                               {
                                 props.coursedata?.lessonResponseList[index]
                                   ?.lessonList[index2]?.lessonName
@@ -89,7 +125,12 @@ export default function Chapters(props) {
                             </span>
                           </div>
                           <img
-                            src={redplay}
+                            src={
+                              props.coursedata?.lessonResponseList[index]
+                                ?.lessonList[index2]?.durationCompleted > 0
+                                ? redplay
+                                : greyplay
+                            }
                             style={{
                               marginRight: "2%",
                               cursor: "pointer",

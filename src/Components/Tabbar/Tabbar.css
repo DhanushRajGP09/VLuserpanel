@@ -45,7 +45,7 @@
 .Tabbaricons {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 150px;
 }
 .TabProfile {

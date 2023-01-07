@@ -31,8 +31,6 @@ export default function Tabbar() {
           ></input>
         </div>
         <div className="Tabbaricons">
-          <img src={bell}></img>
-          <img src={gear}></img>
           <div className="TabProfile">
             <img
               src={userimg}

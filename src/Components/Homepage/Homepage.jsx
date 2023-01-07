@@ -31,11 +31,15 @@ import clock from "../../Assets/Clock.png";
 import axios from "axios";
 import {
   addChoiceCourse,
-  addTopbusiness,
+  addTheChoice,
+  addTopcategory1,
+  addTopcategory2,
+  addcategoryid,
   addcourseId,
   addcourseName,
   getChoiceCourse,
-  getTopBusiness,
+  getTopcategory1,
+  getTopcategory2,
 } from "../../features/Courseslice";
 import { useDispatch, useSelector } from "react-redux/es";
 
@@ -66,6 +70,7 @@ export default function Homepage() {
 
   const [Banner, setBanner] = useState([]);
   const [ongoingdata, setonGoingdata] = useState([]);
+  const [TheChoice, SetTheChoice] = useState("courses");
 
   const getBanners = async () => {
     console.log("entered");
@@ -105,6 +110,7 @@ export default function Homepage() {
     }).then(function (response) {
       console.log("recentcourses", response.data);
       dispatch(addChoiceCourse(response.data));
+      SetTheChoice("courses");
     });
   };
   const getPopular = async () => {
@@ -118,6 +124,7 @@ export default function Homepage() {
     }).then(function (response) {
       console.log("recentcourses", response.data);
       dispatch(addChoiceCourse(response.data));
+      SetTheChoice("popularCourse");
     });
   };
   const getnewest = async () => {
@@ -131,32 +138,52 @@ export default function Homepage() {
     }).then(function (response) {
       console.log("recentcourses", response.data);
       dispatch(addChoiceCourse(response.data));
+      SetTheChoice("newestCourse");
     });
   };
 
   const getchoice = useSelector(getChoiceCourse);
   console.log("choic", getchoice);
 
-  const gettopbusiness = async () => {
+  const getcategory1 = async () => {
     console.log("entered");
     axios({
       method: "get",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+
       url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/course/category1?limit=5&page=1",
     }).then(function (response) {
       console.log("recentcourses", response.data);
-      dispatch(addTopbusiness(response.data));
+      dispatch(addTopcategory1(response.data));
     });
   };
-  const getbusiness = useSelector(getTopBusiness);
-  console.log("getbusi", getbusiness);
+
+  const getcategory2 = async () => {
+    console.log("entered");
+    axios({
+      method: "get",
+      params: {
+        limit: 5,
+        page: 1,
+      },
+
+      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/course/category2",
+    }).then(function (response) {
+      console.log("recentcourses", response.data);
+      dispatch(addTopcategory2(response.data));
+    });
+  };
+
+  const gettopcategory1 = useSelector(getTopcategory1);
+  console.log("cat1", gettopcategory1);
+  const gettopcategory2 = useSelector(getTopcategory2);
+  console.log("cat2", gettopcategory2);
 
   const dispatch = useDispatch();
   const handleContinue = (id, name) => {
     dispatch(addcourseId(id));
     dispatch(addcourseName(name));
+    localStorage.setItem("courseid", JSON.stringify(id));
+    localStorage.setItem("coursename", JSON.stringify(name));
     navigate("/Courseview");
   };
 
@@ -164,7 +191,11 @@ export default function Homepage() {
     getBanners();
     getOngoing();
     getAll();
-    gettopbusiness();
+  }, []);
+
+  useEffect(() => {
+    getcategory1();
+    getcategory2();
   }, []);
 
   console.log("banner", Banner);
@@ -320,7 +351,10 @@ export default function Homepage() {
               src={continuebutton}
               className="continuebutton"
               onClick={() => {
-                navigate("/Courseview");
+                handleContinue(
+                  ongoingdata[0]?.course_id,
+                  ongoingdata[0]?.course_name
+                );
               }}
             ></img>
           </div>
@@ -348,7 +382,10 @@ export default function Homepage() {
               src={continuebutton}
               className="continuebutton"
               onClick={() => {
-                navigate("/Courseview");
+                handleContinue(
+                  ongoingdata[1]?.course_id,
+                  ongoingdata[1]?.course_name
+                );
               }}
             ></img>
           </div>
@@ -376,7 +413,10 @@ export default function Homepage() {
               src={continuebutton}
               className="continuebutton"
               onClick={() => {
-                navigate("/Courseview");
+                handleContinue(
+                  ongoingdata[2]?.course_id,
+                  ongoingdata[2]?.course_name
+                );
               }}
             ></img>
           </div>
@@ -417,6 +457,10 @@ export default function Homepage() {
         <img
           src={seeall}
           style={{ cursor: "pointer", marginRight: "2%" }}
+          onClick={() => {
+            dispatch(addTheChoice(TheChoice));
+            navigate("/Choice");
+          }}
         ></img>
       </div>
       <div className="ChoiceTabBar-div">
@@ -560,6 +604,590 @@ export default function Homepage() {
         </div>
       ) : (
         ""
+      )}
+      {gettopcategory2.length > 0 ? (
+        <div className="OngoingCoursesHeader">
+          <span className="Topcategory2text">
+            Top courses in {gettopcategory2[0]?.category_name}{" "}
+          </span>
+          {gettopcategory2.length > 4 ? (
+            <img
+              src={seeall}
+              style={{ cursor: "pointer", marginRight: "2%" }}
+              onClick={() => {
+                dispatch(addcategoryid(gettopcategory2[0]?.categoryId));
+                navigate("/Topcategory");
+              }}
+            ></img>
+          ) : (
+            " "
+          )}
+        </div>
+      ) : (
+        ""
+      )}
+      {gettopcategory2.length > 0 ? (
+        <div className="ChoiceDisplayMain-div">
+          <div className="ChoiceContainer">
+            <div className="ChoiceContainerImg">
+              <img src={gettopcategory2[0]?.course_image}></img>
+              <img
+                src={play}
+                className="Play"
+                onClick={() => {
+                  handleContinue(
+                    gettopcategory2[0]?.course_id,
+                    gettopcategory2[0]?.course_name
+                  );
+                }}
+              ></img>
+            </div>
+            <div className="ChoiceContainerText-div">
+              <span className="ChoiceContainerText">
+                {gettopcategory2[0]?.course_name}
+              </span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "60%",
+                }}
+              >
+                <span className="ChoiceChapter">
+                  {gettopcategory2[0]?.chapter_count} Chapters
+                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "89.09px",
+                    height: "26px",
+                  }}
+                >
+                  <img src={clock}></img>
+                  <span
+                    style={{
+                      width: "69px",
+                      height: "26px",
+                      fontFamily: "Proxima Nova Soft",
+                      fontStyle: "normal",
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      marginLeft: "5%",
+                      lineHeight: "26px",
+                      color: "#7A7A7A",
+                    }}
+                  >
+                    {(gettopcategory2[0]?.totalVideoLength / 3600 + " ").substr(
+                      0,
+                      5
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="ChoiceContainer">
+            <div className="ChoiceContainerImg">
+              <img src={gettopcategory2[1]?.course_image}></img>
+              <img
+                src={play}
+                className="Play"
+                onClick={() => {
+                  handleContinue(
+                    gettopcategory2[1]?.course_id,
+                    gettopcategory2[1]?.course_name
+                  );
+                }}
+              ></img>
+            </div>
+            <div className="ChoiceContainerText-div">
+              <span className="ChoiceContainerText">
+                {gettopcategory2[1]?.course_name}
+              </span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "60%",
+                }}
+              >
+                <span className="ChoiceChapter">
+                  {gettopcategory2[1]?.chapter_count} Chapters
+                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "89.09px",
+                    height: "26px",
+                  }}
+                >
+                  <img src={clock}></img>
+                  <span
+                    style={{
+                      width: "69px",
+                      height: "26px",
+                      fontFamily: "Proxima Nova Soft",
+                      fontStyle: "normal",
+                      marginLeft: "5%",
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      lineHeight: "26px",
+                      color: "#7A7A7A",
+                    }}
+                  >
+                    {(gettopcategory2[1]?.totalVideoLength / 3600 + " ").substr(
+                      0,
+                      5
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="ChoiceContainer">
+            <div className="ChoiceContainerImg">
+              <img src={gettopcategory2[2]?.course_image}></img>
+              <img
+                src={play}
+                className="Play"
+                onClick={() => {
+                  handleContinue(
+                    gettopcategory2[2]?.course_id,
+                    gettopcategory2[2]?.course_name
+                  );
+                }}
+              ></img>
+            </div>
+            <div className="ChoiceContainerText-div">
+              <span className="ChoiceContainerText">
+                {gettopcategory2[2]?.course_name}
+              </span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "60%",
+                }}
+              >
+                <span className="ChoiceChapter">
+                  {gettopcategory2[2]?.chapter_count} Chapters
+                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "89.09px",
+                    height: "26px",
+                  }}
+                >
+                  <img src={clock}></img>
+                  <span
+                    style={{
+                      width: "69px",
+                      height: "26px",
+                      fontFamily: "Proxima Nova Soft",
+                      fontStyle: "normal",
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      marginLeft: "5%",
+                      lineHeight: "26px",
+                      color: "#7A7A7A",
+                    }}
+                  >
+                    {(gettopcategory2[2]?.totalVideoLength / 3600 + " ").substr(
+                      0,
+                      5
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="ChoiceContainer">
+            <div className="ChoiceContainerImg">
+              <img src={gettopcategory2[3]?.course_image}></img>
+              <img
+                src={play}
+                className="Play"
+                onClick={() => {
+                  handleContinue(
+                    gettopcategory2[3]?.course_id,
+                    gettopcategory2[3]?.course_name
+                  );
+                }}
+              ></img>
+            </div>
+            <div className="ChoiceContainerText-div">
+              <span className="ChoiceContainerText">
+                {gettopcategory2[3]?.course_name}
+              </span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "60%",
+                }}
+              >
+                <span className="ChoiceChapter">
+                  {gettopcategory2[2]?.chapter_count} Chapters
+                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "89.09px",
+                    height: "26px",
+                  }}
+                >
+                  <img src={clock}></img>
+                  <span
+                    style={{
+                      width: "69px",
+                      height: "26px",
+                      fontFamily: "Proxima Nova Soft",
+                      fontStyle: "normal",
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      lineHeight: "26px",
+                      marginLeft: "5%",
+                      color: "#7A7A7A",
+                    }}
+                  >
+                    {(gettopcategory2[3]?.totalVideoLength / 3600 + " ").substr(
+                      0,
+                      5
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        " "
+      )}
+      {gettopcategory1.length > 0 ? (
+        <div className="OngoingCoursesHeader">
+          <span className="Topcategory2text">
+            Top courses in {gettopcategory1[0]?.category_name}{" "}
+          </span>
+
+          {gettopcategory1.length > 4 ? (
+            <img
+              src={seeall}
+              style={{ cursor: "pointer", marginRight: "2%" }}
+              onClick={() => {
+                dispatch(addcategoryid(gettopcategory1[0]?.categoryId));
+                navigate("/Topcategory");
+              }}
+            ></img>
+          ) : (
+            ""
+          )}
+        </div>
+      ) : (
+        ""
+      )}
+
+      {gettopcategory1.length > 0 ? (
+        <div className="ChoiceDisplayMain-div">
+          <div className="ChoiceContainer">
+            <div className="ChoiceContainerImg">
+              <img
+                src={gettopcategory1[0]?.course_image}
+                style={{
+                  borderRadius: "6px",
+                  width: "342px",
+                  height: "193px",
+                }}
+              ></img>
+              <img
+                src={play}
+                className="Play"
+                onClick={() => {
+                  handleContinue(
+                    gettopcategory1[0]?.course_id,
+                    gettopcategory1[0]?.course_name
+                  );
+                }}
+              ></img>
+            </div>
+            <div className="ChoiceContainerText-div">
+              <span className="ChoiceContainerText">
+                {gettopcategory1[0]?.course_name}
+              </span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "60%",
+                }}
+              >
+                <span className="ChoiceChapter">
+                  {gettopcategory1[0]?.chapter_count} Chapters
+                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "89.09px",
+                    height: "26px",
+                  }}
+                >
+                  <img src={clock}></img>
+                  <span
+                    style={{
+                      width: "69px",
+                      height: "26px",
+                      fontFamily: "Proxima Nova Soft",
+                      fontStyle: "normal",
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      marginLeft: "5%",
+                      lineHeight: "26px",
+                      color: "#7A7A7A",
+                    }}
+                  >
+                    {(gettopcategory1[0]?.totalVideoLength / 3600 + " ").substr(
+                      0,
+                      5
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {gettopcategory1?.length > 1 ? (
+            <div className="ChoiceContainer">
+              <div className="ChoiceContainerImg">
+                <img
+                  src={gettopcategory1[1]?.course_image}
+                  style={{
+                    borderRadius: "6px",
+                    width: "342px",
+                    height: "193px",
+                  }}
+                ></img>
+                <img
+                  src={play}
+                  className="Play"
+                  onClick={() => {
+                    handleContinue(
+                      gettopcategory1[1]?.course_id,
+                      gettopcategory1[1]?.course_name
+                    );
+                  }}
+                ></img>
+              </div>
+              <div className="ChoiceContainerText-div">
+                <span className="ChoiceContainerText">
+                  {gettopcategory1[1]?.course_name}
+                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "60%",
+                  }}
+                >
+                  <span className="ChoiceChapter">
+                    {gettopcategory1[1]?.chapter_count} Chapters
+                  </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "89.09px",
+                      height: "26px",
+                    }}
+                  >
+                    <img src={clock}></img>
+                    <span
+                      style={{
+                        width: "69px",
+                        height: "26px",
+                        fontFamily: "Proxima Nova Soft",
+                        fontStyle: "normal",
+                        marginLeft: "5%",
+                        fontWeight: "400",
+                        fontSize: "16px",
+                        lineHeight: "26px",
+                        color: "#7A7A7A",
+                      }}
+                    >
+                      {(
+                        gettopcategory1[1]?.totalVideoLength / 3600 +
+                        " "
+                      ).substr(0, 5)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          {gettopcategory1?.length > 2 ? (
+            <div className="ChoiceContainer">
+              <div className="ChoiceContainerImg">
+                <img
+                  src={gettopcategory1[2]?.course_image}
+                  style={{
+                    borderRadius: "6px",
+                    width: "342px",
+                    height: "193px",
+                  }}
+                ></img>
+                <img
+                  src={play}
+                  className="Play"
+                  onClick={() => {
+                    handleContinue(
+                      gettopcategory1[2]?.course_id,
+                      gettopcategory1[2]?.course_name
+                    );
+                  }}
+                ></img>
+              </div>
+              <div className="ChoiceContainerText-div">
+                <span className="ChoiceContainerText">
+                  {gettopcategory1[2]?.course_name}
+                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "60%",
+                  }}
+                >
+                  <span className="ChoiceChapter">
+                    {gettopcategory1[2]?.chapter_count} Chapters
+                  </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "89.09px",
+                      height: "26px",
+                    }}
+                  >
+                    <img src={clock}></img>
+                    <span
+                      style={{
+                        width: "69px",
+                        height: "26px",
+                        fontFamily: "Proxima Nova Soft",
+                        fontStyle: "normal",
+                        fontWeight: "400",
+                        fontSize: "16px",
+                        marginLeft: "5%",
+                        lineHeight: "26px",
+                        color: "#7A7A7A",
+                      }}
+                    >
+                      {(
+                        gettopcategory1[2]?.totalVideoLength / 3600 +
+                        " "
+                      ).substr(0, 5)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          {gettopcategory1?.length > 3 ? (
+            <div className="ChoiceContainer">
+              <div className="ChoiceContainerImg">
+                <img
+                  src={gettopcategory1[3]?.course_image}
+                  style={{
+                    borderRadius: "6px",
+                    width: "342px",
+                    height: "193px",
+                  }}
+                ></img>
+                <img
+                  src={play}
+                  className="Play"
+                  onClick={() => {
+                    handleContinue(
+                      gettopcategory1[3]?.course_id,
+                      gettopcategory1[3]?.course_name
+                    );
+                  }}
+                ></img>
+              </div>
+              <div className="ChoiceContainerText-div">
+                <span className="ChoiceContainerText">
+                  {gettopcategory1[3]?.course_name}
+                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "60%",
+                  }}
+                >
+                  <span className="ChoiceChapter">
+                    {gettopcategory1[3]?.chapter_count} Chapters
+                  </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "89.09px",
+                      height: "26px",
+                    }}
+                  >
+                    <img src={clock}></img>
+                    <span
+                      style={{
+                        width: "69px",
+                        height: "26px",
+                        fontFamily: "Proxima Nova Soft",
+                        fontStyle: "normal",
+                        fontWeight: "400",
+                        fontSize: "16px",
+                        lineHeight: "26px",
+                        marginLeft: "5%",
+                        color: "#7A7A7A",
+                      }}
+                    >
+                      {(
+                        gettopcategory1[3]?.totalVideoLength / 3600 +
+                        " "
+                      ).substr(0, 5)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      ) : (
+        " "
       )}
     </div>
   );
