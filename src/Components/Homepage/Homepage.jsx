@@ -524,7 +524,16 @@ export default function Homepage() {
               </div>
             </div>
             <div className="ChoiceContainerText-div">
-              <span className="ChoiceContainerText">
+              <span
+                className="ChoiceContainerText"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  handleContinue(
+                    getchoice[0]?.course_id,
+                    getchoice[0]?.course_name
+                  );
+                }}
+              >
                 {getchoice[0]?.course_name}
               </span>
               <span className="ChoiceChapter">
@@ -547,7 +556,16 @@ export default function Homepage() {
               </div>
             </div>
             <div className="ChoiceContainerText-div">
-              <span className="ChoiceContainerText">
+              <span
+                className="ChoiceContainerText"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  handleContinue(
+                    getchoice[1]?.course_id,
+                    getchoice[1]?.course_name
+                  );
+                }}
+              >
                 {getchoice[1]?.course_name}
               </span>
               <span className="ChoiceChapter">
@@ -570,7 +588,16 @@ export default function Homepage() {
               </div>
             </div>
             <div className="ChoiceContainerText-div">
-              <span className="ChoiceContainerText">
+              <span
+                className="ChoiceContainerText"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  handleContinue(
+                    getchoice[2]?.course_id,
+                    getchoice[2]?.course_name
+                  );
+                }}
+              >
                 {getchoice[2]?.course_name}
               </span>
               <span className="ChoiceChapter">
@@ -593,7 +620,16 @@ export default function Homepage() {
               </div>
             </div>
             <div className="ChoiceContainerText-div">
-              <span className="ChoiceContainerText">
+              <span
+                className="ChoiceContainerText"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  handleContinue(
+                    getchoice[3]?.course_id,
+                    getchoice[3]?.course_name
+                  );
+                }}
+              >
                 {getchoice[3]?.course_name}
               </span>
               <span className="ChoiceChapter">

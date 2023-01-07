@@ -60,7 +60,7 @@ export default function Courseview() {
   const dispatch = useDispatch();
 
   const getcourseid = useSelector(getCourseId);
-  console.log("courseid", getcourseid);
+  console.log("courseid..", getcourseid);
 
   const getcoursename = useSelector(getOngoingCourseName);
   console.log("coursename", getcoursename);

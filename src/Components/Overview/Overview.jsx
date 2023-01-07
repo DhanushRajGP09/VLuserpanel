@@ -9,6 +9,7 @@ import point from "../../Assets/point.png";
 import "./Overview.css";
 import { useSelector } from "react-redux/es";
 import { getCourseOverview } from "../../features/Courseslice";
+import axios from "axios";
 
 export default function Overview(props) {
   const Overview = useSelector(getCourseOverview);
@@ -20,6 +21,28 @@ export default function Overview(props) {
   const Totalvideo = Overview?.courseIncludes?.totalHourVideo / 3600 + " ";
 
   const videolength = Totalvideo.substr(0, 4);
+  const token = JSON.parse(localStorage.getItem("token"));
+  console.log("tokenfrom dash", token);
+
+  const handleJoin = () => {
+    console.log("entered");
+    axios({
+      method: "post",
+      params: {
+        courseId: Overview?.courseHeader?.course_id,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      url: "https://app-virtuallearning-230106135903.azurewebsites.net/user/course",
+    })
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -199,7 +222,14 @@ export default function Overview(props) {
       {Overview?.joined_course ? (
         " "
       ) : (
-        <button className="join-btn">Join Course</button>
+        <form
+          className="join-btn"
+          onSubmit={() => {
+            handleJoin();
+          }}
+        >
+          <button className="join">Join Course</button>
+        </form>
       )}
     </>
   );

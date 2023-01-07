@@ -96,7 +96,8 @@
 .VideoDescription-div {
   margin-top: 2%;
   width: 100%;
-  height: 54px;
+  height: auto;
+  flex-wrap: wrap;
   display: flex;
   align-items: center;
   justify-content: space-between;

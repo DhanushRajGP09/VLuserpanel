@@ -40,33 +40,37 @@ export default function Chapters(props) {
               >
                 {data?.chapterName}
               </span>
-              <img
-                id={`img${index}`}
-                src={plus}
-                style={{ marginRight: "2%", cursor: "pointer" }}
-                onClick={() => {
-                  if (
-                    document.getElementById(`ChaptersContainer${index}`).style
-                      .display === "flex"
-                  ) {
-                    document.getElementById(
-                      `ChaptersContainer${index}`
-                    ).style.display = "none";
-                    document.getElementById(`img${index}`).src = plus;
-                    document.getElementById(
-                      "ChapterContainer-div"
-                    ).style.height = "30px";
-                  } else {
-                    document.getElementById(
-                      `ChaptersContainer${index}`
-                    ).style.display = "flex";
-                    document.getElementById(
-                      "ChapterContainer-div"
-                    ).style.height = "auto";
-                    document.getElementById(`img${index}`).src = minus;
-                  }
-                }}
-              ></img>
+              {props.coursedata?.joinedCourse ? (
+                <img
+                  id={`img${index}`}
+                  src={plus}
+                  style={{ marginRight: "2%", cursor: "pointer" }}
+                  onClick={() => {
+                    if (
+                      document.getElementById(`ChaptersContainer${index}`).style
+                        .display === "flex"
+                    ) {
+                      document.getElementById(
+                        `ChaptersContainer${index}`
+                      ).style.display = "none";
+                      document.getElementById(`img${index}`).src = plus;
+                      document.getElementById(
+                        "ChapterContainer-div"
+                      ).style.height = "30px";
+                    } else {
+                      document.getElementById(
+                        `ChaptersContainer${index}`
+                      ).style.display = "flex";
+                      document.getElementById(
+                        "ChapterContainer-div"
+                      ).style.height = "auto";
+                      document.getElementById(`img${index}`).src = minus;
+                    }
+                  }}
+                ></img>
+              ) : (
+                ""
+              )}
             </div>
             <div className="ChaptersContainer" id={`ChaptersContainer${index}`}>
               <div className="lessons-div">

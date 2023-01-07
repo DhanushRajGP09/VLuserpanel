@@ -67,27 +67,39 @@ export default function TheAllCourses() {
             <div className="OngoingCoursemain-div">
               {categorycourse.map((data, index) => {
                 return (
-                  <div className="OngoingCoursecontainer">
-                    <img
-                      src={data?.course_image}
-                      style={{ width: "464px", height: " 262px" }}
-                    ></img>
-                    <div className="OngoingCourseContainer"></div>
-
-                    <span className="OnGoingCourseContainerText">
-                      {data?.course_name}
-                    </span>
-                    <span className="CompletedOngoing">
-                      {data?.chapter_count}
-                      chapters
-                    </span>
-                    <img
-                      src={continuebutton}
-                      className="Ongoingcontinuebutton"
-                      onClick={() => {
-                        handleContinue(data?.course_id, data?.course_name);
-                      }}
-                    ></img>
+                  <div
+                    className="ChoiceContainer"
+                    style={{
+                      marginTop: "3%",
+                    }}
+                  >
+                    <div className="ChoiceContainerImg">
+                      <img
+                        src={data?.course_image}
+                        style={{
+                          borderRadius: "6px",
+                          width: "342px",
+                          height: "193px",
+                        }}
+                      ></img>
+                      <div className="ChoiceCategory">
+                        {data?.category_name}
+                      </div>
+                    </div>
+                    <div className="ChoiceContainerText-div">
+                      <span
+                        className="ChoiceContainerText"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          handleContinue(data?.course_id, data?.course_name);
+                        }}
+                      >
+                        {data?.course_name}
+                      </span>
+                      <span className="ChoiceChapter">
+                        {data?.chapter_count} Chapters
+                      </span>
+                    </div>
                   </div>
                 );
               })}

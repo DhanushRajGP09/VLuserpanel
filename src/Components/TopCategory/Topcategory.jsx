@@ -11,6 +11,8 @@ import { useEffect } from "react";
 import continuebutton from "../../Assets/continuebutton.png";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import play from "../../Assets/play.png";
+import clock from "../../Assets/Clock.png";
 
 export default function Topcategory() {
   const catid = useSelector(getCategoryID);
@@ -57,27 +59,60 @@ export default function Topcategory() {
             <div className="OngoingCoursemain-div">
               {categorycourse.map((data, index) => {
                 return (
-                  <div className="OngoingCoursecontainer">
-                    <img
-                      src={data?.course_image}
-                      style={{ width: "464px", height: " 262px" }}
-                    ></img>
-                    <div className="OngoingCourseContainer"></div>
-
-                    <span className="OnGoingCourseContainerText">
-                      {data?.course_name}
-                    </span>
-                    <span className="CompletedOngoing">
-                      {data?.chapter_count}
-                      chapters
-                    </span>
-                    <img
-                      src={continuebutton}
-                      className="Ongoingcontinuebutton"
-                      onClick={() => {
-                        handleContinue(data?.course_id, data?.course_name);
-                      }}
-                    ></img>
+                  <div className="ChoiceContainer" style={{ marginTop: "2%" }}>
+                    <div className="ChoiceContainerImg">
+                      <img src={data?.course_image}></img>
+                      <img
+                        src={play}
+                        className="Play"
+                        onClick={() => {
+                          handleContinue(data?.course_id, data?.course_name);
+                        }}
+                      ></img>
+                    </div>
+                    <div className="ChoiceContainerText-div">
+                      <span className="ChoiceContainerText">
+                        {data?.course_name}
+                      </span>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          width: "60%",
+                        }}
+                      >
+                        <span className="ChoiceChapter">
+                          {data?.chapter_count} Chapters
+                        </span>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            width: "89.09px",
+                            height: "26px",
+                          }}
+                        >
+                          <img src={clock}></img>
+                          <span
+                            style={{
+                              width: "69px",
+                              height: "26px",
+                              fontFamily: "Proxima Nova Soft",
+                              fontStyle: "normal",
+                              fontWeight: "400",
+                              fontSize: "16px",
+                              marginLeft: "5%",
+                              lineHeight: "26px",
+                              color: "#7A7A7A",
+                            }}
+                          >
+                            {(data?.totalVideoLength / 3600 + " ").substr(0, 5)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 );
               })}
