@@ -1,0 +1,257 @@
+.deleteoverlay {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  width: auto;
+  /* align-items: center; */
+  justify-content: center;
+  z-index: 2;
+}
+.deletemodal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deletemodal {
+  /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  /* Location of the box */
+
+  margin-left: 0%;
+  margin-bottom: 55%;
+  width: 100%; /* Full width */
+  height: 100vh; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+.deletemodal-inner-content {
+  background: white;
+  padding: 3rem;
+  border-radius: 10px 10px 0 0;
+  width: 948px;
+  height: 604px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  z-index: 3;
+  position: relative;
+}
+.SearchFilterText {
+  width: 181px;
+  height: 26px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 26px;
+  /* identical to box height, or 93% */
+
+  color: #000000;
+}
+.SearchFilterMin-div {
+  height: 374px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 80%;
+}
+.SearchFilterCategory-div {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.SearchFilterDurationContainer {
+  height: 34px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2%;
+  padding-right: 2%;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #2b2b2b;
+  mix-blend-mode: normal;
+  border: 1px solid #e4e4e4;
+  border-radius: 6px;
+}
+
+.SearchFilterDurationMain-div {
+  height: 92px;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.ApplyFilterButton {
+  height: 44px;
+  width: 200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ee5c4d;
+  border-radius: 6px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 35px;
+  /* identical to box height, or 194% */
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.ClearAllButton {
+  box-sizing: border-box;
+  height: 44px;
+  width: 200px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 35px;
+  /* identical to box height, or 194% */
+
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2b2b2b;
+  mix-blend-mode: normal;
+  border: 1px solid #e4e4e4;
+  border-radius: 6px;
+}
+.SearchFilterText-Close-div {
+  height: 26px;
+  width: 90%;
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+}
+.ApplyCancel-div {
+  width: 424px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+}
+.CatNameIcon-Div {
+  display: flex;
+  height: 34px;
+  width: auto;
+  padding-top: 0.2%;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 0.2%;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: normal;
+  border: 1px solid #e4e4e4;
+  border-radius: 6px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  width: auto;
+  gap: 14px;
+  line-height: 19px;
+
+  color: #2b2b2b;
+}
+
+.catIcon-div {
+  width: 20.9px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-video {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  font-family: Proxima Nova Soft, sans-serif;
+  padding-bottom: 1rem;
+}
+
+.are-u-sure {
+  font-size: 19px;
+  line-height: 32px;
+  font-weight: 400;
+  font-family: Proxima Nova Soft, sans-serif;
+  color: #010101;
+}
+
+.course-name {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  font-family: Proxima Nova Soft, sans-serif;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  padding-top: 2rem;
+}
+
+.cancel-btn {
+  border: 1.2px solid #d5d4dc;
+  outline: none;
+  display: flex;
+  border-radius: 6px;
+  background-color: #ffffff;
+}
+
+.cancel-text {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 35px;
+  font-family: Proxima Nova Soft, sans-serif;
+  padding: 0rem 3rem;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: #09296333;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  display: flex;
+}
+
+.delete-text {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 35px;
+  font-family: Proxima Nova Soft, sans-serif;
+  padding: 0.1rem 3rem;
+  cursor: pointer;
+}

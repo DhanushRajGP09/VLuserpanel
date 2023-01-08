@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Homepage from "../../Components/Homepage/Homepage";
 import "./Home.css";
 import { Route, Routes, useNavigate } from "react-router";
@@ -9,6 +9,7 @@ import Courseview from "../../Components/Courseview/Courseview";
 import Login from "../Login/Login";
 import Topcategory from "../../Components/TopCategory/Topcategory";
 import TheAllCourses from "../../Components/TheAllCourses/TheAllCourses";
+import Modal from "../../Components/Modal/Modal";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -19,9 +20,12 @@ export default function Home() {
     }
   }, []);
 
+  const [modal, setModal] = useState(false);
+
   return (
     <div className="Home">
-      <Tabbar />
+      <Modal setModal={setModal} modal={modal} />
+      <Tabbar setModal={setModal} />
       <Routes>
         <Route path="/" element={<Homepage />}></Route>
         <Route path="/Mycourse/*" element={<Mycourse />}></Route>

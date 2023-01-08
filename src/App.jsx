@@ -7,6 +7,7 @@ import { Routes, Route } from "react-router";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import PrivateComponent from "./Components/PrivateComponent";
+import Modal from "./Components/Modal/Modal";
 
 function App() {
   return (

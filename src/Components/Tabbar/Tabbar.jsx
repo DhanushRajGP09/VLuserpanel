@@ -18,10 +18,14 @@ import Lifestyle from "../../Assets/Lifestyle.png";
 import Photography from "../../Assets/Photography.png";
 import close from "../../Assets/X.png";
 import searchimage from "../../Assets/illustration-in-UI.png";
+import { addcourseId, addcourseName } from "../../features/Courseslice";
+import { useDispatch } from "react-redux/es";
+import filter from "../../Assets/icn_filter_search.png";
 
-export default function Tabbar() {
+export default function Tabbar(props) {
   const [search, setSearch] = useState(false);
   const [searchinput, setSearchinput] = useState("");
+  const [searchresult, setSearchResult] = useState([]);
   console.log("search", searchinput);
 
   const userimg = JSON.parse(localStorage.getItem("profileUrl"));
@@ -33,34 +37,29 @@ export default function Tabbar() {
       "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/search",
       {
         method: "post",
-        body: JSON.stringify({
-          searchOption: "desig",
-
-          categories: ["design"],
-
-          durationRequestList: [
-            {
-              startDuration: 3,
-
-              endDuration: 10,
-            },
-
-            {
-              startDuration: 3,
-
-              endDuration: 20,
-            },
-          ],
-        }),
+        body: JSON.stringify({ searchOption: searchinput }),
+        headers: {
+          "Content-Type": "application/JSON",
+        },
       }
     );
     result = await result.json();
     console.warn(result);
     if (result) {
       console.log("res", result);
+      setSearchResult(result);
     } else {
       alert("result not found");
     }
+  };
+  const dispatch = useDispatch();
+
+  const handleContinue = (id, name) => {
+    dispatch(addcourseId(id));
+    dispatch(addcourseName(name));
+    localStorage.setItem("courseid", JSON.stringify(id));
+    localStorage.setItem("coursename", JSON.stringify(name));
+    navigate("/Courseview");
   };
 
   return (
@@ -74,34 +73,44 @@ export default function Tabbar() {
           style={{ cursor: "pointer" }}
         ></img>
         {search ? (
-          <div
-            className="Tabsearchmain-div"
-            onClick={() => {
-              document.getElementById("tabbarmain").style.height = "580px";
-            }}
-          >
-            <input
-              placeholder="search"
-              style={{ marginLeft: "2%" }}
-              className="Tabsearchinputactive"
-              value={searchinput}
-              onChange={(e) => {
-                setSearchinput(e.target.value);
-                document.getElementById("TopSearch").style.display = "none";
-                document.getElementById("categorySearch").style.display =
-                  "none";
-                document.getElementById("Searchresults").style.display = "flex";
+          <div className="Tabsearchwithfilter-div">
+            <div
+              className="Tabsearchactivemain-div"
+              onClick={() => {
+                document.getElementById("tabbarmain").style.height = "580px";
               }}
-            ></input>
-            <div className="activesearchCover">
-              <img
-                src={searchicon}
-                style={{ marginLeft: "2%" }}
-                onClick={() => {
+            >
+              <input
+                placeholder="search"
+                style={{ marginLeft: "2%", color: "white" }}
+                className="Tabsearchinputactive"
+                value={searchinput}
+                onChange={(e) => {
+                  setSearchinput(e.target.value);
+                  document.getElementById("TopSearch").style.display = "none";
+                  document.getElementById("categorySearch").style.display =
+                    "none";
+                  document.getElementById("Searchresults").style.display =
+                    "flex";
                   handleSearch();
                 }}
-              ></img>
+              ></input>
+              <div className="activesearchCover">
+                <img
+                  src={searchicon}
+                  style={{ marginLeft: "2%" }}
+                  onClick={() => {
+                    handleSearch();
+                  }}
+                ></img>
+              </div>
             </div>
+            <img
+              src={filter}
+              onClick={() => {
+                props.setModal(true);
+              }}
+            ></img>
           </div>
         ) : (
           <div
@@ -152,27 +161,62 @@ export default function Tabbar() {
         >
           <span className="TopSearchText">Top Search</span>
           <div className="TopSearchIcons-div">
-            <button className="TopSearchButton">
-              <span className="TopSearchButtonText">Python</span>
-            </button>
-            <button className="TopSearchButton">
-              <span className="TopSearchButtonText">Java</span>
-            </button>
-            <button className="TopSearchButton">
-              <span className="TopSearchButtonText">Javascript</span>
-            </button>
-            <button className="TopSearchButton">
-              <span className="TopSearchButtonText">Leadership</span>
-            </button>
-            <button className="TopSearchButton">
-              <span className="TopSearchButtonText">Photoshop</span>
-            </button>
-            <button className="TopSearchButton">
-              <span className="TopSearchButtonText">React</span>
-            </button>
-            <button className="TopSearchButton">
-              <span className="TopSearchButtonText">Communication</span>
-            </button>
+            <div
+              className="TopSearchButton"
+              onClick={() => {
+                setSearchinput("Python");
+              }}
+            >
+              Python
+            </div>
+            <div
+              className="TopSearchButton"
+              onClick={() => {
+                setSearchinput("Java");
+              }}
+            >
+              Java
+            </div>
+            <div
+              className="TopSearchButton"
+              onClick={() => {
+                setSearchinput("Javascript");
+              }}
+            >
+              Javascript
+            </div>
+            <div
+              className="TopSearchButton"
+              onClick={() => {
+                setSearchinput("Leadership");
+              }}
+            >
+              Leadership
+            </div>
+            <div
+              className="TopSearchButton"
+              onClick={() => {
+                setSearchinput("Photoshop");
+              }}
+            >
+              Photoshop
+            </div>
+            <div
+              className="TopSearchButton"
+              onClick={() => {
+                setSearchinput("React");
+              }}
+            >
+              React
+            </div>
+            <div
+              className="TopSearchButton"
+              onClick={() => {
+                setSearchinput("Communication");
+              }}
+            >
+              Communication
+            </div>
           </div>
         </div>
       ) : (
@@ -194,6 +238,9 @@ export default function Tabbar() {
                 borderRadius: "6px",
                 mixBlendMode: "normal",
               }}
+              onClick={() => {
+                setSearchinput("Design");
+              }}
             ></img>
             <img
               src={development}
@@ -202,6 +249,9 @@ export default function Tabbar() {
                 backgroundColor: "white",
                 borderRadius: "6px",
                 mixBlendMode: "normal",
+              }}
+              onClick={() => {
+                setSearchinput("Development");
               }}
             ></img>
             <img
@@ -212,6 +262,9 @@ export default function Tabbar() {
                 borderRadius: "6px",
                 mixBlendMode: "normal",
               }}
+              onClick={() => {
+                setSearchinput("Business");
+              }}
             ></img>
             <img
               src={Music}
@@ -220,6 +273,9 @@ export default function Tabbar() {
                 backgroundColor: "white",
                 borderRadius: "6px",
                 mixBlendMode: "normal",
+              }}
+              onClick={() => {
+                setSearchinput("Music");
               }}
             ></img>
             <img
@@ -230,6 +286,9 @@ export default function Tabbar() {
                 borderRadius: "6px",
                 mixBlendMode: "normal",
               }}
+              onClick={() => {
+                setSearchinput("Finance");
+              }}
             ></img>
             <img
               src={health}
@@ -238,6 +297,9 @@ export default function Tabbar() {
                 backgroundColor: "white",
                 borderRadius: "6px",
                 mixBlendMode: "normal",
+              }}
+              onClick={() => {
+                setSearchinput("Health");
               }}
             ></img>
             <img
@@ -248,6 +310,9 @@ export default function Tabbar() {
                 borderRadius: "6px",
                 mixBlendMode: "normal",
               }}
+              onClick={() => {
+                setSearchinput("It and Software");
+              }}
             ></img>
             <img
               src={Marketing}
@@ -256,6 +321,9 @@ export default function Tabbar() {
                 backgroundColor: "white",
                 borderRadius: "6px",
                 mixBlendMode: "normal",
+              }}
+              onClick={() => {
+                setSearchinput("Marketing");
               }}
             ></img>
             <img
@@ -267,6 +335,9 @@ export default function Tabbar() {
                 borderRadius: "6px",
                 mixBlendMode: "normal",
               }}
+              onClick={() => {
+                setSearchinput("Lifestyle");
+              }}
             ></img>
             <img
               src={Photography}
@@ -277,6 +348,9 @@ export default function Tabbar() {
                 backgroundColor: "white",
                 borderRadius: "6px",
                 mixBlendMode: "normal",
+              }}
+              onClick={() => {
+                setSearchinput("Photography");
               }}
             ></img>
           </div>
@@ -290,102 +364,44 @@ export default function Tabbar() {
           id="Searchresults"
           style={{ display: searchinput === "" ? "none" : "flex" }}
         >
-          <div className="ResultContainer-div">
-            <div className="ResultContainer">
-              <div className="Resultimg">
-                <img className="SearchImage" src={searchimage}></img>
-              </div>
-              <div className="ResultDetails-div">
-                <span className="TopSearchText">
-                  Digital Marketing for 2021 Masterclass
-                </span>
-                <span className="ResultChapters">sddasd</span>
-                <div className="ResultCategory">
-                  designdddsssssssssssssssdddddd
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="ResultContainer-div">
-            <div className="ResultContainer">
-              <div className="Resultimg">
-                <img className="SearchImage" src={searchimage}></img>
-              </div>
-              <div className="ResultDetails-div">
-                <span className="TopSearchText">
-                  Digital Marketing for 2021 Masterclass
-                </span>
-                <span className="ResultChapters">sddasd</span>
-                <div className="ResultCategory">
-                  designdddsssssssssssssssdddddd
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="ResultContainer-div">
-            <div className="ResultContainer">
-              <div className="Resultimg">
-                <img className="SearchImage" src={searchimage}></img>
-              </div>
-              <div className="ResultDetails-div">
-                <span className="TopSearchText">
-                  Digital Marketing for 2021 Masterclass
-                </span>
-                <span className="ResultChapters">sddasd</span>
-                <div className="ResultCategory">
-                  designdddsssssssssssssssdddddd
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="ResultContainer-div">
-            <div className="ResultContainer">
-              <div className="Resultimg">
-                <img className="SearchImage" src={searchimage}></img>
-              </div>
-              <div className="ResultDetails-div">
-                <span className="TopSearchText">
-                  Digital Marketing for 2021 Masterclass
-                </span>
-                <span className="ResultChapters">sddasd</span>
-                <div className="ResultCategory">
-                  designdddsssssssssssssssdddddd
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="ResultContainer-div">
-            <div className="ResultContainer">
-              <div className="Resultimg">
-                <img className="SearchImage" src={searchimage}></img>
-              </div>
-              <div className="ResultDetails-div">
-                <span className="TopSearchText">
-                  Digital Marketing for 2021 Masterclass
-                </span>
-                <span className="ResultChapters">sddasd</span>
-                <div className="ResultCategory">
-                  designdddsssssssssssssssdddddd
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="ResultContainer-div">
-            <div className="ResultContainer">
-              <div className="Resultimg">
-                <img className="SearchImage" src={searchimage}></img>
-              </div>
-              <div className="ResultDetails-div">
-                <span className="TopSearchText">
-                  Digital Marketing for 2021 Masterclass
-                </span>
-                <span className="ResultChapters">sddasd</span>
-                <div className="ResultCategory">
-                  designdddsssssssssssssssdddddd
-                </div>
-              </div>
-            </div>
-          </div>
+          {searchresult.length > 0
+            ? searchresult.map((data) => {
+                return (
+                  <>
+                    <div
+                      className="ResultContainer-div"
+                      onClick={() => {
+                        handleContinue(data?.courseId, data?.courseName);
+                        setSearch(false);
+                        document.getElementById("tabbarmain").style.height =
+                          "100px";
+                        window.location.reload();
+                      }}
+                    >
+                      <div className="ResultContainer">
+                        <div className="Resultimg">
+                          <img
+                            className="SearchImage"
+                            src={data?.courseImage}
+                          ></img>
+                        </div>
+                        <div className="ResultDetails-div">
+                          <span className="TopSearchText">
+                            {data?.courseName}
+                          </span>
+                          <span className="ResultChapters">
+                            {data?.noOfChapters} Chapter
+                          </span>
+                          <div className="ResultCategory">
+                            {data?.categoryName}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })
+            : ""}
         </div>
       ) : (
         ""
