@@ -3,7 +3,9 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-
+  z-index: 2;
+  position: fixed;
+  top: 0;
   justify-content: space-between;
 
   background: #092963;
@@ -126,6 +128,39 @@
   margin-left: 3%;
   overflow: hidden;
   overflow-y: scroll;
+}
+.noresultfound {
+  width: auto;
+  height: 26px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 26px;
+  /* identical to box height, or 81% */
+
+  color: #ffffff;
+}
+.Tryadiff {
+  width: auto;
+  margin-top: 1%;
+  height: 26px;
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 26px;
+  color: #ffffff;
+  opacity: 0.5;
+}
+.NoMatching-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 10%;
+  gap: 17px;
 }
 .Tabsearchwithfilter-div {
   width: 55%;

@@ -24,8 +24,8 @@ export default function Home() {
 
   return (
     <div className="Home">
-      <Modal setModal={setModal} modal={modal} />
       <Tabbar setModal={setModal} />
+      <Modal setModal={setModal} modal={modal} />
       <Routes>
         <Route path="/" element={<Homepage />}></Route>
         <Route path="/Mycourse/*" element={<Mycourse />}></Route>

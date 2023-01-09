@@ -130,9 +130,6 @@ const Userlogin = () => {
             />
           </Box>
         </div>
-        <div className="fogrot-password">
-          <Link to="/forgotpassword">Forgot Password?</Link>
-        </div>
 
         <button className="login-btn">
           <span

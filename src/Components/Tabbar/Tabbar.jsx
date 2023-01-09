@@ -18,26 +18,39 @@ import Lifestyle from "../../Assets/Lifestyle.png";
 import Photography from "../../Assets/Photography.png";
 import close from "../../Assets/X.png";
 import searchimage from "../../Assets/illustration-in-UI.png";
-import { addcourseId, addcourseName } from "../../features/Courseslice";
-import { useDispatch } from "react-redux/es";
+import {
+  addcourseId,
+  addcourseName,
+  getFilter,
+} from "../../features/Courseslice";
+import { useDispatch, useSelector } from "react-redux/es";
 import filter from "../../Assets/icn_filter_search.png";
 
 export default function Tabbar(props) {
   const [search, setSearch] = useState(false);
   const [searchinput, setSearchinput] = useState("");
   const [searchresult, setSearchResult] = useState([]);
-  console.log("search", searchinput);
+
+  console.log("searc", searchinput);
 
   const userimg = JSON.parse(localStorage.getItem("profileUrl"));
   console.log(userimg);
   const navigate = useNavigate();
+
+  const getfilter = useSelector(getFilter);
+  console.log("filter", getfilter);
+  console.log("getfilter", getfilter);
 
   const handleSearch = async () => {
     let result = await fetch(
       "https://app-virtuallearning-230106135903.azurewebsites.net/user/view/search",
       {
         method: "post",
-        body: JSON.stringify({ searchOption: searchinput }),
+        body: JSON.stringify({
+          searchOption: searchinput,
+          categories: getfilter.categories,
+          durationRequestList: getfilter.durationRequestList,
+        }),
         headers: {
           "Content-Type": "application/JSON",
         },
@@ -107,6 +120,9 @@ export default function Tabbar(props) {
             </div>
             <img
               src={filter}
+              style={{
+                cursor: "pointer",
+              }}
               onClick={() => {
                 props.setModal(true);
               }}
@@ -364,44 +380,53 @@ export default function Tabbar(props) {
           id="Searchresults"
           style={{ display: searchinput === "" ? "none" : "flex" }}
         >
-          {searchresult.length > 0
-            ? searchresult.map((data) => {
-                return (
-                  <>
-                    <div
-                      className="ResultContainer-div"
-                      onClick={() => {
-                        handleContinue(data?.courseId, data?.courseName);
-                        setSearch(false);
-                        document.getElementById("tabbarmain").style.height =
-                          "100px";
-                        window.location.reload();
-                      }}
-                    >
-                      <div className="ResultContainer">
-                        <div className="Resultimg">
-                          <img
-                            className="SearchImage"
-                            src={data?.courseImage}
-                          ></img>
-                        </div>
-                        <div className="ResultDetails-div">
-                          <span className="TopSearchText">
-                            {data?.courseName}
-                          </span>
-                          <span className="ResultChapters">
-                            {data?.noOfChapters} Chapter
-                          </span>
-                          <div className="ResultCategory">
-                            {data?.categoryName}
-                          </div>
+          {searchresult.length > 0 ? (
+            searchresult.map((data) => {
+              return (
+                <>
+                  <div
+                    className="ResultContainer-div"
+                    onClick={() => {
+                      handleContinue(data?.courseId, data?.courseName);
+                      setSearch(false);
+                      document.getElementById("tabbarmain").style.height =
+                        "100px";
+                      window.location.reload();
+                    }}
+                  >
+                    <div className="ResultContainer">
+                      <div className="Resultimg">
+                        <img
+                          className="SearchImage"
+                          src={data?.courseImage}
+                        ></img>
+                      </div>
+                      <div className="ResultDetails-div">
+                        <span className="TopSearchText">
+                          {data?.courseName}
+                        </span>
+                        <span className="ResultChapters">
+                          {data?.noOfChapters} Chapter
+                        </span>
+                        <div className="ResultCategory">
+                          {data?.categoryName}
                         </div>
                       </div>
                     </div>
-                  </>
-                );
-              })
-            : ""}
+                  </div>
+                </>
+              );
+            })
+          ) : (
+            <div className="NoResultMain-div">
+              <div className="NoMatching-div">
+                <span className="noresultfound">No matching course</span>
+                <span className="Tryadiff">
+                  Try a different search or browse categories
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         ""
