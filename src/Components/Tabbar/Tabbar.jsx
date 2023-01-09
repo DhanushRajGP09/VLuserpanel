@@ -30,6 +30,16 @@ export default function Tabbar(props) {
   const [search, setSearch] = useState(false);
   const [searchinput, setSearchinput] = useState("");
   const [searchresult, setSearchResult] = useState([]);
+  const [showdrop, setShowDrop] = useState(false);
+
+  const handleShowDrop = () => {
+    setShowDrop(!showdrop);
+  };
+  const logout = () => {
+    localStorage.clear();
+    setShowDrop(false);
+    navigate("/");
+  };
 
   console.log("searc", searchinput);
 
@@ -72,7 +82,7 @@ export default function Tabbar(props) {
     dispatch(addcourseName(name));
     localStorage.setItem("courseid", JSON.stringify(id));
     localStorage.setItem("coursename", JSON.stringify(name));
-    navigate("/Courseview");
+    navigate("/home/Courseview");
   };
 
   return (
@@ -81,7 +91,7 @@ export default function Tabbar(props) {
         <img
           src={tablogo}
           onClick={() => {
-            navigate("/");
+            navigate("/home");
           }}
           style={{ cursor: "pointer" }}
         ></img>
@@ -90,7 +100,7 @@ export default function Tabbar(props) {
             <div
               className="Tabsearchactivemain-div"
               onClick={() => {
-                document.getElementById("tabbarmain").style.height = "580px";
+                document.getElementById("tabbarmain").style.height = "auto";
               }}
             >
               <input
@@ -132,7 +142,9 @@ export default function Tabbar(props) {
           <div
             className="Tabsearchmain-div"
             onClick={() => {
-              document.getElementById("tabbarmain").style.height = "580px";
+              document.getElementById("tabbarmain").style.height = "auto";
+              document.getElementById("tabbarmain").style.gap = "30px";
+
               setSearch(true);
             }}
           >
@@ -160,11 +172,40 @@ export default function Tabbar(props) {
           </div>
         ) : (
           <div className="Tabbaricons">
-            <div className="TabProfile">
+            <div
+              className="TabProfile"
+              onClick={() => {
+                handleShowDrop();
+              }}
+            >
               <img
                 src={userimg}
-                style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
               ></img>
+            </div>
+            <div
+              className="LogOutDropDown"
+              style={{ display: showdrop ? "flex" : "none" }}
+            >
+              <button
+                className="login-btn"
+                style={{ width: "150px", backgroundColor: "white" }}
+              >
+                <span
+                  className="login-text"
+                  onClick={() => {
+                    logout();
+                  }}
+                  style={{ cursor: "pointer", color: "black" }}
+                >
+                  Logout
+                </span>
+              </button>
             </div>
           </div>
         )}

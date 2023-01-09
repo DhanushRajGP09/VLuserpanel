@@ -14,19 +14,19 @@ export default function Mycourse() {
     setcompleted(!completed);
     setactive(false);
 
-    navigate("/Mycourse/Completed");
+    navigate("/home/Mycourse/Completed");
   }
   function handleOngoing() {
     setactive(true);
     setcompleted(false);
-    navigate("/Mycourse/Ongoing");
+    navigate("/home/Mycourse/Ongoing");
   }
 
   useEffect(() => {
-    if (window.location.pathname === "/Mycourse/Ongoing") {
+    if (window.location.pathname === "/home/Mycourse/Ongoing") {
       setactive(!active);
       setcompleted(false);
-    } else if (window.location.pathname === "/Mycourse/Completed") {
+    } else if (window.location.pathname === "/home/Mycourse/Completed") {
       setactive(false);
       setcompleted(!completed);
     }
@@ -65,8 +65,8 @@ export default function Mycourse() {
         </div>
       </div>
       <Routes>
-        <Route path="/Ongoing/*" element={<Ongoing />}></Route>
-        <Route path="/Completed/*" element={<Completed />}></Route>
+        <Route exact path="/Ongoing/*" element={<Ongoing />}></Route>
+        <Route exact path="/Completed/*" element={<Completed />}></Route>
       </Routes>
     </div>
   );

@@ -7,7 +7,6 @@
   position: fixed;
   top: 0;
   justify-content: space-between;
-
   background: #092963;
 }
 
@@ -23,6 +22,7 @@
 .Tabsearchmain-div {
   width: 47%;
   height: 44px;
+
   margin-right: 2%;
   display: flex;
   align-items: center;
@@ -96,8 +96,8 @@
   border-radius: 50%;
 }
 .TopSearch {
-  width: 643px;
-  height: 138px;
+  width: 33%;
+  height: auto;
   display: flex;
 
   flex-direction: column;
@@ -107,8 +107,9 @@
 
 .categorySearch {
   margin-left: 4%;
-  width: 709px;
-  height: 196px;
+  width: 37%;
+  gap: 2%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -117,7 +118,7 @@
   margin-bottom: 5%;
 }
 .Searchresults {
-  height: 552px;
+  height: 480px;
   width: 38%;
   display: none;
   margin-top: 0%;
@@ -129,6 +130,18 @@
   overflow: hidden;
   overflow-y: scroll;
 }
+.LogOutDropDown {
+  position: absolute;
+  background-color: white;
+  width: auto;
+
+  align-items: center;
+
+  height: auto;
+  margin-top: 6%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
 .noresultfound {
   width: auto;
   height: 26px;
@@ -265,7 +278,9 @@
   color: #ffffff;
 }
 .TopSearchIcons-div {
-  height: 92px;
+  height: auto;
+  margin-top: 2%;
+  gap: 10px;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -301,6 +316,8 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  height: 150px;
+  height: auto;
+  gap: 5px;
+  margin-top: 2%;
   width: 100%;
 }

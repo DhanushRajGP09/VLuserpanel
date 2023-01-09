@@ -22,41 +22,7 @@
   height: 531px;
   position: relative;
 }
-.video-heading {
-  position: absolute;
-  top: 0;
-  margin-left: 60px;
-}
-.video-heading-style {
-  font-family: "Proxima Nova Soft";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 30px;
-  line-height: 24px;
-  color: white;
-}
-.video-footer {
-  position: absolute;
-  width: 98%;
-  height: 101px;
-  /* left: 1px; */
-  top: 368px;
 
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.83) 17.46%,
-    rgba(0, 0, 0, 0) 90.6%
-  );
-}
-.intro-footer-video {
-  font-family: "Proxima Nova Soft";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 21px;
-  display: flex;
-  color: #ffffff;
-  margin-left: 60px;
-}
 .video-info-foot {
   display: flex;
   /* justify-content: space-between; */

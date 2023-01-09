@@ -184,7 +184,7 @@ export default function Homepage() {
     dispatch(addcourseName(name));
     localStorage.setItem("courseid", JSON.stringify(id));
     localStorage.setItem("coursename", JSON.stringify(name));
-    navigate("/Courseview");
+    navigate("/home/Courseview");
   };
 
   useEffect(() => {
@@ -320,7 +320,7 @@ export default function Homepage() {
           src={seeall}
           style={{ cursor: "pointer", marginRight: "2%" }}
           onClick={() => {
-            navigate("/Mycourse/Ongoing");
+            navigate("/home/Mycourse/Ongoing");
           }}
         ></img>
       </div>
@@ -459,7 +459,7 @@ export default function Homepage() {
           style={{ cursor: "pointer", marginRight: "2%" }}
           onClick={() => {
             dispatch(addTheChoice(TheChoice));
-            navigate("/Choice");
+            navigate("/home/Choice");
           }}
         ></img>
       </div>
@@ -652,7 +652,7 @@ export default function Homepage() {
               style={{ cursor: "pointer", marginRight: "2%" }}
               onClick={() => {
                 dispatch(addcategoryid(gettopcategory2[0]?.categoryId));
-                navigate("/Topcategory");
+                navigate("/home/Topcategory");
               }}
             ></img>
           ) : (
@@ -924,7 +924,7 @@ export default function Homepage() {
               style={{ cursor: "pointer", marginRight: "2%" }}
               onClick={() => {
                 dispatch(addcategoryid(gettopcategory1[0]?.categoryId));
-                navigate("/Topcategory");
+                navigate("/home/Topcategory");
               }}
             ></img>
           ) : (

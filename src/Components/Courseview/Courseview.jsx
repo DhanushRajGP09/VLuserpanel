@@ -31,24 +31,23 @@ export default function Courseview() {
     setOverview(!overview);
     setChapters(false);
     setOnGoingpage(false);
-    navigate("/Courseview");
+    navigate("/home/Courseview");
   };
   const handleChapters = () => {
     setOverview(false);
     setChapters(!chapters);
     setOnGoingpage(true);
-    navigate("/Courseview/Chapters");
+    navigate("/home/Courseview/Chapters");
   };
 
   useEffect(() => {
-    if (window.location.pathname === "/Courseview") {
+    if (window.location.pathname === "/home/Courseview") {
       setOverview(true);
-    } else if (window.location.pathname === "/Courseview/Chapters") {
+    } else if (window.location.pathname === "/home/Courseview/Chapters") {
       setChapters(true);
     }
   }, []);
   const token = JSON.parse(localStorage.getItem("token"));
-  console.log("tokenfrom dash", token);
 
   const localid = JSON.parse(localStorage.getItem("courseid"));
   const localname = JSON.parse(localStorage.getItem("coursename"));
@@ -63,12 +62,14 @@ export default function Courseview() {
   console.log("courseid..", getcourseid);
 
   const getcoursename = useSelector(getOngoingCourseName);
-  console.log("coursename", getcoursename);
+  console.log("coursenam", getcoursename);
 
   const [id, setid] = useState(getcourseid);
   const [name, setName] = useState(getcoursename);
   const [video, setvideo] = useState(false);
   const [videourl, setVideoUrl] = useState("");
+  const [image, setImage] = useState(false);
+  const [imageurl, setImageUrl] = useState("");
 
   const getCourse = async () => {
     console.log("entered");
@@ -84,12 +85,22 @@ export default function Courseview() {
     }).then(function (response) {
       console.log("recentcourss", response.data);
       setCoursedata(response.data);
+      if (response.data.currentLesson === null) {
+        setTheLessonId(
+          response.data.lessonResponseList[0]?.lessonList[0]?.lessonId
+        );
+      } else if (response.data.currentLesson !== null) {
+        setTheLessonId(response.data.currentLesson.lessonId);
+      }
       dispatch(addCourseData(response.data));
     });
   };
+  const [played, setPlayed] = useState(0);
+
+  console.log("played", played);
 
   const getOverview = async () => {
-    console.log("entered");
+    console.log("entere");
     axios({
       method: "get",
       headers: {
@@ -102,20 +113,62 @@ export default function Courseview() {
       dispatch(addcourseOverview(response.data));
     });
   };
-  const OverView = useSelector(getCourseOverview);
 
-  console.log("coursedat", coursedata);
+  const [theLessonId, setTheLessonId] = useState(0);
+
+  const handleOnPause = async (time) => {
+    console.log("entered");
+    axios({
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        lessonId: theLessonId,
+        duration: time,
+      },
+      url: `https://app-virtuallearning-230106135903.azurewebsites.net/user/lesson`,
+    }).then(function (response) {
+      console.log(response);
+    });
+  };
+
+  const OverView = useSelector(getCourseOverview);
+  const [thumbtext, setThumbtext] = useState(true);
+
+  console.log("coursedata", coursedata);
   useEffect(() => {
     getOverview();
     getCourse();
     setid(getcourseid);
   }, []);
 
+  console.log("pla", played);
+
   const Totalvideo =
     coursedata?.courseContentResponse?.totalVideoLength / 3600 + " ";
 
   const videolength = Totalvideo.substr(0, 4);
   const username = JSON.parse(localStorage.getItem("name"));
+
+  const playerRef = React.useRef();
+
+  const [TheRef, setTheRef] = useState(false);
+
+  const onReady = React.useCallback(() => {
+    const timeToStart =
+      coursedata?.currentLesson !== null
+        ? coursedata?.currentLesson?.durationCompleted
+        : 0;
+    playerRef.current.seekTo(timeToStart, "seconds");
+  }, [playerRef.current]);
+
+  const onHandlePause = React.useCallback(() => {
+    const time = playerRef.current.getCurrentTime();
+    setPlayed(Math.round(time));
+    handleOnPause(Math.round(time));
+  }, [playerRef.current]);
+  console.log("thelid,dur", theLessonId, played);
 
   return (
     <>
@@ -128,7 +181,7 @@ export default function Courseview() {
             <span
               className="MyCourse-text"
               onClick={() => {
-                navigate("/Mycourse/Ongoing");
+                navigate("/home/Mycourse/Ongoing");
               }}
             >
               My Course
@@ -153,13 +206,54 @@ export default function Courseview() {
           </div>
           <div className="CourseViewInner-div">
             <div className="VideoDisplay-div">
-              <div className="video-div">
+              <div
+                className="video-div"
+                onClick={() => {
+                  setThumbtext(false);
+                }}
+              >
                 <ReactPlayer
+                  onStart={() => {
+                    setTheRef(true);
+                  }}
+                  onPause={() => {
+                    onHandlePause();
+                  }}
+                  onEnded={() => {
+                    onHandlePause();
+                  }}
+                  ref={playerRef}
                   controls
+                  light={
+                    image
+                      ? imageurl
+                      : OverView?.overview?.videoLink.replace(".mp4", ".jpg")
+                  }
                   url={video ? videourl : OverView?.overview?.videoLink}
                   width="100%"
                   height="531px"
+                  onReady={TheRef ? onHandlePause : onReady}
                 />
+                <div
+                  className="video-heading"
+                  style={{
+                    display: thumbtext ? "flex" : "none",
+                  }}
+                >
+                  {" "}
+                  <p className="video-heading-style">
+                    Continue Chapter {coursedata?.currentLesson?.chapterNumber}{" "}
+                    Lesson {coursedata?.currentLesson?.lessonNumber}
+                  </p>{" "}
+                </div>
+                <div
+                  className="video-footer"
+                  style={{
+                    display: thumbtext ? "block" : "none",
+                  }}
+                >
+                  {coursedata?.currentLesson?.lessonName}
+                </div>
               </div>
               <div className="VideoDescription-div">
                 <div className="VideoDescriptionInner-div">
@@ -268,16 +362,19 @@ export default function Courseview() {
               </div>
               <Routes>
                 <Route
+                  exact
                   path="/"
                   element={<Overview courseoverview={courseoverview} />}
                 ></Route>
                 <Route
+                  exact
                   path="/Chapters"
                   element={
                     <Chapters
                       coursedata={coursedata}
                       setVideoUrl={setVideoUrl}
                       setvideo={setvideo}
+                      setTheLessonId={setTheLessonId}
                     />
                   }
                 ></Route>
@@ -294,7 +391,7 @@ export default function Courseview() {
             <span
               className="MyCourse-text"
               onClick={() => {
-                navigate("/Mycourse/Ongoing");
+                navigate("/home/Mycourse/Ongoing");
               }}
             >
               My Course

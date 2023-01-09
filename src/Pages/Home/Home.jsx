@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     const auth = localStorage.getItem("token");
     if (!auth) {
-      navigate("/login");
+      navigate("/");
     }
   }, []);
 

@@ -33,7 +33,7 @@ const Userlogin = () => {
       localStorage.setItem("emailId", JSON.stringify(result.emailId));
       localStorage.setItem("Number", JSON.stringify(result.phoneNumber));
 
-      navigate("/");
+      navigate("/home");
     } else {
       alert("Please enter the correct details");
     }
@@ -42,7 +42,7 @@ const Userlogin = () => {
   useEffect(() => {
     const auth = localStorage.getItem("token");
     if (auth) {
-      navigate("/");
+      navigate("/home");
     }
   }, []);
 
@@ -131,7 +131,12 @@ const Userlogin = () => {
           </Box>
         </div>
 
-        <button className="login-btn">
+        <button
+          className="login-btn"
+          style={{
+            marginTop: "10%",
+          }}
+        >
           <span
             className="login-text"
             onClick={() => {

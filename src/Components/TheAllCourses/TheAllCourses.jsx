@@ -55,11 +55,11 @@ export default function TheAllCourses() {
     dispatch(addcourseName(name));
     localStorage.setItem("courseid", JSON.stringify(id));
     localStorage.setItem("coursename", JSON.stringify(name));
-    navigate("/Courseview");
+    navigate("/home/Courseview");
   };
 
   return (
-    <div className="MyCourseMain-div">
+    <div className="MyCourseMain-div" style={{ marginTop: "5%" }}>
       {categorycourse.length > 0 ? (
         <>
           <span className="Mycourse-text">{name}</span>

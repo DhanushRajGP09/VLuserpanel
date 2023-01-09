@@ -5,6 +5,7 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 75%;
+  margin-top: 5%;
   height: 150vh;
 }
 .CourseviewTab {
@@ -346,6 +347,50 @@
   position: relative;
 }
 
+.video-heading {
+  position: absolute;
+  width: auto;
+  height: auto;
+  left: 30%;
+  top: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ec5d52;
+  border-radius: 6px;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+.video-heading-style {
+  font-family: "Proxima Nova Soft";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 50px;
+  /* identical to box height, or 179% */
+  width: auto;
+  height: auto;
+  text-align: center;
+
+  color: #ffffff;
+}
+.video-footer {
+  position: absolute;
+
+  left: 3%;
+  top: 461px;
+  width: auto;
+  height: 30px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 30px;
+  /* identical to box height, or 100% */
+
+  color: #ffffff;
+}
 .VideoDescription-lessons {
   width: auto;
   height: 24px;

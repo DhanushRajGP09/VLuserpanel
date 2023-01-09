@@ -141,9 +141,18 @@ export default function Chapters(props) {
                             }}
                             onClick={() => {
                               props.setvideo(true);
+
                               props.setVideoUrl(
                                 props.coursedata?.lessonResponseList[index]
                                   ?.lessonList[index2]?.videoLink
+                              );
+                              props.setTheLessonId(
+                                props.coursedata?.lessonResponseList[index]
+                                  ?.lessonList[index2]?.lessonId
+                              );
+                              console.log(
+                                props.coursedata?.lessonResponseList[index]
+                                  ?.lessonList[index2]?.lessonId
                               );
                               console.log(
                                 props.coursedata?.lessonResponseList[index]

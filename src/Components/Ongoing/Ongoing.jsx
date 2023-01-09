@@ -38,7 +38,7 @@ export default function Ongoing() {
     dispatch(addcourseName(name));
     localStorage.setItem("courseid", JSON.stringify(id));
     localStorage.setItem("coursename", JSON.stringify(name));
-    navigate("/Courseview");
+    navigate("/home/Courseview");
   };
 
   return (
