@@ -936,7 +936,12 @@ export default function Homepage() {
       )}
 
       {gettopcategory1.length > 0 ? (
-        <div className="ChoiceDisplayMain-div">
+        <div
+          className="ChoiceDisplayMain-div"
+          style={{
+            width: gettopcategory1.length > 3 ? "100%" : "75%",
+          }}
+        >
           <div className="ChoiceContainer">
             <div className="ChoiceContainerImg">
               <img

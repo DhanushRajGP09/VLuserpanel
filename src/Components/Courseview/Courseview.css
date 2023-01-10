@@ -493,11 +493,57 @@
   align-items: flex-start;
   justify-content: space-between;
 }
+.TestContainerMain-div {
+  width: 370px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+.TestInsideContainer {
+  height: 50px;
+  width: 87%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.TestContainerText {
+  width: auto;
+  height: 20px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  /* identical to box height, or 111% */
+
+  color: #373737;
+}
+.TestContainerDetailsText {
+  width: auto;
+  height: 30px;
+
+  font-family: "Proxima Nova Soft", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 30px;
+  /* identical to box height, or 214% */
+
+  color: #7a7a7a;
+}
+
 .ChaptersContainer {
   height: auto;
   width: 100%;
   display: none;
   margin-top: 3%;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
 }
@@ -526,6 +572,14 @@
   width: 24px;
 
   height: 24px;
+}
+.TestMain-div {
+  margin-top: 2%;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .lessons-div {
@@ -563,8 +617,8 @@
 .lessonDetails {
   display: flex;
   flex-direction: column;
-  width: 220px;
-  height: 70px;
+  width: 280px;
+  height: 50px;
   align-items: flex-start;
   justify-content: space-between;
 }
@@ -582,7 +636,7 @@
 .lessonDuration {
   width: auto;
   height: 30px;
-  margin-left: 3%;
+  margin-left: 0%;
   font-family: "Proxima Nova Soft", sans-serif;
   font-style: normal;
   font-weight: 500;

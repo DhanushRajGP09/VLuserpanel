@@ -9,9 +9,19 @@ import greendot from "../../Assets/Group Dot@2x.png";
 import greydot from "../../Assets/Grey Dot@2x.png";
 import { addTheLessonID } from "../../features/Courseslice";
 import { useDispatch } from "react-redux";
+import test from "../../Assets/moduletest.png";
+import { useNavigate } from "react-router";
 
 export default function Chapters(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleAssignmentClick = (id, name, duration) => {
+    localStorage.setItem("assignmentID", JSON.stringify(id));
+    localStorage.setItem("assignmentName", JSON.stringify(name));
+    localStorage.setItem("assignmentDuration", JSON.stringify(duration));
+    navigate("/home/Quiz");
+  };
 
   return (
     <>
@@ -195,7 +205,67 @@ export default function Chapters(props) {
                     );
                   }
                 )}
+                {}
               </div>
+
+              {props.coursedata?.lessonResponseList[index]
+                ?.assignmentResponse !== null ? (
+                <div
+                  className="TestMain-div"
+                  onClick={() => {
+                    handleAssignmentClick(
+                      props.coursedata?.lessonResponseList[index]
+                        ?.assignmentResponse.assignmentId,
+                      props.coursedata?.lessonResponseList[index]
+                        ?.assignmentResponse.assignmentName,
+                      props.coursedata?.lessonResponseList[index]
+                        ?.assignmentResponse.testDuration
+                    );
+                  }}
+                >
+                  <div className="ProgressContainer-div">
+                    <img
+                      src={
+                        props.coursedata?.lessonResponseList[index]
+                          ?.assignmentResponse.grade > 0
+                          ? greentick
+                          : greydot
+                      }
+                      style={{
+                        width: "24px",
+                        height: "24px",
+                      }}
+                    ></img>
+                  </div>
+                  <div className="TestContainerMain-div">
+                    <img src={test} style={{ marginLeft: "2%" }}></img>
+                    <div className="TestInsideContainer">
+                      <span className="TestContainerText">
+                        {
+                          props.coursedata?.lessonResponseList[index]
+                            ?.assignmentResponse?.assignmentName
+                        }
+                      </span>
+                      <span className="TestContainerDetailsText">
+                        {(
+                          props.coursedata?.lessonResponseList[index]
+                            ?.assignmentResponse?.testDuration /
+                            3600 +
+                          " "
+                        ).substr(0, 3)}{" "}
+                        Mins |{" "}
+                        {
+                          props.coursedata?.lessonResponseList[index]
+                            ?.assignmentResponse?.questionCount
+                        }{" "}
+                        Questions
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         );

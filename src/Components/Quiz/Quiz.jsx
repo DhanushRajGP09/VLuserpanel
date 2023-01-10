@@ -9,21 +9,40 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "axios";
 import { Carousel } from "react-responsive-carousel";
 import greentick from "../../Assets/Answer Tick Icon.png";
+import submitbutton from "../../Assets/Submitbut.png";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addQuestionAnswer,
+  deletequestionanswer,
+  getQuestionAnswer,
+} from "../../features/Courseslice";
 
-export default function Quiz() {
+export default function Quiz(props) {
   const token = JSON.parse(localStorage.getItem("token"));
 
   const [questiondata, setQuestionData] = useState("");
   const [carouselindex, setcarouselindex] = useState(0);
 
-  console.log("qdat", questiondata);
+  const localid = JSON.parse(localStorage.getItem("assignmentID"));
+  const localname = JSON.parse(localStorage.getItem("assignmentName"));
+  const localduration = JSON.parse(localStorage.getItem("assignmentDuration"));
+
+  const getthereduxquestion = useSelector(getQuestionAnswer);
+  console.log("getthereduxquestion", getthereduxquestion);
+
+  const duration = (localduration / 3600 + " ").substr(0, 3);
+
+  const navigate = useNavigate();
+
+  console.log("qdad", questiondata);
 
   const getTheQuestions = () => {
     console.log("entered");
     axios({
       method: "get",
       params: {
-        assignmentId: 5,
+        assignmentId: localid,
         limit: 100,
         page: 1,
       },
@@ -41,17 +60,31 @@ export default function Quiz() {
       });
   };
 
-  const handleOption = (index, num) => {
+  const dispatch = useDispatch();
+
+  const handleOption = (index, num, id, answer) => {
     document.getElementById(`option${num}${index}`).style.backgroundColor =
       "#EC5D52";
     document.getElementById(`option${num}radio${index}`).src = greentick;
     document.getElementById(`option${num}text${index}`).style.color = "white";
+    dispatch(
+      addQuestionAnswer({
+        questionId: id,
+        givenAnswer: answer,
+      })
+    );
   };
-  const removeselect = (index, num) => {
+  const removeselect = (index, num, id, answer) => {
     document.getElementById(`option${num}${index}`).style.backgroundColor =
       "white";
     document.getElementById(`option${num}radio${index}`).src = radio;
     document.getElementById(`option${num}text${index}`).style.color = "#2b2b2b";
+    dispatch(
+      deletequestionanswer({
+        questionId: id,
+        givenAnswer: answer,
+      })
+    );
   };
 
   useEffect(() => {
@@ -61,7 +94,16 @@ export default function Quiz() {
   return (
     <div className="QuizMain-div">
       <div className="QuizHeaderMain">
-        Module Test 2<img src={closequiz}></img>
+        {localname}
+        <img
+          src={closequiz}
+          style={{
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            navigate("/home/Courseview");
+          }}
+        ></img>
       </div>
       <Carousel
         className="carousel-style"
@@ -79,7 +121,9 @@ export default function Quiz() {
                       <img src={clock}></img>
                     </div>
 
-                    <span className="TimeRemainingText">8mins remaining</span>
+                    <span className="TimeRemainingText">
+                      {duration} mins remaining
+                    </span>
                   </div>
                 </div>
                 <div className="QuestionContainerMain-div">
@@ -93,9 +137,19 @@ export default function Quiz() {
                           document.getElementById(`option1${index}`).style
                             .backgroundColor === "white"
                         ) {
-                          handleOption(index, 1);
+                          handleOption(
+                            index,
+                            1,
+                            data.questionId,
+                            data?.options[0]
+                          );
                         } else {
-                          removeselect(index, 1);
+                          removeselect(
+                            index,
+                            1,
+                            data.questionId,
+                            data?.options[0]
+                          );
                         }
                       }}
                     >
@@ -119,9 +173,19 @@ export default function Quiz() {
                           document.getElementById(`option2${index}`).style
                             .backgroundColor === "white"
                         ) {
-                          handleOption(index, 2);
+                          handleOption(
+                            index,
+                            2,
+                            data.questionId,
+                            data?.options[1]
+                          );
                         } else {
-                          removeselect(index, 2);
+                          removeselect(
+                            index,
+                            2,
+                            data.questionId,
+                            data?.options[1]
+                          );
                         }
                       }}
                     >
@@ -144,9 +208,19 @@ export default function Quiz() {
                           document.getElementById(`option3${index}`).style
                             .backgroundColor === "white"
                         ) {
-                          handleOption(index, 3);
+                          handleOption(
+                            index,
+                            3,
+                            data.questionId,
+                            data?.options[2]
+                          );
                         } else {
-                          removeselect(index, 3);
+                          removeselect(
+                            index,
+                            3,
+                            data.questionId,
+                            data?.options[2]
+                          );
                         }
                       }}
                     >
@@ -169,9 +243,19 @@ export default function Quiz() {
                           document.getElementById(`option4${index}`).style
                             .backgroundColor === "white"
                         ) {
-                          handleOption(index, 4);
+                          handleOption(
+                            index,
+                            4,
+                            data.questionId,
+                            data?.options[3]
+                          );
                         } else {
-                          removeselect(index, 4);
+                          removeselect(
+                            index,
+                            4,
+                            data.questionId,
+                            data?.options[3]
+                          );
                         }
                       }}
                     >
@@ -230,8 +314,11 @@ export default function Quiz() {
               ></img>
             ) : (
               <img
-                src={rightarrow}
-                style={{ cursor: "pointer", display: "none" }}
+                src={submitbutton}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  props.setResultModal(true);
+                }}
               ></img>
             )}
           </div>

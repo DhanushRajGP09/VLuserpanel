@@ -98,7 +98,7 @@ export default function Courseview() {
   };
   const [played, setPlayed] = useState(0);
 
-  console.log("plaayas", played);
+  console.log("plaaa", played);
 
   const getOverview = async () => {
     console.log("entere");

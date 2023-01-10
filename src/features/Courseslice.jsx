@@ -18,7 +18,9 @@ const CourseSlice = createSlice({
     categories: [],
     durationRequestList: [],
     filter: {},
+
     TheLessonID: "",
+    QuestionAnswers: [],
   },
   reducers: {
     addcourseId: (state, { payload }) => {
@@ -95,6 +97,24 @@ const CourseSlice = createSlice({
         (data) => data.startDuration !== payload.startDuration
       );
     },
+    addQuestionAnswer: (state, action) => {
+      let isPresent = false;
+      for (let item of state.QuestionAnswers) {
+        if (item.questionId === action.payload.questionId) {
+          isPresent = true;
+          item.givenAnswer = action.payload.givenAnswer;
+        }
+      }
+      if (!isPresent) {
+        console.log("Got a hit");
+        state.QuestionAnswers.push(action.payload);
+      }
+    },
+    deletequestionanswer: (state, { payload }) => {
+      state.QuestionAnswers = state.QuestionAnswers.filter(
+        (data) => data.questionId !== payload.questionId
+      );
+    },
   },
   extraReducers: {},
 });
@@ -118,6 +138,8 @@ export const {
   deleteFromFilter,
   addToFilter,
   addTheLessonID,
+  addQuestionAnswer,
+  deletequestionanswer,
 } = CourseSlice.actions;
 
 export const getCourseId = (state) => state.Course.courseId;
@@ -136,5 +158,6 @@ export const getFilter = (state) => state.Course.filter;
 export const getDurationRequestlist = (state) =>
   state.Course.durationRequestList;
 export const getTheLessonID = (state) => state.Course.TheLessonID;
+export const getQuestionAnswer = (state) => state.Course.QuestionAnswers;
 
 export default CourseSlice.reducer;
