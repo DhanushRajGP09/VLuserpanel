@@ -118,7 +118,7 @@ export default function Courseview() {
   const [theLessonId, setTheLessonId] = useState(0);
 
   const getthelessonid = useSelector(getTheLessonID);
-  console.log("getthelessonid", getthelessonid);
+  console.log("getthelessoni", getthelessonid);
 
   const handleOnPause = async (time) => {
     console.log("entered");
@@ -172,7 +172,7 @@ export default function Courseview() {
     setid(getcourseid);
   }, []);
 
-  console.log("played.", played);
+  console.log("playe", played);
 
   const handlerender = () => {
     console.log("rendered");

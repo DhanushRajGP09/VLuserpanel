@@ -1,21 +1,22 @@
 .QuizMain-div {
   margin-top: 100px;
-  background-color: lightblue;
+  flex-wrap: wrap;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   width: 75%;
-  height: 100vh;
+  height: auto;
 }
 
 .QuizHeaderMain {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   height: 30px;
   width: 100%;
-
+  margin-top: 3%;
   font-family: "Biko", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -30,4 +31,191 @@
   flex: none;
   order: 0;
   flex-grow: 0;
+}
+.QuestionHeaderMain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+  flex-wrap: wrap;
+  font-family: "Proxima Nova", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  /* identical to box height, or 120% */
+
+  color: #7a7a7a;
+  width: 100%;
+  margin-top: 3%;
+}
+.QuestionPaginationInside-div {
+  width: 87%;
+  height: auto;
+  flex-wrap: wrap;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.QuestionText {
+  width: auto;
+  height: auto;
+  font-family: "Proxima Nova", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 24px;
+  color: #2b2b2b;
+}
+.QuestionTime-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  width: auto;
+  height: 25.71px;
+  left: 1366px;
+  top: 170px;
+}
+.OptionContainer {
+  cursor: pointer;
+  width: 100%;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
+  border-radius: 6px;
+}
+.QuestionContainerMain-div {
+  height: 100%;
+  width: 57%;
+  margin-top: 3%;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.OptionsContainerMain-div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 5%;
+
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 354px;
+}
+
+.ChapterPaginationtext-div {
+  width: 47%;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-family: "Proxima Nova", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  /* or 133% */
+
+  color: #ffffff;
+}
+.ChapterPaginationArrows-div {
+  width: 154px;
+  height: 25.04px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ChapterNamePagination {
+  width: auto;
+  height: auto;
+  justify-content: space-between;
+  font-family: "Proxima Nova", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  /* or 133% */
+
+  color: #ffffff;
+}
+
+.Radio-div {
+  margin-left: 2%;
+}
+.OptionText {
+  width: 100%;
+  height: 24px;
+  font-family: "Proxima Nova", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 24px;
+  /* identical to box height, or 100% */
+
+  color: #2b2b2b;
+}
+.ellipse {
+  margin-left: 2%;
+  width: 20px;
+  height: 20px;
+}
+.carousel-style {
+  height: auto;
+  width: 100%;
+  text-decoration: none;
+}
+.QuestionsDiv {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.control-prev {
+  display: none;
+}
+.control-next {
+  display: none;
+}
+.carousel-status {
+  display: none;
+}
+
+.QuestionPaginationMain-div {
+  width: 33%;
+  height: auto;
+  padding-top: 1.5%;
+  padding-bottom: 1.5%;
+  margin-top: 3%;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-left: 25%;
+  background: #2bb5f4;
+  border-radius: 6px;
+}
+.TimeRemainingText {
+  width: auto;
+  height: 24px;
+  font-family: "Proxima Nova", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #2bb5f4;
 }
