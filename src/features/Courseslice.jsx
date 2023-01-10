@@ -18,6 +18,7 @@ const CourseSlice = createSlice({
     categories: [],
     durationRequestList: [],
     filter: {},
+    TheLessonID: "",
   },
   reducers: {
     addcourseId: (state, { payload }) => {
@@ -25,6 +26,9 @@ const CourseSlice = createSlice({
     },
     addToFilter: (state, { payload }) => {
       state.filter = payload;
+    },
+    addTheLessonID: (state, { payload }) => {
+      state.TheLessonID = payload;
     },
     deleteFromFilter: (state, { payload }) => {
       state.filter = {};
@@ -113,6 +117,7 @@ export const {
   addcategories,
   deleteFromFilter,
   addToFilter,
+  addTheLessonID,
 } = CourseSlice.actions;
 
 export const getCourseId = (state) => state.Course.courseId;
@@ -130,5 +135,6 @@ export const getCategories = (state) => state.Course.categories;
 export const getFilter = (state) => state.Course.filter;
 export const getDurationRequestlist = (state) =>
   state.Course.durationRequestList;
+export const getTheLessonID = (state) => state.Course.TheLessonID;
 
 export default CourseSlice.reducer;

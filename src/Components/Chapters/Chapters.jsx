@@ -7,8 +7,12 @@ import greentick from "../../Assets/Green Tick@2x.png";
 import greyplay from "../../Assets/grey play@2x.png";
 import greendot from "../../Assets/Group Dot@2x.png";
 import greydot from "../../Assets/Grey Dot@2x.png";
+import { addTheLessonID } from "../../features/Courseslice";
+import { useDispatch } from "react-redux";
 
 export default function Chapters(props) {
+  const dispatch = useDispatch();
+
   return (
     <>
       <div className="CourseSidebar-header">
@@ -141,7 +145,21 @@ export default function Chapters(props) {
                             }}
                             onClick={() => {
                               props.setvideo(true);
-
+                              props.setImage(true);
+                              props.setImageUrl(
+                                props.coursedata?.lessonResponseList[
+                                  index
+                                ]?.lessonList[index2]?.videoLink.replace(
+                                  ".mp4",
+                                  ".jpg"
+                                )
+                              );
+                              dispatch(
+                                addTheLessonID(
+                                  props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList[index2]?.lessonId
+                                )
+                              );
                               props.setVideoUrl(
                                 props.coursedata?.lessonResponseList[index]
                                   ?.lessonList[index2]?.videoLink
@@ -150,14 +168,26 @@ export default function Chapters(props) {
                                 props.coursedata?.lessonResponseList[index]
                                   ?.lessonList[index2]?.lessonId
                               );
-                              console.log(
+                              if (
                                 props.coursedata?.lessonResponseList[index]
-                                  ?.lessonList[index2]?.lessonId
-                              );
-                              console.log(
+                                  ?.lessonList[index2]?.videoLink ===
                                 props.coursedata?.lessonResponseList[index]
-                                  ?.lessonList[index2]?.videoLink
-                              );
+                                  ?.lessonList[
+                                  props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList?.length - 1
+                                ]?.videoLink
+                              ) {
+                                props.setNextvideo(
+                                  props.coursedata?.lessonResponseList[
+                                    index + 1
+                                  ]?.lessonList[0]?.videoLink
+                                );
+                              } else {
+                                props.setNextvideo(
+                                  props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList[index2 + 1]?.videoLink
+                                );
+                              }
                             }}
                           ></img>
                         </div>

@@ -14,6 +14,7 @@ import {
   getCourseId,
   getCourseOverview,
   getOngoingCourseName,
+  getTheLessonID,
 } from "../../features/Courseslice";
 import ReactPlayer from "react-player";
 import Chapters from "../Chapters/Chapters";
@@ -62,7 +63,7 @@ export default function Courseview() {
   console.log("courseid..", getcourseid);
 
   const getcoursename = useSelector(getOngoingCourseName);
-  console.log("coursenam", getcoursename);
+  console.log("coursename", getcoursename);
 
   const [id, setid] = useState(getcourseid);
   const [name, setName] = useState(getcoursename);
@@ -97,7 +98,7 @@ export default function Courseview() {
   };
   const [played, setPlayed] = useState(0);
 
-  console.log("played", played);
+  console.log("plaayas", played);
 
   const getOverview = async () => {
     console.log("entere");
@@ -116,6 +117,9 @@ export default function Courseview() {
 
   const [theLessonId, setTheLessonId] = useState(0);
 
+  const getthelessonid = useSelector(getTheLessonID);
+  console.log("getthelessonid", getthelessonid);
+
   const handleOnPause = async (time) => {
     console.log("entered");
     axios({
@@ -124,7 +128,11 @@ export default function Courseview() {
         Authorization: `Bearer ${token}`,
       },
       params: {
-        lessonId: theLessonId,
+        lessonId: image
+          ? getthelessonid
+          : coursedata?.currentLesson !== null
+          ? coursedata?.currentLesson?.lessonId
+          : coursedata?.lessonResponseList[0]?.lessonList[0]?.lessonId,
         duration: time,
       },
       url: `https://app-virtuallearning-230106135903.azurewebsites.net/user/lesson`,
@@ -133,20 +141,48 @@ export default function Courseview() {
     });
   };
 
+  const handleOnEnd = async (time) => {
+    console.log("entered");
+    axios({
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        lessonId: image
+          ? getthelessonid + 1
+          : coursedata?.currentLesson !== null
+          ? coursedata?.currentLesson?.lessonId + 1
+          : coursedata?.lessonResponseList[0]?.lessonList[0]?.lessonId + 1,
+        duration: time,
+      },
+      url: `https://app-virtuallearning-230106135903.azurewebsites.net/user/lesson`,
+    }).then(function (response) {
+      console.log("End", response);
+    });
+  };
+
   const OverView = useSelector(getCourseOverview);
   const [thumbtext, setThumbtext] = useState(true);
 
-  console.log("coursedata", coursedata);
+  console.log("coursedat", coursedata);
   useEffect(() => {
     getOverview();
     getCourse();
     setid(getcourseid);
   }, []);
 
-  console.log("pla", played);
+  console.log("played.", played);
+
+  const handlerender = () => {
+    console.log("rendered");
+  };
 
   const Totalvideo =
     coursedata?.courseContentResponse?.totalVideoLength / 3600 + " ";
+
+  const [nextvideo, setNextvideo] = useState("");
+  console.log("next", nextvideo);
 
   const videolength = Totalvideo.substr(0, 4);
   const username = JSON.parse(localStorage.getItem("name"));
@@ -167,8 +203,15 @@ export default function Courseview() {
     const time = playerRef.current.getCurrentTime();
     setPlayed(Math.round(time));
     handleOnPause(Math.round(time));
+    handlerender();
   }, [playerRef.current]);
   console.log("thelid,dur", theLessonId, played);
+
+  const onHandleEnd = React.useCallback(() => {
+    const time = playerRef.current.getCurrentTime();
+    setPlayed(Math.round(time));
+    handleOnEnd(1);
+  }, [playerRef.current]);
 
   return (
     <>
@@ -221,6 +264,8 @@ export default function Courseview() {
                   }}
                   onEnded={() => {
                     onHandlePause();
+                    onHandleEnd();
+                    setVideoUrl(nextvideo);
                   }}
                   ref={playerRef}
                   controls
@@ -229,7 +274,13 @@ export default function Courseview() {
                       ? imageurl
                       : OverView?.overview?.videoLink.replace(".mp4", ".jpg")
                   }
-                  url={video ? videourl : OverView?.overview?.videoLink}
+                  url={
+                    video
+                      ? videourl
+                      : coursedata?.currentLesson !== null
+                      ? coursedata?.currentLesson?.videoLink
+                      : OverView?.overview?.videoLink
+                  }
                   width="100%"
                   height="531px"
                   onReady={TheRef ? onHandlePause : onReady}
@@ -375,6 +426,9 @@ export default function Courseview() {
                       setVideoUrl={setVideoUrl}
                       setvideo={setvideo}
                       setTheLessonId={setTheLessonId}
+                      setNextvideo={setNextvideo}
+                      setImage={setImage}
+                      setImageUrl={setImageUrl}
                     />
                   }
                 ></Route>

@@ -10,6 +10,7 @@ import Login from "../Login/Login";
 import Topcategory from "../../Components/TopCategory/Topcategory";
 import TheAllCourses from "../../Components/TheAllCourses/TheAllCourses";
 import Modal from "../../Components/Modal/Modal";
+import Quiz from "../../Components/Quiz/Quiz";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ export default function Home() {
         <Route path="/Courseview/*" element={<Courseview />}></Route>
         <Route path="/Topcategory/*" element={<Topcategory />}></Route>
         <Route path="/Choice/*" element={<TheAllCourses />}></Route>
+        <Route path="/Quiz/*" element={<Quiz />}></Route>
       </Routes>
     </div>
   );
