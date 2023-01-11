@@ -16,13 +16,12 @@ export default function Overview(props) {
   console.log("overview", Overview);
 
   const [overviewdata, setOverview] = useState(Overview);
-  console.log("overview", overviewdata);
+  console.log("overvie", overviewdata);
   const [about, setabout] = useState(false);
   const Totalvideo = Overview?.courseIncludes?.totalHourVideo / 3600 + " ";
 
   const videolength = Totalvideo.substr(0, 4);
   const token = JSON.parse(localStorage.getItem("token"));
-  console.log("tokenfrom dash", token);
 
   const handleJoin = () => {
     console.log("entered");
@@ -38,6 +37,8 @@ export default function Overview(props) {
     })
       .then(function (response) {
         console.log(response.data);
+        alert("joined successfully");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -222,14 +223,14 @@ export default function Overview(props) {
       {Overview?.joined_course ? (
         " "
       ) : (
-        <form
+        <div
           className="join-btn"
-          onSubmit={() => {
+          onClick={() => {
             handleJoin();
           }}
         >
           <button className="join">Join Course</button>
-        </form>
+        </div>
       )}
     </>
   );

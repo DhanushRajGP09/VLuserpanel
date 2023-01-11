@@ -4,14 +4,17 @@ import { useNavigate } from "react-router";
 
 export default function Congratulations() {
   const navigate = useNavigate();
+
+  const localname = JSON.parse(localStorage.getItem("assignmentName"));
+  const localCoursename = JSON.parse(localStorage.getItem("coursename"));
+
   return (
     <div className="CongratulationsMain-div">
       <div className="CongratulationsMain">
         <img src={img} style={{ width: "587px", height: "428px" }}></img>
         <span className="CongratsText">Congratulations!</span>
         <span className="CongratsdescText">
-          You have completed Chapter 3 - Setting up a new project from Course:
-          Learn Figma - UI/UX Design Essential Training
+          You have completed {localname} from Course: {localCoursename}
         </span>
         <div
           className="ApplyFilterButton"

@@ -14,9 +14,8 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route element={<PrivateComponent />}>
-            <Route exact path="/home/*" element={<Home />}></Route>
-          </Route>
+          <Route exact path="/home/*" element={<Home />}></Route>
+
           <Route path="/" element={<Login />}></Route>
         </Routes>
       </div>

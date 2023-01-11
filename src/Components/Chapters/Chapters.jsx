@@ -142,64 +142,80 @@ export default function Chapters(props) {
                               mins
                             </span>
                           </div>
-                          <img
-                            src={
-                              props.coursedata?.lessonResponseList[index]
-                                ?.lessonList[index2]?.durationCompleted > 0
-                                ? redplay
-                                : greyplay
-                            }
-                            style={{
-                              marginRight: "2%",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              props.setvideo(true);
-                              props.setImage(true);
-                              props.setImageUrl(
-                                props.coursedata?.lessonResponseList[
-                                  index
-                                ]?.lessonList[index2]?.videoLink.replace(
-                                  ".mp4",
-                                  ".jpg"
-                                )
-                              );
-                              dispatch(
-                                addTheLessonID(
+                          {props.coursedata?.lessonResponseList[index]
+                            ?.lessonList[index2 - 1]?.lessonCompleted ? (
+                            <img
+                              src={
+                                props.coursedata?.lessonResponseList[index]
+                                  ?.lessonList[index2]?.durationCompleted > 0
+                                  ? redplay
+                                  : greyplay
+                              }
+                              style={{
+                                marginRight: "2%",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                props.setvideo(true);
+                                props.setImage(true);
+                                props.setImageUrl(
+                                  props.coursedata?.lessonResponseList[
+                                    index
+                                  ]?.lessonList[index2]?.videoLink.replace(
+                                    ".mp4",
+                                    ".jpg"
+                                  )
+                                );
+                                dispatch(
+                                  addTheLessonID(
+                                    props.coursedata?.lessonResponseList[index]
+                                      ?.lessonList[index2]?.lessonId
+                                  )
+                                );
+                                props.setVideoUrl(
+                                  props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList[index2]?.videoLink
+                                );
+                                props.setTheLessonId(
                                   props.coursedata?.lessonResponseList[index]
                                     ?.lessonList[index2]?.lessonId
-                                )
-                              );
-                              props.setVideoUrl(
-                                props.coursedata?.lessonResponseList[index]
-                                  ?.lessonList[index2]?.videoLink
-                              );
-                              props.setTheLessonId(
-                                props.coursedata?.lessonResponseList[index]
-                                  ?.lessonList[index2]?.lessonId
-                              );
-                              if (
-                                props.coursedata?.lessonResponseList[index]
-                                  ?.lessonList[index2]?.videoLink ===
-                                props.coursedata?.lessonResponseList[index]
-                                  ?.lessonList[
-                                  props.coursedata?.lessonResponseList[index]
-                                    ?.lessonList?.length - 1
-                                ]?.videoLink
-                              ) {
-                                props.setNextvideo(
-                                  props.coursedata?.lessonResponseList[
-                                    index + 1
-                                  ]?.lessonList[0]?.videoLink
                                 );
-                              } else {
-                                props.setNextvideo(
+                                if (
                                   props.coursedata?.lessonResponseList[index]
-                                    ?.lessonList[index2 + 1]?.videoLink
-                                );
+                                    ?.lessonList[index2]?.videoLink ===
+                                  props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList[
+                                    props.coursedata?.lessonResponseList[index]
+                                      ?.lessonList?.length - 1
+                                  ]?.videoLink
+                                ) {
+                                  props.setNextvideo(
+                                    props.coursedata?.lessonResponseList[
+                                      index + 1
+                                    ]?.lessonList[0]?.videoLink
+                                  );
+                                } else {
+                                  props.setNextvideo(
+                                    props.coursedata?.lessonResponseList[index]
+                                      ?.lessonList[index2 + 1]?.videoLink
+                                  );
+                                }
+                              }}
+                            ></img>
+                          ) : (
+                            <img
+                              src={
+                                props.coursedata?.lessonResponseList[index]
+                                  ?.lessonList[index2]?.durationCompleted > 0
+                                  ? redplay
+                                  : greyplay
                               }
-                            }}
-                          ></img>
+                              style={{
+                                marginRight: "2%",
+                                cursor: "pointer",
+                              }}
+                            ></img>
+                          )}
                         </div>
                       </div>
                     );
@@ -207,22 +223,81 @@ export default function Chapters(props) {
                 )}
                 {}
               </div>
-
-              {props.coursedata?.lessonResponseList[index]
-                ?.assignmentResponse !== null ? (
-                <div
-                  className="TestMain-div"
-                  onClick={() => {
-                    handleAssignmentClick(
-                      props.coursedata?.lessonResponseList[index]
-                        ?.assignmentResponse.assignmentId,
-                      props.coursedata?.lessonResponseList[index]
-                        ?.assignmentResponse.assignmentName,
-                      props.coursedata?.lessonResponseList[index]
-                        ?.assignmentResponse.testDuration
-                    );
-                  }}
-                >
+              {props.coursedata?.lessonResponseList[index].lessonList[
+                props.coursedata?.lessonResponseList[index].lessonList.length -
+                  1
+              ].lessonCompleted ? (
+                props.coursedata?.lessonResponseList[index]
+                  ?.assignmentResponse !== null ? (
+                  <div
+                    className="TestMain-div"
+                    onClick={() => {
+                      handleAssignmentClick(
+                        props.coursedata?.lessonResponseList[index]
+                          ?.assignmentResponse.assignmentId,
+                        props.coursedata?.lessonResponseList[index]
+                          ?.assignmentResponse.assignmentName,
+                        props.coursedata?.lessonResponseList[index]
+                          ?.assignmentResponse.testDuration
+                      );
+                    }}
+                  >
+                    <div className="ProgressContainer-div">
+                      <img
+                        src={
+                          props.coursedata?.lessonResponseList[index]
+                            ?.assignmentResponse.grade > 0
+                            ? greentick
+                            : greydot
+                        }
+                        style={{
+                          width: "24px",
+                          height: "24px",
+                        }}
+                      ></img>
+                    </div>
+                    <div className="TestContainerMain-div">
+                      <img src={test} style={{ marginLeft: "2%" }}></img>
+                      <div className="TestInsideContainer">
+                        <span
+                          className="TestContainerText"
+                          style={{
+                            cursor: "pointer",
+                          }}
+                        >
+                          {
+                            props.coursedata?.lessonResponseList[index]
+                              ?.assignmentResponse?.assignmentName
+                          }
+                        </span>
+                        <span
+                          className="TestContainerDetailsText"
+                          style={{
+                            cursor: "pointer",
+                          }}
+                        >
+                          {(
+                            props.coursedata?.lessonResponseList[index]
+                              ?.assignmentResponse?.testDuration /
+                              3600 +
+                            " "
+                          ).substr(0, 3)}{" "}
+                          Mins |{" "}
+                          {
+                            props.coursedata?.lessonResponseList[index]
+                              ?.assignmentResponse?.questionCount
+                          }{" "}
+                          Questions
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )
+              ) : props.coursedata?.lessonResponseList[index]
+                  ?.assignmentResponse !== null ? (
+                <div className="TestMain-div">
                   <div className="ProgressContainer-div">
                     <img
                       src={
@@ -240,13 +315,23 @@ export default function Chapters(props) {
                   <div className="TestContainerMain-div">
                     <img src={test} style={{ marginLeft: "2%" }}></img>
                     <div className="TestInsideContainer">
-                      <span className="TestContainerText">
+                      <span
+                        className="TestContainerText"
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      >
                         {
                           props.coursedata?.lessonResponseList[index]
                             ?.assignmentResponse?.assignmentName
                         }
                       </span>
-                      <span className="TestContainerDetailsText">
+                      <span
+                        className="TestContainerDetailsText"
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      >
                         {(
                           props.coursedata?.lessonResponseList[index]
                             ?.assignmentResponse?.testDuration /

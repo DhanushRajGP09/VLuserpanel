@@ -60,7 +60,7 @@ export default function Courseview() {
   const dispatch = useDispatch();
 
   const getcourseid = useSelector(getCourseId);
-  console.log("courseid..", getcourseid);
+  console.log("courseid.", getcourseid);
 
   const getcoursename = useSelector(getOngoingCourseName);
   console.log("coursename", getcoursename);
@@ -344,10 +344,13 @@ export default function Courseview() {
                       <div className="joinDatediv">
                         <span className="joinDateText">Duration</span>
                         <span className="joinDate">
-                          {(coursedata?.certificateResponse
-                            ?.completionDuration /
-                            3600) *
-                            60}
+                          {(
+                            (coursedata?.certificateResponse
+                              ?.completionDuration /
+                              3600) *
+                              60 +
+                            ""
+                          ).substr(0, 3)}
                           m
                         </span>
                       </div>

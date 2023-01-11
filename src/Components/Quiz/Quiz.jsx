@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Quiz.css";
 import closequiz from "../../Assets/closequiz.png";
 import radio from "../../Assets/Ellipse 10.png";
@@ -31,11 +31,42 @@ export default function Quiz(props) {
   const getthereduxquestion = useSelector(getQuestionAnswer);
   console.log("getthereduxquestion", getthereduxquestion);
 
-  const duration = (localduration / 3600 + " ").substr(0, 3);
+  const duration = (localduration / 3600) * 60 + "";
+
+  let arr = duration.split(".");
+  console.log("arr", arr);
+
+  const minutes1 = parseInt(arr[0]);
+  console.log("minutes", minutes1);
+
+  const seconds1 = arr.length > 1 ? parseInt(arr[1]?.substr(0, 1)) : 0;
+
+  console.log("seconds", seconds1);
+
+  const localID = JSON.parse(localStorage.getItem("assignmentID"));
+  console.log("localid", localID);
 
   const navigate = useNavigate();
 
   console.log("qdad", questiondata);
+
+  const handleSubmit = () => {
+    console.log("entered");
+    axios({
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        assignmentId: localID,
+        questionAnswers: getthereduxquestion,
+      },
+      url: `https://app-virtuallearning-230106135903.azurewebsites.net/user/assignment`,
+    }).then(function (response) {
+      console.log(response);
+      navigate("/home/congrats");
+    });
+  };
 
   const getTheQuestions = () => {
     console.log("entered");
@@ -74,6 +105,29 @@ export default function Quiz(props) {
       })
     );
   };
+
+  const [minutes, setMinutes] = useState(minutes1);
+  const [seconds, setSeconds] = useState(seconds1);
+  useEffect(() => {
+    let myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          handleSubmit();
+          clearInterval(myInterval);
+        } else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
+    return () => {
+      clearInterval(myInterval);
+    };
+  });
+
   const removeselect = (index, num, id, answer) => {
     document.getElementById(`option${num}${index}`).style.backgroundColor =
       "white";
@@ -122,7 +176,13 @@ export default function Quiz(props) {
                     </div>
 
                     <span className="TimeRemainingText">
-                      {duration} mins remaining
+                      {minutes === 0 && seconds === 0 ? null : (
+                        <span>
+                          {" "}
+                          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}{" "}
+                          mins remaining
+                        </span>
+                      )}
                     </span>
                   </div>
                 </div>
