@@ -16,15 +16,20 @@ export default function Chapters(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleAssignmentClick = (id, name, duration) => {
-    localStorage.setItem("assignmentID", JSON.stringify(id));
-    localStorage.setItem("assignmentName", JSON.stringify(name));
-    localStorage.setItem("assignmentDuration", JSON.stringify(duration));
-    navigate("/home/Quiz");
+  const handleAssignmentClick = (id, name, duration, index) => {
+    if (
+      props.coursedata?.lessonResponseList[index]?.assignmentResponse
+        ?.assignmentCompleted === false
+    ) {
+      localStorage.setItem("assignmentID", JSON.stringify(id));
+      localStorage.setItem("assignmentName", JSON.stringify(name));
+      localStorage.setItem("assignmentDuration", JSON.stringify(duration));
+      navigate("/home/Quiz");
+    }
   };
 
   return (
-    <>
+    <div className="CHAPTERS">
       <div className="CourseSidebar-header">
         <span className="CourseContentText">Course Content</span>
         <span className="CourseContentDetails">
@@ -99,6 +104,11 @@ export default function Chapters(props) {
                                 ?.lessonList[index2]?.lessonCompleted
                                 ? greentick
                                 : props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList[index2]?.durationCompleted ===
+                                  props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList[index2]?.duration
+                                ? greentick
+                                : props.coursedata?.lessonResponseList[index]
                                     ?.lessonList[index2]?.durationCompleted > 0
                                 ? greendot
                                 : greydot
@@ -142,8 +152,97 @@ export default function Chapters(props) {
                               mins
                             </span>
                           </div>
-                          {props.coursedata?.lessonResponseList[index]
-                            ?.lessonList[index2 - 1]?.lessonCompleted ? (
+
+                          {!props.coursedata?.lessonResponseList[0]
+                            ?.lessonList[0] ? (
+                            props.coursedata?.lessonResponseList[index]
+                              ?.lessonList[index2 - 1]?.lessonCompleted ? (
+                              <img
+                                src={
+                                  props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList[index2]?.durationCompleted > 0
+                                    ? redplay
+                                    : greyplay
+                                }
+                                style={{
+                                  marginRight: "2%",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => {
+                                  props.setvideo(true);
+                                  props.setImage(true);
+                                  props.setImageUrl(
+                                    props.coursedata?.lessonResponseList[
+                                      index
+                                    ]?.lessonList[index2]?.videoLink.replace(
+                                      ".mp4",
+                                      ".jpg"
+                                    )
+                                  );
+                                  dispatch(
+                                    addTheLessonID(
+                                      props.coursedata?.lessonResponseList[
+                                        index
+                                      ]?.lessonList[index2]?.lessonId
+                                    )
+                                  );
+                                  props.setVideoUrl(
+                                    props.coursedata?.lessonResponseList[index]
+                                      ?.lessonList[index2]?.videoLink
+                                  );
+                                  localStorage.setItem(
+                                    "videoURL",
+                                    JSON.stringify(
+                                      props.coursedata?.lessonResponseList[
+                                        index
+                                      ]?.lessonList[index2]?.videoLink
+                                    )
+                                  );
+
+                                  props.setTheLessonId(
+                                    props.coursedata?.lessonResponseList[index]
+                                      ?.lessonList[index2]?.lessonId
+                                  );
+                                  if (
+                                    props.coursedata?.lessonResponseList[index]
+                                      ?.lessonList[index2]?.videoLink ===
+                                    props.coursedata?.lessonResponseList[index]
+                                      ?.lessonList[
+                                      props.coursedata?.lessonResponseList[
+                                        index
+                                      ]?.lessonList?.length - 1
+                                    ]?.videoLink
+                                  ) {
+                                    props.setNextvideo(
+                                      props.coursedata?.lessonResponseList[
+                                        index + 1
+                                      ]?.lessonList[0]?.videoLink
+                                    );
+                                  } else {
+                                    props.setNextvideo(
+                                      props.coursedata?.lessonResponseList[
+                                        index
+                                      ]?.lessonList[index2 + 1]?.videoLink
+                                    );
+                                  }
+                                }}
+                              ></img>
+                            ) : (
+                              <img
+                                src={
+                                  props.coursedata?.lessonResponseList[index]
+                                    ?.lessonList[index2]?.durationCompleted > 0
+                                    ? redplay
+                                    : greyplay
+                                }
+                                style={{
+                                  marginRight: "2%",
+                                  cursor: "pointer",
+                                }}
+                              ></img>
+                            )
+                          ) : props.coursedata?.lessonResponseList[index]
+                              ?.lessonList[index2 - 1]?.lessonCompleted ? (
                             <img
                               src={
                                 props.coursedata?.lessonResponseList[index]
@@ -176,6 +275,14 @@ export default function Chapters(props) {
                                   props.coursedata?.lessonResponseList[index]
                                     ?.lessonList[index2]?.videoLink
                                 );
+                                localStorage.setItem(
+                                  "videoURL",
+                                  JSON.stringify(
+                                    props.coursedata?.lessonResponseList[index]
+                                      ?.lessonList[index2]?.videoLink
+                                  )
+                                );
+
                                 props.setTheLessonId(
                                   props.coursedata?.lessonResponseList[index]
                                     ?.lessonList[index2]?.lessonId
@@ -238,7 +345,8 @@ export default function Chapters(props) {
                         props.coursedata?.lessonResponseList[index]
                           ?.assignmentResponse.assignmentName,
                         props.coursedata?.lessonResponseList[index]
-                          ?.assignmentResponse.testDuration
+                          ?.assignmentResponse.testDuration,
+                        index
                       );
                     }}
                   >
@@ -355,6 +463,6 @@ export default function Chapters(props) {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }

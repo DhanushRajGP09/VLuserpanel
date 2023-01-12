@@ -231,7 +231,7 @@ export default function Homepage() {
               src={Banner[0].imageLink}
               style={{
                 borderRadius: "6px",
-                width: "540px",
+                width: "520px",
                 height: "332px",
                 marginTop: "4%",
               }}
@@ -243,7 +243,7 @@ export default function Homepage() {
               src={Banner[1].imageLink}
               style={{
                 borderRadius: "6px",
-                width: "540px",
+                width: "520px",
                 height: "332px",
                 marginTop: "4%",
               }}
@@ -326,100 +326,125 @@ export default function Homepage() {
       </div>
 
       {ongoingdata?.length > 0 ? (
-        <div className="OnGoingCoursesMain-div">
-          <div className="OnGoingCoursesContainer">
-            <img
-              src={ongoingdata[0]?.course_image}
-              style={{
-                borderRadius: "6px",
-                width: "519px",
-                height: "332px",
-                marginTop: "4%",
-              }}
-            ></img>
-            <span className="OnGoingCoursesContainerText">
-              {ongoingdata[0]?.course_name.length > 23
-                ? ongoingdata[0]?.course_name.substr(0, 23) + "..."
-                : ongoingdata[0]?.course_name}
-            </span>
-            <span className="CompletedOutOfText">
-              {ongoingdata[0]?.completed_chapter_count}/
-              {ongoingdata[0]?.chapter_count}
-              chapters
-            </span>
-            <img
-              src={continuebutton}
-              className="continuebutton"
-              onClick={() => {
-                handleContinue(
-                  ongoingdata[0]?.course_id,
-                  ongoingdata[0]?.course_name
-                );
-              }}
-            ></img>
-          </div>
-          <div className="OnGoingCoursesContainer">
-            <img
-              src={ongoingdata[1]?.course_image}
-              style={{
-                borderRadius: "6px",
-                width: "519px",
-                height: "332px",
-                marginTop: "4%",
-              }}
-            ></img>
-            <span className="OnGoingCoursesContainerText">
-              {ongoingdata[1]?.course_name.length > 23
-                ? ongoingdata[1]?.course_name.substr(0, 23) + "..."
-                : ongoingdata[1]?.course_name}
-            </span>
-            <span className="CompletedOutOfText">
-              {ongoingdata[1]?.completed_chapter_count}/
-              {ongoingdata[1]?.chapter_count}
-              chapters
-            </span>
-            <img
-              src={continuebutton}
-              className="continuebutton"
-              onClick={() => {
-                handleContinue(
-                  ongoingdata[1]?.course_id,
-                  ongoingdata[1]?.course_name
-                );
-              }}
-            ></img>
-          </div>
-          <div className="OnGoingCoursesContainer">
-            <img
-              src={ongoingdata[2]?.course_image}
-              style={{
-                borderRadius: "6px",
-                width: "519px",
-                height: "332px",
-                marginTop: "4%",
-              }}
-            ></img>
-            <span className="OnGoingCoursesContainerText">
-              {ongoingdata[2]?.course_name.length > 23
-                ? ongoingdata[2]?.course_name.substr(0, 23) + "..."
-                : ongoingdata[2]?.course_name}
-            </span>
-            <span className="CompletedOutOfText">
-              {ongoingdata[2]?.completed_chapter_count}/
-              {ongoingdata[2]?.chapter_count}
-              chapters
-            </span>
-            <img
-              src={continuebutton}
-              className="continuebutton"
-              onClick={() => {
-                handleContinue(
-                  ongoingdata[2]?.course_id,
-                  ongoingdata[2]?.course_name
-                );
-              }}
-            ></img>
-          </div>
+        <div
+          className="OnGoingCoursesMain-div"
+          style={{
+            width:
+              ongoingdata?.length < 2
+                ? "33%"
+                : ongoingdata?.length < 3
+                ? "67%"
+                : ongoingdata?.length === 3
+                ? "100%"
+                : "100%",
+          }}
+        >
+          {ongoingdata?.length > 0 ? (
+            <div className="OnGoingCoursesContainer">
+              <img
+                src={ongoingdata[0]?.course_image}
+                style={{
+                  borderRadius: "6px",
+                  width: "519px",
+                  height: "260px",
+                  marginTop: "4%",
+                }}
+              ></img>
+              <span className="OnGoingCoursesContainerText">
+                {ongoingdata[0]?.course_name.length > 23
+                  ? ongoingdata[0]?.course_name.substr(0, 23) + "..."
+                  : ongoingdata[0]?.course_name}
+              </span>
+              <span className="CompletedOutOfText">
+                {ongoingdata[0]?.completed_chapter_count}/
+                {ongoingdata[0]?.chapter_count}
+                chapters
+              </span>
+              <img
+                src={continuebutton}
+                className="continuebutton"
+                onClick={() => {
+                  handleContinue(
+                    ongoingdata[0]?.course_id,
+                    ongoingdata[0]?.course_name
+                  );
+                }}
+              ></img>
+            </div>
+          ) : (
+            ""
+          )}
+          {ongoingdata?.length > 1 ? (
+            <div className="OnGoingCoursesContainer">
+              <img
+                src={ongoingdata[1]?.course_image}
+                style={{
+                  borderRadius: "6px",
+                  width: "519px",
+                  height: "260px",
+                  marginTop: "4%",
+                }}
+              ></img>
+              <span className="OnGoingCoursesContainerText">
+                {ongoingdata[1]?.course_name.length > 23
+                  ? ongoingdata[1]?.course_name.substr(0, 23) + "..."
+                  : ongoingdata[1]?.course_name}
+              </span>
+              <span className="CompletedOutOfText">
+                {ongoingdata[1]?.completed_chapter_count}/
+                {ongoingdata[1]?.chapter_count}
+                chapters
+              </span>
+              <img
+                src={continuebutton}
+                className="continuebutton"
+                onClick={() => {
+                  handleContinue(
+                    ongoingdata[1]?.course_id,
+                    ongoingdata[1]?.course_name
+                  );
+                }}
+              ></img>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {ongoingdata?.length > 2 ? (
+            <div className="OnGoingCoursesContainer">
+              <img
+                src={ongoingdata[2]?.course_image}
+                style={{
+                  borderRadius: "6px",
+                  width: "519px",
+                  height: "260px",
+                  marginTop: "4%",
+                }}
+              ></img>
+              <span className="OnGoingCoursesContainerText">
+                {ongoingdata[2]?.course_name.length > 23
+                  ? ongoingdata[2]?.course_name.substr(0, 23) + "..."
+                  : ongoingdata[2]?.course_name}
+              </span>
+              <span className="CompletedOutOfText">
+                {ongoingdata[2]?.completed_chapter_count}/
+                {ongoingdata[2]?.chapter_count}
+                chapters
+              </span>
+              <img
+                src={continuebutton}
+                className="continuebutton"
+                onClick={() => {
+                  handleContinue(
+                    ongoingdata[2]?.course_id,
+                    ongoingdata[2]?.course_name
+                  );
+                }}
+              ></img>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       ) : (
         ""

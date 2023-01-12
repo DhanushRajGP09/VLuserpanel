@@ -60,7 +60,7 @@
   height: 262px;
   background: linear-gradient(
     360deg,
-    rgba(0, 0, 0, 0.39) 39.69%,
+    rgba(0, 0, 0, 0.39) 40.69%,
     rgba(0, 0, 0, 0) 100%
   );
   border-radius: 6px;
@@ -73,6 +73,8 @@
   height: 50px;
   font-family: "Proxima Nova Soft", sans-serif;
   font-style: normal;
+  text-shadow: 2px 7px 5px rgba(0, 0, 0, 0.3),
+    0px -4px 10px rgba(255, 255, 255, 0.3);
   font-weight: 600;
   font-size: 24px;
   line-height: 50px;
@@ -93,11 +95,13 @@
 }
 .CompletedOutOfText {
   position: absolute;
+  text-shadow: 2px 7px 5px rgba(0, 0, 0, 0.3),
+    0px -4px 10px rgba(255, 255, 255, 0.3);
   width: auto;
   height: 50px;
   left: 20.09px;
   top: 192px;
-  font-family: "Proxima Nova Soft";
+  font-family: "Proxima Nova Soft", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;

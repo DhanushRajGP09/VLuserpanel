@@ -5,8 +5,8 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 75%;
-  margin-top: 5%;
-  height: 150vh;
+  margin-top: 100px;
+  height: auto;
 }
 .CourseviewTab {
   display: flex;
@@ -85,7 +85,7 @@
   box-sizing: border-box;
 
   width: 464px;
-  height: auto;
+  height: 730px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -120,6 +120,12 @@
   justify-content: space-between;
   align-items: flex-start;
 }
+.CHAPTERS {
+  height: 720px;
+  width: 100%;
+  overflow-y: scroll;
+}
+
 .ApprovalText {
   width: 120px;
   height: 30px;
@@ -383,6 +389,8 @@
   height: 30px;
 
   font-family: "Proxima Nova Soft", sans-serif;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7),
+    0px -4px 10px rgba(255, 255, 255, 0.3);
   font-style: normal;
   font-weight: 500;
   font-size: 30px;
@@ -645,4 +653,8 @@
   /* identical to box height, or 214% */
 
   color: #7a7a7a;
+}
+
+.react-player__play-icon {
+  display: none;
 }

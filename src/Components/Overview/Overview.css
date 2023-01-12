@@ -157,6 +157,11 @@
   justify-content: space-between;
   align-items: flex-start;
 }
+.OVERVIEW {
+  height: 720px;
+  overflow-y: scroll;
+  width: 100%;
+}
 
 .Whatyoulearn-div {
   margin-top: 3%;

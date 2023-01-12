@@ -46,7 +46,7 @@ export default function Overview(props) {
   };
 
   return (
-    <>
+    <div className="OVERVIEW">
       <div className="CoursesInclude-div">
         <span className="couses-Include">Courses Includes</span>
         <div className="courses-folder">
@@ -232,6 +232,6 @@ export default function Overview(props) {
           <button className="join">Join Course</button>
         </div>
       )}
-    </>
+    </div>
   );
 }

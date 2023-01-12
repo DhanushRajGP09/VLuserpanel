@@ -60,10 +60,10 @@ export default function Courseview() {
   const dispatch = useDispatch();
 
   const getcourseid = useSelector(getCourseId);
-  console.log("courseid.", getcourseid);
+  console.log("courseid", getcourseid);
 
   const getcoursename = useSelector(getOngoingCourseName);
-  console.log("coursename", getcoursename);
+  console.log("coursenam", getcoursename);
 
   const [id, setid] = useState(getcourseid);
   const [name, setName] = useState(getcoursename);
@@ -141,6 +141,10 @@ export default function Courseview() {
     });
   };
 
+  const [changeLight, setChangeLight] = useState(true);
+
+  const localVideoURL = JSON.parse(localStorage.getItem("videoURL"));
+
   const handleOnEnd = async (time) => {
     console.log("entered");
     axios({
@@ -159,20 +163,21 @@ export default function Courseview() {
       url: `https://app-virtuallearning-230106135903.azurewebsites.net/user/lesson`,
     }).then(function (response) {
       console.log("End", response);
+      console.log("onenddata", coursedata);
     });
   };
 
   const OverView = useSelector(getCourseOverview);
   const [thumbtext, setThumbtext] = useState(true);
 
-  console.log("coursedat", coursedata);
+  console.log("courseda", coursedata);
   useEffect(() => {
     getOverview();
     getCourse();
     setid(getcourseid);
   }, []);
 
-  console.log("playe", played);
+  console.log("played", played);
 
   const handlerender = () => {
     console.log("rendered");
@@ -182,7 +187,7 @@ export default function Courseview() {
     coursedata?.courseContentResponse?.totalVideoLength / 3600 + " ";
 
   const [nextvideo, setNextvideo] = useState("");
-  console.log("next", nextvideo);
+  console.log("nex", nextvideo);
 
   const videolength = Totalvideo.substr(0, 4);
   const username = JSON.parse(localStorage.getItem("name"));
@@ -205,13 +210,17 @@ export default function Courseview() {
     handleOnPause(Math.round(time));
     handlerender();
   }, [playerRef.current]);
-  console.log("thelid,dur", theLessonId, played);
+  console.log("thelid,du", theLessonId, played);
 
   const onHandleEnd = React.useCallback(() => {
     const time = playerRef.current.getCurrentTime();
     setPlayed(Math.round(time));
+    setVideoUrl(true);
+
     handleOnEnd(1);
   }, [playerRef.current]);
+
+  console.log("video", video);
 
   return (
     <>
@@ -259,24 +268,31 @@ export default function Courseview() {
                   onStart={() => {
                     setTheRef(true);
                   }}
+                  playing={true}
                   onPause={() => {
                     onHandlePause();
                   }}
                   onEnded={() => {
                     onHandlePause();
                     onHandleEnd();
-                    setVideoUrl(nextvideo);
+                    getCourse();
+                    localStorage.setItem("videoURL", JSON.stringify(nextvideo));
                   }}
                   ref={playerRef}
                   controls
                   light={
-                    image
-                      ? imageurl
-                      : OverView?.overview?.videoLink.replace(".mp4", ".jpg")
+                    changeLight
+                      ? coursedata?.currentLesson !== null
+                        ? coursedata?.currentLesson.videoLink.replace(
+                            ".mp4",
+                            ".jpg"
+                          )
+                        : OverView?.overview?.videoLink.replace(".mp4", ".jpg")
+                      : false
                   }
                   url={
                     video
-                      ? videourl
+                      ? localVideoURL
                       : coursedata?.currentLesson !== null
                       ? coursedata?.currentLesson?.videoLink
                       : OverView?.overview?.videoLink
@@ -289,13 +305,29 @@ export default function Courseview() {
                   className="video-heading"
                   style={{
                     display: thumbtext ? "flex" : "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setChangeLight(false);
                   }}
                 >
-                  {" "}
-                  <p className="video-heading-style">
-                    Continue Chapter {coursedata?.currentLesson?.chapterNumber}{" "}
-                    Lesson {coursedata?.currentLesson?.lessonNumber}
-                  </p>{" "}
+                  {coursedata?.joinedCourse ? (
+                    <>
+                      {" "}
+                      <p className="video-heading-style">
+                        Continue Chapter{" "}
+                        {coursedata?.currentLesson?.chapterNumber} Lesson{" "}
+                        {coursedata?.currentLesson?.lessonNumber}
+                      </p>{" "}
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <p className="video-heading-style">
+                        Course Introduction
+                      </p>{" "}
+                    </>
+                  )}
                 </div>
                 <div
                   className="video-footer"
@@ -349,8 +381,8 @@ export default function Courseview() {
                               ?.completionDuration /
                               3600) *
                               60 +
-                            ""
-                          ).substr(0, 3)}
+                            " "
+                          ).substr(0, 2)}
                           m
                         </span>
                       </div>
@@ -369,9 +401,12 @@ export default function Courseview() {
                         Joined: {coursedata?.certificateResponse?.joinDate}{" "}
                         Completed:{" "}
                         {coursedata?.certificateResponse?.completedDate}{" "}
-                        {(coursedata?.certificateResponse?.completionDuration /
-                          3600) *
-                          60}
+                        {(
+                          (coursedata?.certificateResponse?.completionDuration /
+                            3600) *
+                            60 +
+                          " "
+                        ).substr(0, 2)}
                         m Certificate No: {randomid}
                       </span>
                     </div>
